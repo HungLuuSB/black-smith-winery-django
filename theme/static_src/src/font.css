@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'GTSuperDisplay';
+  src: url("../../fonts/GT-Super-Display-Regular.otf") format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("../../fonts/Roboto-Regular.woff") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

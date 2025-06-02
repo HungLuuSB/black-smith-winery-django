@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'GTSuperDisplay';
+  src: url("../../fonts/GT-Super-Display-Regular.otf") format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("../../fonts/Roboto-Regular.woff") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+@import "tailwindcss";
+
+/**
+  * A catch-all path to Django template files, JavaScript, and Python files
+  * that contain Tailwind CSS classes and will be scanned by Tailwind to generate the final CSS file.
+  *
+  * If your final CSS file is not being updated after code changes, you may want to broaden or narrow
+  * the scope of this path.
+  */
+@source "../../../**/*.{html,py,js}";
+
+
+
+body.is-scrolling-down #nav--bar {
+  @apply text-black;
+  @apply bg-white;
+}
+
+body.is-scrolling-down #nav--bar {
+  @apply -translate-y-[12.1rem];
+}
+
+body.is-scrolling-up #nav--bar {
+  @apply text-black;
+  @apply bg-white;
+  @apply translate-y-0;
+}
+
+body.is-scrolling-up #nav--button .nav--button-bar {
+  @apply bg-black;
+}
+
+.eyebrow {
+  @apply font-[800];
+  @apply text-[0.9rem];
+  @apply uppercase;
+  @apply text-[#7e7e7e];
+  @apply tracking-[0.125em];
+  @apply leading-[1rem];
+}

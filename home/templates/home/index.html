@@ -1,0 +1,135 @@
+{% extends "_Layout.html" %}
+{% load static %}
+{% block title %}
+BlackSmith's Winery
+{% endblock title %}
+
+{% block content %}
+<div class="modules--0 mt-0 mb-0 w-full h-[calc(100vh-12.1rem)]">
+    <div class="top-[calc(-12.1rem)] h-[calc(100vh+12.1rem)] left-0 w-full overflow-hidden absolute">
+        <div class="slide--0 inactive top-0 left-0 w-full h-full z-0 absolute">
+            <div class="w-full h-full">
+                <picture class="w-full h-full object-cover">
+            <img class="w-full h-full object-cover" src="{% static "/images/banners/banner_1.jpg" %}" />
+                </picture>
+            </div>
+        </div>
+    </div>
+    <div class="top-[33%] left-[55%] mr-auto ml-auto absolute visible">
+        <p class="eyebrow">
+            AVAILABLE ONLY AT BLACK SMITH'S WINERY
+        </p>
+        <h1 class="font-[GTSuperDisplay] text-white text-[5vw] pt-[2rem] pb-[2rem]">
+            Winery Exclusive
+        </h1>
+        <a class="text-white font-[800] text-[1.5rem] -tracking-[0.025rem]">
+            Shop Now
+        </a>
+    </div>
+</div>
+
+<div class="modules--1 bg-white pb-[10rem]">
+    <div class="eyebrow">
+        We have all your favourites
+    </div>
+    <h3 class="font-[GTSuperDisplay] text-[5vw]">Find your favourites<br /> Below</h3>
+    <div class="flex flex-col gap-[5px] justify-start items-center">
+        <div class="flex gap-[2px] w-full flex-wrap">
+            <div class="relative group w-[33%] max-[800px]:w-[100%] overflow-hidden flex flex-col justify-center items-center self-stretch bg-top-left bg-no-repeat">
+                <figure class="w-full border-none">
+                    <img class="w-full object-cover transition-transform group-hover:scale-110 duration-300 ease-out" src="{% static "/images/banners/white_wine.png" %}" />
+                </figure>
+        <a class="w-full h-full top-auto absolute flex justify-center items-center"  class="font-bold">
+                    <div class="capitalize text-white text-[2rem] tracking-[0.1em] font-bold">
+                        WHITE WINE
+                    </div>
+                </a>
+            </div>
+            <div class="relative group w-[33%] max-[800px]:w-[100%] overflow-hidden flex flex-col justify-center items-center self-stretch bg-top-left bg-no-repeat">
+                <figure class="w-full border-none">
+                    <img class="w-full object-cover transition-transform group-hover:scale-110 duration-300 ease-out" src="{% static "/images/banners/red_wine.png" %}" />
+                </figure>
+                <a class="w-full h-full top-auto absolute flex justify-center items-center" class="font-bold">
+                    <div class="capitalize text-white text-[2rem] tracking-[0.1em] font-bold">
+                        RED WINE
+                    </div>
+                </a>
+            </div>
+            <div class="relative group w-[33%] max-[800px]:w-[100%] overflow-hidden flex flex-col justify-center items-center self-stretch bg-top-left bg-no-repeat">
+                <figure class="w-full border-none">
+                    <img class="w-full object-cover transition-transform group-hover:scale-110 duration-300 ease-out" src="{% static "/images/banners/champagne-sparkling-wine.png" %}"  />
+                </figure>
+                <a class="w-full h-full top-auto absolute flex justify-center items-center" class="font-bold">
+                    <div class="capitalize text-white text-[2rem] tracking-[0.1em] font-bold">
+                        SPARKLING
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="flex gap-[2px] w-full flex-wrap">
+            <div class="relative group w-[33%] max-[800px]:w-[100%] overflow-hidden flex flex-col justify-center items-center self-stretch bg-top-left bg-no-repeat">
+                <figure class="w-full border-none">
+                    <img class="w-full object-cover transition-transform group-hover:scale-110 duration-300 ease-out" src="{% static "/images/banners/whisky.png" %}" class="font-bold" />
+                </figure>
+                <a class="w-full h-full top-auto absolute flex justify-center items-center" class="font-bold">
+                    <div class="capitalize text-white text-[2rem] tracking-[0.1em] font-bold">
+                        WHISKY
+                    </div>
+                </a>
+            </div>
+            <div class="relative group w-[33%] max-[800px]:w-[100%] overflow-hidden flex flex-col justify-center items-center self-stretch bg-top-left bg-no-repeat">
+                <figure class="w-full border-none">
+                    <img class="w-full object-cover transition-transform group-hover:scale-110 duration-300 ease-out" src="{% static "/images/banners/gin.png" %}" />
+                </figure>
+                <a class="w-full h-full top-auto absolute flex justify-center items-center" class="font-bold">
+                    <div class="capitalize text-white text-[2rem] tracking-[0.1em] font-bold">
+                        GIN
+                    </div>
+                </a>
+            </div>
+            <div class="relative group w-[33%] max-[800px]:w-[100%] overflow-hidden flex flex-col justify-center items-center self-stretch bg-top-left bg-no-repeat">
+                <figure class="w-full border-none">
+                    <img class="w-full object-cover transition-transform group-hover:scale-110 duration-300 ease-out" src="{% static "/images/banners/tequila.png" %}" />
+                </figure>
+                <a class="w-full h-full top-auto absolute flex justify-center items-center" class="font-bold">
+                    <div class="capitalize text-white text-[2rem] tracking-[0.1em] font-bold">
+                        TEQUILA
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modules--2 bg-white pb-[10rem]">
+    <div class="eyebrow">
+        Plan your visit
+    </div>
+    <h3 class="font-[GTSuperDisplay] text-[5vw]">Explore the <br/> Heart of wines</h3>
+    <div class="flex flex-wrap h-full justify-between flex-nowrap">
+        <div class="relative group w-[49%] h-full mt-[7rem] max-[1300px]:w-full overflow-hidden">
+            <picture class="w-full h-full object-cover">
+                <img class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500 ease-[cubic-bezier(0.420,0.000,0.002,1.000)]" src="{% static "/images/banners/our_place.jpg" %}" />
+            </picture>
+            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-[0.35]">
+            </div>
+            <div class="absolute left-[3rem] bottom-[5rem] text-white">
+                <p class="text-gray-300 text-[1.2rem]">FINEST ON THE MARKET</p>
+                <h4 class="text-[1.6rem] mt-[1rem]"> View Products </h4>
+            </div>
+        </div>
+        <div class="relative group w-[49%] h-full max-[1300px]:w-full overflow-hidden">
+            <picture class="w-full h-full object-cover">
+                <img class="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500 ease-[cubic-bezier(0.420,0.000,0.002,1.000)]" src="{% static "/images/banners/visit_us.jpg" %}" />
+            </picture>
+            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-[0.35]">
+            </div>
+            <div class="absolute left-[3rem] bottom-[5rem] text-white">
+                <p class="text-gray-300 text-[1.2rem]">VINEYARD</p>
+                <h4 class="text-[1.6rem] mt-[1rem]"> Visit Us </h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
