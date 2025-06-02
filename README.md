@@ -7,4 +7,14 @@ All code is produced by Luu Thai Hung.
 This project is an attempt to work with django Framework.
 
 # Disclaimer
-Please don't repost this code without my permisson.
+Please don't repost this code without my permissions.
+
+# UpdateLog
+## 02/06/2025
+- Project setup
+- Tailwind setup
+- Shared layout
+- Base theme
+- home controller
+  - index
+- product controller
