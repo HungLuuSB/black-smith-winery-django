@@ -135,3 +135,7 @@ TAILWIND_APP_NAME = 'theme'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DEBUG SECTION
+print(f"DEBUG: MEDIA_URL is set to: {MEDIA_URL}")
+print(f"DEBUG: MEDIA_ROOT is set to: {MEDIA_ROOT}")

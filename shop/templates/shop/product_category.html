@@ -43,7 +43,7 @@ BlackSmith's Winery | {{ categoryName|title }}
                   {% for product in products %}
                   <li class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
                     <div class="w-full max-w-full">
-                      <a class="cursor-pointer text-decoration-none">
+                      <a class="cursor-pointer text-decoration-none" href="{% url 'product/details' product.slug %}">
                         <span class="w-auto h-[219px] max-w-full p-[10px] aspect-167/200 mb-[10px]">
                           <span class="h-full w-full overflow-hidden block relative z-1 text-center">
                             <img class="max-w-full inline-block !w-[167px] !h-[200px] object-contain" src="{{ product.image.url }}" alt="{{ product.name }}" />

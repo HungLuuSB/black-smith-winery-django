@@ -14,4 +14,8 @@ def category(request, categorySlug: str):
     return render(request, 'shop/product_category.html', context)
 
 def product_details(request, productSlug: str):
-    return render(request, 'shop/index.html')
+    product = get_object_or_404(Product, slug=productSlug)
+    context = {
+        'product': product
+    }
+    return render(request, 'shop/product_details.html', context)
