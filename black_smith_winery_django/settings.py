@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'shop',
-    'home'
+    'home',
+    'common',
+    'dashboard'
 ]
 
 MIDDLEWARE = [
@@ -125,7 +127,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / 'media'
 TAILWIND_APP_NAME = 'theme'
 
 # Default primary key field type

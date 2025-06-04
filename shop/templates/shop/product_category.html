@@ -1,0 +1,79 @@
+{% extends "_Layout.html" %}
+{% load static %}
+{% block title %}
+BlackSmith's Winery | {{ categoryName|title }}
+{% endblock title %}
+
+{% block content %}
+
+<div class="modules--0 mt-0 mb-0 w-full h-[calc(100vh-12.1rem)]">
+    <div class="top-[calc(-12.1rem)] h-[calc(100vh+12.1rem)] left-0 w-full overflow-hidden absolute">
+        <div class="slide--0 inactive top-0 left-0 w-full h-full z-0 absolute">
+            <div class="w-full h-full">
+                <picture class="w-full h-full object-cover">
+                  <img class="w-full h-full object-cover" src="{% static "/images/banners/banner_0.jpg" %}" />
+                </picture>
+            </div>
+        </div>
+    </div>
+    <div class="top-[33%] mr-auto ml-auto z-2 absolute visible">
+        <p class="eyebrow">
+            Explore all your favourites
+        </p>
+        <h1 class="font-[GTSuperDisplay] text-white text-[5vw] pt-[2rem] pb-[2rem]">
+          {{ category.name|title}}
+        </h1>
+        <p class="text-white font-[800] text-[1.5rem] -tracking-[0.025rem]">
+            Shop Now
+        </p>
+    </div>
+</div>
+<div class="modules--1 bg-white">
+    <div class="flex flex-nowrap">
+        <div id="product-list" class="flex-[0_1_83.5%] order-2 pl-[30px] float-right max-w-full">
+            <div id="toolbar" class="max-w-full mb-[1rem]">
+                <div class="relative border border-[#b2b2b2] py-[10px] px-[20px] rounded-[6px]">
+                    <div class="flex text-center text-[#7e7e7e]">
+                        <p>Showing: 0-0 of 0 products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+              <ul class="grid grid-cols-[repeat(auto-fit,minmax(300,1fr))] gap-[15px]">
+                  {% for product in products %}
+                  <li class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
+                    <div class="w-full max-w-full">
+                      <a asp-action="ProductDetails" asp-route-productSlug="@product.Slug" class="cursor-pointer text-decoration-none">
+                        <span class="w-auto h-[219px] max-w-full p-[10px] aspect-167/200 mb-[10px]">
+                          <span class="h-full w-full overflow-hidden block relative z-1 text-center">
+                            <img class="max-w-full inline-block !w-[167px] !h-[200px] object-contain" src="~/images/products/@(UtilsHelper.ParseNameIntoPNGUrl(product.Name))" />
+                          </span>
+                        </span>
+                      </a>
+                      <div>
+                        <p id="product--name" class="min-h-[76px] my-[5px]">
+                          <a asp-action="ProductDetails" asp-route-productSlug="@product.Slug" class="text-[1.6rem] text-black leading-[25px] tracking-[1px]">
+                            {{ product.name |title }}
+                          </a>
+                          </p>
+                          <p id="product--abv" class="text-[.9rem] text-[#7e7e7e]">{{ product.volume }}ml / {{ product.abv }}%</p>
+                          <p id="product--price" class="font-bold text-[2rem] text-black">£{{ product.price }}</p>
+                        <p id="product--sale-price" class="text-[.9rem] text-[#7e7e7e]">As low as <span class="font-bold text-black">£11.50</span></p>
+                        <div class="w-full h-auto mt-[1rem]">
+                          <button class="text-white w-full h-[50px] bg-black rounded-[6px]" type="button">
+                            <span>Add to Cart</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="flex-[0_1_20%] order-1 float-left max-w-[256px]">
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
