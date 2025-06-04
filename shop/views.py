@@ -11,7 +11,7 @@ def category(request, categorySlug: str):
         'category': category,
         'products': products
     }
-    return render(request, 'shop/product_category.html')
+    return render(request, 'shop/product_category.html', context)
 
 def product_details(request, productSlug: str):
     return render(request, 'shop/index.html')
