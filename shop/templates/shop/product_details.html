@@ -55,7 +55,7 @@
                         const incBtn = document.getElementById("incrQty");
                         const descBtn = document.getElementById("descQty");
                         const quantityInput = document.getElementById("quantity");
-                        const maxStock = {{ product.Stock.quantity }};
+                        const maxStock = {{ product.stock.quantity }};
 
                         incBtn.addEventListener("click", () => {
                             let currentQty = parseInt(quantityInput.value);

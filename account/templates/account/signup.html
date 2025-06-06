@@ -1,0 +1,119 @@
+{% extends "_Layout.html" %}
+{% load static %}
+{% block title %}
+Create an Account
+{% endblock title %}
+{% block content %}
+<div class="modules--0 mt-0 mb-0 w-full h-[calc(100vh-12.1rem)]">
+    <div class="top-[calc(-12.1rem)] h-[calc(100vh+12.1rem)] left-0 w-full overflow-hidden absolute">
+        <div class="slide--0 inactive top-0 left-0 w-full h-full z-0 absolute">
+            <div class="w-full h-full">
+                <picture class="w-full h-full object-cover">
+                  <img class="w-full h-full object-cover" src="{% static "/images/banners/banner_0.jpg" %}" />
+                </picture>
+            </div>
+        </div>
+    </div>
+    <div class="top-[33%] mr-auto ml-auto z-2 absolute visible">
+        <p class="eyebrow text-gray-400 ">
+            Enjoy your privileges
+        </p>
+        <h1 class="font-[GTSuperDisplay] text-white text-[5vw] pt-[2.5rem] pb-[2.5rem]">
+            Loyalty
+        </h1>
+        <a asp-controller="Account" asp-action="Create" class="text-white font-[800] text-[1.5rem] -tracking-[0.025rem]">
+            
+        </a>
+    </div>
+</div>
+<div class="modules--1 bg-white">
+    <div class="flex flex-wrap justify-between flex-col">
+        <div class="p-[5rem] mt-[5vh] mb-[5vh] w-full">
+            <h4 class="mb-[1.5rem] font-[GTSuperDisplay] text-3xl">Create a new account</h4>
+            <p class="text-gray-600 mb-[1.5rem]">
+                Thank you for your interest in us. Please complete the form below to register. <br/>
+                <span class="!text-red-500">*</span> indicates required fields.
+            </p>
+            <form method="post" class="mb-[1.5rem] bg-[#EFECE8]">
+              {% csrf_token %}
+                <div class="flex flex-col justify-center items-center">
+                    <div class="w-full p-[5vw]">
+                        <p class="text-black text-[1rem] font-bold">Personal Information</p>
+                        <div class="flex flex-wrap">
+                            <div class="w-[50%] max-[1300px]:w-full pl-[1%] group/field inline-flex flex-col mt-[3rem] align-top border-gray-500">
+                                <div class="mt-[.2rem] mb-[.2rem] relative h-[2.4rem] w-full">
+                                    <input name="email" type="text" class="peer/field-input required text-[1.2rem] h-[2rem] h-full w-full outline-none" placeholder=" " />
+                                    <span class="absolute left-0 -bottom-[6px] h-[2px] w-full bg-gray-500 transition-colors duration-100 group-hover/field:bg-black"></span>
+                                    <label class="text-gray-500 text-[0.9rem] absolute block transform -translate-y-[3.01rem] peer-placeholder-shown/field-input:-translate-y-[2.01rem] peer-placeholder-shown/field-input:text-[1.2rem] transition-[font-size,translate] ease-in duration-100"><span class="!text-red-500">*</span>Email Address</label>
+                                </div>
+                            </div>
+                            <div class="w-[50%] max-[1300px]:w-full pl-[1%] group/field inline-flex flex-col mt-[3rem] align-top border-gray-500">
+                                <div class="mt-[.2rem] mb-[.2rem] relative h-[2.4rem] w-full">
+                                    <input name="full_name" type="text" class="peer/field-input required text-[1.2rem] h-[2rem] h-full w-full outline-none" placeholder=" " />
+                                    <span class="absolute left-0 -bottom-[6px] h-[2px] w-full bg-gray-500 transition-colors duration-100 group-hover/field:bg-black"></span>
+                                    <label class="text-gray-500 text-[0.9rem] absolute block transform -translate-y-[3.01rem] peer-placeholder-shown/field-input:-translate-y-[2.01rem] peer-placeholder-shown/field-input:text-[1.2rem] transition-[font-size,translate] ease-in duration-100"><span class="!text-red-500">*</span>Full Name</label>
+                                </div>
+                            </div>
+                            <div class="w-[50%] max-[1300px]:w-full pl-[1%] group/field inline-flex flex-col mt-[3rem] align-top border-gray-500">
+                                <div class="mt-[.2rem] mb-[.2rem] relative h-[2.4rem] w-full">
+                                    <input name="password" type="password" class="peer/field-input required text-[1.2rem] h-[2rem] h-full w-full outline-none" placeholder=" " />
+                                    <span class="absolute left-0 -bottom-[6px] h-[2px] w-full bg-gray-500 transition-colors duration-100 group-hover/field:bg-black"></span>
+                                    <label class="text-gray-500 text-[0.9rem] absolute block transform -translate-y-[3.01rem] peer-placeholder-shown/field-input:-translate-y-[2.01rem] peer-placeholder-shown/field-input:text-[1.2rem] transition-[font-size,translate] ease-in duration-100"><span class="!text-red-500">*</span>Password</label>
+                                </div>
+                            </div>
+                            <div class="w-[50%] max-[1300px]:w-full pl-[1%] group/field inline-flex flex-col mt-[3rem] align-top border-gray-500">
+                                <div class="mt-[.2rem] mb-[.2rem] relative h-[2.4rem] w-full">
+                                    <input name="phone" type="tel" class="peer/field-input required text-[1.2rem] h-[2rem] h-full w-full outline-none" placeholder=" " />
+                                    <span class="absolute left-0 -bottom-[6px] h-[2px] w-full bg-gray-500 transition-colors duration-100 group-hover/field:bg-black"></span>
+                                    <label class="text-gray-500 text-[0.9rem] absolute block transform -translate-y-[3.01rem] peer-placeholder-shown/field-input:-translate-y-[2.01rem] peer-placeholder-shown/field-input:text-[1.2rem] transition-[font-size,translate] ease-in duration-100">Mobile Phone</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full px-[5vw]">
+                        <p class="text-black text-[1rem] font-bold">Default Address</p>
+                        <div class="flex flex-wrap">
+                            <div class="w-[50%] max-[1300px]:w-full pl-[1%] group/field inline-flex flex-col mt-[3rem] align-top border-gray-500">
+                                <div class="mt-[.2rem] mb-[.2rem] relative h-[2.4rem] w-full">
+                                    <input name="city" type="text" class="peer/field-input required text-[1.2rem] h-[2rem] h-full w-full outline-none" placeholder=" " />
+                                    <span class="absolute left-0 -bottom-[6px] h-[2px] w-full bg-gray-500 transition-colors duration-100 group-hover/field:bg-black"></span>
+                                    <label class="text-gray-500 text-[0.9rem] absolute block transform -translate-y-[3.01rem] peer-placeholder-shown/field-input:-translate-y-[2.01rem] peer-placeholder-shown/field-input:text-[1.2rem] transition-[font-size,translate] ease-in duration-100">City</label>
+                                </div>
+                            </div>
+                            <div class="w-[50%] max-[1300px]:w-full pl-[1%] group/field inline-flex flex-col mt-[3rem] align-top border-gray-500">
+                                <div class="mt-[.2rem] mb-[.2rem] relative h-[2.4rem] w-full">
+                                    <input name="address" type="text" class="peer/field-input required text-[1.2rem] h-[2rem] h-full w-full outline-none" placeholder=" " />
+                                    <span class="absolute left-0 -bottom-[6px] h-[2px] w-full bg-gray-500 transition-colors duration-100 group-hover/field:bg-black"></span>
+                                    <label class="text-gray-500 text-[0.9rem] absolute block transform -translate-y-[3.01rem] peer-placeholder-shown/field-input:-translate-y-[2.01rem] peer-placeholder-shown/field-input:text-[1.2rem] transition-[font-size,translate] ease-in duration-100">Address</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex p-[5vw] justify-center">
+                        <button class="bg-black w-full text-white border-none w-[50%] p-[1.2rem] font-[500] text-center cursor-pointer" type="submit">
+                            <div>
+                                Create Account
+                            </div>
+                        </button>
+                    </div>
+                    <br />
+                    <span class="text-red-500 ml-[25%]">
+                          {% if form.errors %}
+                            <ul>
+                              {% for field in form %}
+                                {% for error in field.errors %}
+                                  <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                              {% endfor %}
+                              {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                              {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

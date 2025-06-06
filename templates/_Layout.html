@@ -55,7 +55,11 @@
                     <nav class="ml-auto flex flex-1 justify-end flex max-[1400px]:hidden">
                         <ul class="flex list-none items-center">
                             <li>
-                              <a asp-controller="Account" asp-action="Login" class="pr-3 pl-3"> Account </a>
+                              {% if user.is_authenticated %}
+                              <a href="" class="pr-3 pl-3"> Your Account </a>
+                              {% else %}
+                              <a href="{% url 'account/login' %}" class="pr-3 pl-3"> Account </a>
+                              {% endif %}
                             </li>
                             <li>
                                 <button id="cartBtn" class="pr-6 pl-6" onclick=""> Cart </button>
