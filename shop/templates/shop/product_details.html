@@ -38,12 +38,13 @@
             <div class="mt-[1rem]">
               <p class="break text-[1rem] text-justify">{{ product.description }}</p>
             </div>
-            <form class="mt-[1rem]" asp-controller="Cart" asp-action="AddToCart" method="post">
-                <div class="flex justify-between">
+            <form class="mt-[1rem]" method="post" action="{% url 'cart/add' product.id %}">
+              {% csrf_token %}
+              <div class="flex justify-between">
                     <div class="flex justify-evenly items-center border-2 border-[#f2f0ec] rounded-[6px]">
                         <button id="descQty" type="button" class="w-[40px] text-[35px] px-[10px] cursor-pointer">-</button>
                         <input name="quantity" id="quantity" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center" value="1"/>
-                        <input name="productId" class="hidden" value="@Model.ProductId" />
+                        <input name="product_id" class="hidden" value="{{ product.id }}" />
                         <button id="incrQty" type="button" class="w-[40px] text-[35px] px-[10px] cursor-pointer">+</button>
                     </div>
                     <div class="justify-end flex-[0_1_75%]">

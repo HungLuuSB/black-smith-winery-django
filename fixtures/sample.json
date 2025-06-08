@@ -1,0 +1,56 @@
+[
+  {
+    "model": "common.category",
+    "pk": 1,
+    "fields": {
+      "name": "White Wine",
+      "slug": "white-wine",
+      "sku_prefix": "WHT"
+    }
+  },
+  {
+    "model": "common.category",
+    "pk": 2,
+    "fields": {
+      "name": "Red Wine",
+      "slug": "red-wine",
+      "sku_prefix": "RED"
+    }
+  },
+  {
+    "model": "common.category",
+    "pk": 3,
+    "fields": {
+      "name": "Sparkling & Champagne",
+      "slug": "sparkling-champagne",
+      "sku_prefix": "SPK"
+    }
+  },
+  {
+    "model": "common.category",
+    "pk": 4,
+    "fields": {
+      "name": "Whisky",
+      "slug": "whisky",
+      "sku_prefix": "WSK"
+    }
+  },
+  {
+    "model": "common.category",
+    "pk": 5,
+    "fields": {
+      "name": "Gin",
+      "slug": "gin",
+      "sku_prefix": "GIN"
+    }
+  },
+  {
+    "model": "common.category",
+    "pk": 6,
+    "fields": {
+      "name": "Tequila",
+      "slug": "tequila",
+      "sku_prefix": "TEQ"
+    }
+  }
+]

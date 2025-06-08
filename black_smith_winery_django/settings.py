@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'home',
     'common',
     'dashboard',
-    'account'
+    'account',
+    'cart'
 ]
 
 MIDDLEWARE = [
@@ -130,6 +131,9 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+FIXTURE_DIRS = [
+    BASE_DIR / 'fixtures'
+]
 TAILWIND_APP_NAME = 'theme'
 
 # Default primary key field type
