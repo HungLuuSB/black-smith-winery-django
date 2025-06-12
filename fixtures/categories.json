@@ -52,21 +52,5 @@
       "slug": "tequila",
       "sku_prefix": "TEQ"
     }
-  },
-  {
-    "model": "common.country",
-    "pk": 1,
-    "fields": {
-      "name": "United States",
-      "code": "US"
-    }
-  },
-  {
-    "model": "common.brand",
-    "pk": 1,
-    "fields": {
-      "name": "Some Brand",
-      "slug": "some-brand"
-    }
   }
 ]
