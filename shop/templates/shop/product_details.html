@@ -38,7 +38,7 @@
             <div class="mt-[1rem]">
               <p class="break text-[1rem] text-justify">{{ product.description }}</p>
             </div>
-            <form class="mt-[1rem]" method="post" action="{% url 'cart/add' product.id %}">
+            <form class="mt-[1rem]" method="post" action="{% url 'cart/update' product.id %}">
               {% csrf_token %}
               <div class="flex justify-between">
                     <div class="flex justify-evenly items-center border-2 border-[#f2f0ec] rounded-[6px]">

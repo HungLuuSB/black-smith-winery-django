@@ -1,0 +1,29 @@
+[
+  {
+    "model": "shop.product",
+    "pk": 1,
+    "fields": {
+      "sku": "WHT-31889",
+      "slug": "leflaive-puligny-montrachet-1er-cru-clavoillon",
+      "name": "Leflaive Puligny Montrachet 1er Cru Clavoillon",
+      "category": 1,
+      "brand": 1,
+      "country": 185,
+      "description": "Skibidi toilet",
+      "price": 520.00,
+      "volume": 750,
+      "abv": 13.5,
+      "vintage": 2018,
+      "image": "products/leflaive_puligny_montrachet_1er_cru_clavoillon.png"
+    }
+  },
+  {
+    "model": "shop.stock",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "quantity": 50,
+      "last_updated": "2025-06-08 00:49:01.816490"
+    }
+  }
+]

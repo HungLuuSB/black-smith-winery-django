@@ -1,0 +1,32 @@
+
+<div class="flex flex-col h-full flex-none">
+    <div class="flex items-center justify-between pb-[3rem] border-b border-b-[#D7D7D7] border-b-[0.1rem]">
+    <h4 class="text-[2rem] font-[GTSuperDisplay]">Your Cart ({%  %})</h4>
+        <a class="text-[1.2rem]">Account</a>
+    </div>
+</div>
+<div class="overflow-auto flex-1">
+    <ul class="w-full">
+        @foreach (var item in Model)
+        {
+            <li class="flex border-b border-b-[#D7D7D7] border-b-[0.1rem] py-[1.5rem] relative items-center">
+                <div class="w-[115px] h-[115px] -ml-[2.5rem] mr-[1.5rem]">
+                    <img class="w-full h-full block object-contain" src="~/images/products/@UtilsHelper.ParseNameIntoPNGUrl(item.ProductName)" />
+                </div>
+                <div class="pr-[2.5rem] max-w-[38%]">
+                    <a class="inline-block max-w-[14em]">@item.ProductName</a>
+                </div>
+                <div class="text-center ml-auto mr-[3.5rem]">
+                    <span>£@(item.ProductPrice.ToString("F2"))</span>
+                </div>
+                <div class="text-center mr-[3.5rem] mb-[0.6rem]">
+                    <span>@item.Quantity</span>
+                </div>
+                <form class="" asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                    <input name="productId" class="hidden" value="@item.ProductId" />
+                    <button class="underline" type="submit">Remove</button>
+                </form>
+            </li>
+        }
+    </ul>
+</div>

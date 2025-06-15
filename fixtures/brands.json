@@ -1,0 +1,10 @@
+[
+  {
+    "model": "common.brand",
+    "pk": 1,
+    "fields": {
+      "name": "Some Brand",
+      "slug": "some-brand"
+    }
+  }
+]
