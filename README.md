@@ -18,3 +18,12 @@ Please don't repost this code without my permissions.
 - home controller
   - index
 - product controller
+## 16/06/2025
+- Finsihed:
+  - Populate database:
+    - Brand
+    - Category
+    - Country
+    - Product
+- TODO:
+  - Add [CORE] Views
