@@ -19,6 +19,17 @@ def get_or_create_cart(request):
     return cart
 
 
+def get_cart_details(request):
+    cart = get_or_create_cart(request)
+    total_price = sum(item.product.price * item.quantity for item in cart.items.all())
+    context = {
+        "cart": cart,
+        "total_price": total_price,
+        "total_quantity": sum(item.quantity for item in cart.items.all()),
+    }
+    return render(request, "cart/details.html", context)
+
+
 def get_cart_summary(request):
     cart = get_or_create_cart(request)
     items = cart.items.all()
