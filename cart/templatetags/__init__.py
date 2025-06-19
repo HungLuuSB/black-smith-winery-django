@@ -1,1 +1,1 @@
-from .math_filters import math_filters
+from .math_filters import multiply
