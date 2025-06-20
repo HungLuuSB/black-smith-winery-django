@@ -1,5 +1,6 @@
 {% extends "_StaticNavLayout.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}
   {{ product_name|title }}
 {% endblock title %}
@@ -33,7 +34,7 @@
                 </p>
             </div>
             <div class="mt-[1rem]">
-              <p class="font-bold text-[2rem]">£{{ product.price }}</p>
+              <p class="font-bold text-[2rem]">£{{ product.price|floatformat:2|intcomma }}</p>
             </div>
             <div class="mt-[1rem]">
               <p class="break text-[1rem] text-justify">{{ product.description }}</p>

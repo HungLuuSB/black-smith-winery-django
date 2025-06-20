@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.shortcuts import redirect, render, get_object_or_404
 from cart.models import Cart, CartItem
 from shop.models import Product
+from decimal import Decimal
 # Create your views here.
 
 
@@ -26,6 +27,7 @@ def get_cart_details(request):
         "cart": cart,
         "total_price": total_price,
         "total_quantity": sum(item.quantity for item in cart.items.all()),
+        "vat": total_price * Decimal("1.8"),
     }
     return render(request, "cart/details.html", context)
 
@@ -47,18 +49,18 @@ def update_cart(request, product_id):
     cart = get_or_create_cart(request)
     product = get_object_or_404(Product, id=product_id)
     try:
-        quantity = int(request.POST.get("quantity", 1))
-        if quantity < 1:
-            quantity = 1
+        quantity = int(request.POST.get("quantity", 0))
+        if quantity <= 0:
+            quantity = 0
     except ValueError:
-        quantity = 1
+        quantity = 0
 
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     if not created:
-        cart_item.quantity = quantity
+        cart_item.quantity += quantity
         cart_item.save()
     else:
-        cart_item.quantity += quantity
+        cart_item.quantity = quantity
         cart_item.save()
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
