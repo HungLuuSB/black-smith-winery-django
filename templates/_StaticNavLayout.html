@@ -53,42 +53,66 @@
                         </ul>
                     </nav>
                     <nav class="ml-auto flex flex-1 justify-end flex max-[1400px]:hidden">
-                        <ul class="flex list-none items-center">
-                            <li>
-                              <a asp-controller="Account" class="pr-3 pl-3"> Account </a>
-                            </li>
-                            <li><a class="pr-6 pl-6"> Cart </a></li>
-                        </ul>
+                      <ul class="flex list-none items-center">
+                        <li class="border-r-[rgba(255, 255, 255, 0.2)] border-r-[0.1rem]">
+                          {% if user.is_authenticated %}
+                          <a href="" class="pr-3 pl-3"> Your Account </a>
+                          {% else %}
+                          <a href="{% url 'account/login' %}" class="pr-3 pl-3"> Account </a>
+                          {% endif %}
+                        </li>
+                        <li>
+                          <button id="cartBtn" class="pr-6 pl-6" onclick=""> Cart </button>
+                        </li>
+                      </ul>
                     </nav>
-
                 </div>
             </div>
         </nav>
         <div class="modules ml-auto mr-auto pt-[5rem] px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
-        {% block content %}
-        
-        {% endblock content %}
+          {% block content %}
+
+          {% endblock content %}
         </div>
         <footer class="bg-black w-full h-full mt-1">
-            <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
-                <div class="flex flex-wrap">
-                    <div>
-                        <address>
-                            <p class="not-italic text-white font-[400] text-[1rem]">Black Smith's Winery Headquarter</p>
-                            <p class="not-italic text-gray-400 font-[400] text-[0.8rem]">31/2D Tân Xuân 6, ấp Mỹ Hòa 3, Hốc Môn, Tp.Hồ Chí Minh</p>
-                            <p class="not-italic text-gray-400 font-[400] text-[0.8rem]">(84) 774 688 827</p>
-                        </address>
-                    </div>
-                </div>
+          <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
+            <div class="flex flex-wrap">
+              <div>
+                <address>
+                  <p class="not-italic text-white font-[400] text-[1rem]">Black Smith's Winery Headquarter</p>
+                  <p class="not-italic text-gray-400 font-[400] text-[0.8rem]">31/2D Tân Xuân 6, ấp Mỹ Hòa 3, Hốc Môn, Tp.Hồ Chí Minh</p>
+                  <p class="not-italic text-gray-400 font-[400] text-[0.8rem]">(84) 774 688 827</p>
+                </address>
+              </div>
             </div>
+          </div>
         </footer>
     </div>
-    <script>
-        const btn = document.getElementById("cartBtn");
-        const cart = document.getElementById("cartSection");
+    <div id="cartSection" class="subroot fixed hidden">
+      <div class="fixed z-1600 inset-0 bg-[rgba(0,0,0,0.8)]">
 
-        btn.addEventListener("click", () => {
-            cart.classList.toggle("hidden");
+      </div>
+      <div class="fixed z-1700 top-0 right-0 absolute w-[56%] h-screen bg-[#FAF8F5]">
+        <div id="cart-summary" class="px-[20%] py-[10%]">
+          {% comment %}
+          InvokeCartAsync()
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+    <script>
+      const btn = document.getElementById("cartBtn");
+      const cart = document.getElementById("cartSection");
+
+      btn.addEventListener("click", () => {
+        cart.classList.toggle("hidden");
+      });
+    </script>
+    <script>
+      fetch("{% url 'cart/summary_partial' %}")
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('cart-summary').innerHTML = html;
         });
     </script>
     <script src="{% static "/js/site.js" %}"></script>

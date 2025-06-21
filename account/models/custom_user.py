@@ -1,8 +1,13 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+)
 from django.db import models
 
+
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password = None, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("Email can not be None")
         email = self.normalize_email(email)
@@ -19,18 +24,18 @@ class CustomUserManager(BaseUserManager):
     def get_by_natural_key(self, email):
         return self.get(email=email)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique = True)
-    full_name = models.CharField(max_length=200)
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
     phone = models.CharField(max_length=15)
     address = models.TextField()
     city = models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['full_name']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["full_name"]
 
     objects = CustomUserManager()
-
-

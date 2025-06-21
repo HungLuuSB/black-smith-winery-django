@@ -9,9 +9,12 @@ BlackSmith's Winery - Cart
 <div class="modules--1 bg-white relative text-black">
   <h3 class="font-[GTSuperDisplay] text-[2rem]">Your shopping cart</h3>
   <div class="flex justify-between flex-row">
-    <div class="w-[70%]">
-      <table class="w-full">
-        <thead class="">
+    <div class="w-[70%] flex justify-center">
+      {% if cart.items.all|length %}
+            <form method="post" action="{% url 'cart/update_all' %}" class="w-full">
+        {% csrf_token %}
+        <table class="w-full">
+          <thead class="">
             <tr class="text-left uppercase text-[1.2rem] font-[GTSuperDisplay]">
               <th class="eyebrow p-[20px] border-b-[1px] border-b-[#b2b2b2]">Items</th>
               <th class="eyebrow p-[20px] text-center border-b-[1px] border-b-[#b2b2b2]">Price</th>
@@ -30,7 +33,7 @@ BlackSmith's Winery - Cart
                 <span>£{{ item.product.price }}</span>
               </td>
               <td class="text-center ml-auto mr-[3.5rem]">
-                <input name="quantity" id="quantity" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center border border-[#b2b2b2]" value="{{ item.quantity }}"/>
+                <input name="quantity_{{ item.id }}" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center border border-[#b2b2b2]" value="{{ item.quantity }}"/>
               </td>
               <td class="text-center mr-[3.5rem] mb-[0.6rem]">
                 <span>£{{ item.quantity|multiply:item.product.price|floatformat:2|intcomma }}</span>
@@ -39,11 +42,27 @@ BlackSmith's Winery - Cart
             {% endfor %}
           </tbody>
           <tfoot>
+            {% comment %}
             <tr class="text-left uppercase text-[1.2rem]">
               <td class="eyebrow p-[20px] border-t-[1px] border-t-[#b2b2b2] font-[GTSuperDisplay]" colspan="3">Total</td>
               <td class="p-[20px] text-center border-t-[1px] border-t-[#b2b2b2]">£{{ total_price|floatformat:2|intcomma }}</td>
             </tr>
-      </table>
+            {% endcomment %}
+            <tr class="text-left uppercase text-[1.2rem]">
+              <td class="border-t-[1px] border-t-[#b2b2b2]" colspan="3"></td>
+              <td class="p-[20px] text-center border-t-[1px] border-t-[#b2b2b2]">
+                <button class="cursor-pointer bg-black w-full uppercase font-bold text-white border-none p-[1.2rem] font-[500] text-center" type="submit">
+                  <span>
+                    Update Cart
+                  </span>
+                </button>
+              </td>
+            </tr>
+        </table>
+      </form>
+      {% else %}
+      <h1 class="eyebrow text-[1.5rem] font-[GTSuperDisplay] text-center content-center">Your cart is empty</h1>
+      {% endif %}
     </div>
     <div class="w-[29%]">
       <div class="p-[20px] bg-[#EFECE8]">
@@ -66,12 +85,14 @@ BlackSmith's Winery - Cart
             </tbody>
           </table>
         </div>
-        <div class="pt-[1rem] ">
-          <button class="cursor-pointer bg-black w-full text-white border-none p-[1.2rem] font-[500] text-center" type="button" onclick="">
-            <div>
+        <div class="pt-[1rem]">
+          {% if cart.items.all|length > 0 %}
+          <button class="cursor-pointer bg-black w-full uppercase font-bold text-white border-none p-[1.2rem] font-[500] text-center" type="button" onclick="">
+            <span>
               Proceed to Checkout
-            </div>
+            </span>
           </button>
+          {% endif %}
         </div>
       </div>
     </div>

@@ -7,7 +7,15 @@ from account.models import CustomUser
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'password', 'full_name', 'phone', 'address', 'city')
+        fields = (
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "phone",
+            "address",
+            "city",
+        )
 
     def save(self, commit=True):
         user = super().save(commit=False)

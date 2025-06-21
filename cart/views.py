@@ -5,38 +5,27 @@ from django.shortcuts import redirect, render, get_object_or_404
 from cart.models import Cart, CartItem
 from shop.models import Product
 from decimal import Decimal
+from cart.forms import UpdateCartItemForm
 # Create your views here.
 
 
-def get_or_create_cart(request):
-    if request.user.is_authenticated:
-        cart, _ = Cart.objects.get_or_create(user=request.user)
-    else:
-        session_key = request.session.session_key
-        if not session_key:
-            request.session.create()
-            session_key = request.session.session_key
-        cart, _ = Cart.objects.get_or_create(session_key=session_key)
-    return cart
-
-
 def get_cart_details(request):
-    cart = get_or_create_cart(request)
-    total_price = sum(item.product.price * item.quantity for item in cart.items.all())
+    cart = Cart.get_cart(request)
+    total_price = cart.get_total()
+    total_quantity = cart.get_total_quantity()
     context = {
         "cart": cart,
         "total_price": total_price,
-        "total_quantity": sum(item.quantity for item in cart.items.all()),
+        "total_quantity": total_quantity,
         "vat": total_price * Decimal("1.8"),
     }
     return render(request, "cart/details.html", context)
 
 
 def get_cart_summary(request):
-    cart = get_or_create_cart(request)
-    items = cart.items.all()
-    total_quantity = sum(item.quantity for item in items)
-    total_price = sum(item.product.price * item.quantity for item in items)
+    cart = Cart.get_cart(request)
+    total_quantity = cart.get_total_quantity()
+    total_price = cart.get_total()
     context = {
         "cart": cart,
         "total_quantity": total_quantity,
@@ -46,7 +35,7 @@ def get_cart_summary(request):
 
 
 def update_cart(request, product_id):
-    cart = get_or_create_cart(request)
+    cart = Cart.get_cart(request)
     product = get_object_or_404(Product, id=product_id)
     try:
         quantity = int(request.POST.get("quantity", 0))
@@ -65,11 +54,28 @@ def update_cart(request, product_id):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
-def remove_from_cart(request, item_id):
-    cart = get_or_create_cart(request)
-    item = get_object_or_404(CartItem, id=item_id, cart=cart)
-    if item:
-        item.delete()
+def remove_from_cart(request, product_id):
+    cart = Cart.get_cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.remove_item(product)
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+def update_carts(request):
+    cart = Cart.get_cart(request)
+    if request.method == "POST":
+        form = UpdateCartItemForm(request.POST, cart=cart)
+        if form.is_valid():
+            for item in cart.get_items():
+                field_name = f"quantity_{item.id}"
+                quantity = form.cleaned_data.get(field_name)
+
+                if quantity == 0:
+                    item.delete()
+                else:
+                    item.quantity = quantity
+                    item.save()
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
