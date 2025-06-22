@@ -16,3 +16,4 @@ class Order(models.Model):
     shipping_address = models.CharField(max_length=255)
     total_amount = models.DecimalField(decimal_places=2, max_digits=12)
     status = models.CharField(max_length=20, default="Pending")
+    created_at = models.DateTimeField(auto_now_add=True)

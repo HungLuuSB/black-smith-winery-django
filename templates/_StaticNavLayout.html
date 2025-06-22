@@ -13,61 +13,61 @@
   <body class="isloaded font-[Roboto] m-0 p-0">
     <div class="root">
         <nav id="nav--bar" class="group/nav--button sticky top-0 left-0 w-full translate-y-0 bg-white text-black z-1200 transition-all transform ease-linear duration-200">
-            <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
-                <div class="m-0 flex h-20 items-center justify-between p-0 outline-0">
-                    <div class="hidden max-[1400px]:block">
-                        <button id="nav--button" class="flex w-[6rem] h-[6rem] outline-none flex-wrap flex-col justify-center">
-                            <span class="nav--button-bar block w-[3rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-black"></span>
-                            <span class="nav--button-bar block w-[2rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-black"></span>
-                        </button>
-                    </div>
-                    <div class="flex-1 text-2xl items-center font-[GTSuperDisplay] max-[1400px]:text-center">
-                        <a class="" href="{% url 'home/index' %}">BLACK SMITH WINERY</a>
-                    </div>
-                    <nav class="flex-1 flex max-[1400px]:hidden justify-center">
-                        <ul class="flex list-none justify-center items-center">
-                            <li class="group">
-                                <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline">
-                                    Shop
-                                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                                </a>
-                            </li>
-                            <li class="group">
-                                <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline">
-                                    Visit
-                                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                                </a>
-                            </li>
-                            <li class="group">
-                                <a class="relative flex items-center justify-center h-full w-full px-6 no-underline">
-                                    Blog
-                                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                                </a>
-                            </li>
-                            <li class="group">
-                                <a class="relative flex items-center justify-center h-full w-full px-6 no-underline">
-                                    About Us
-                                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav class="ml-auto flex flex-1 justify-end flex max-[1400px]:hidden">
-                      <ul class="flex list-none items-center">
-                        <li class="border-r-[rgba(255, 255, 255, 0.2)] border-r-[0.1rem]">
-                          {% if user.is_authenticated %}
-                          <a href="" class="pr-3 pl-3"> Your Account </a>
-                          {% else %}
-                          <a href="{% url 'account/login' %}" class="pr-3 pl-3"> Account </a>
-                          {% endif %}
-                        </li>
-                        <li>
-                          <button id="cartBtn" class="pr-6 pl-6" onclick=""> Cart </button>
-                        </li>
-                      </ul>
-                    </nav>
-                </div>
+          <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem] border-b-[rgba(255, 255, 255, 0.2)] border-b-[0.1rem]">
+            <div class="m-0 flex h-20 items-center justify-between p-0 outline-0">
+              <div class="hidden max-[1400px]:block">
+                <button id="nav--button" class="flex w-[6rem] h-[6rem] outline-none flex-wrap flex-col justify-center">
+                  <span class="nav--button-bar block w-[3rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-black"></span>
+                  <span class="nav--button-bar block w-[2rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-black"></span>
+                </button>
+              </div>
+              <div class="flex-1 text-2xl items-center font-[GTSuperDisplay] max-[1400px]:text-center">
+                <a class="" href="{% url 'home/index' %}">BLACK SMITH WINERY</a>
+              </div>
+              <nav class="flex-1 flex max-[1400px]:hidden justify-center">
+                <ul class="flex list-none justify-center items-center">
+                  <li class="group">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline">
+                      Shop
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                    </a>
+                  </li>
+                  <li class="group">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline">
+                      Visit
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                    </a>
+                  </li>
+                  <li class="group">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 no-underline">
+                      Blog
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                    </a>
+                  </li>
+                  <li class="group">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 no-underline">
+                      About Us
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <nav class="ml-auto flex flex-1 justify-end flex max-[1400px]:hidden">
+                <ul class="flex list-none items-center">
+                  <li class="border-r-[rgba(255, 255, 255, 0.2)] border-r-[0.1rem]">
+                    {% if user.is_authenticated %}
+                    <a href="" class="pr-3 pl-3"> Your Account </a>
+                    {% else %}
+                    <a href="{% url 'account/login' %}" class="pr-3 pl-3"> Account </a>
+                    {% endif %}
+                  </li>
+                  <li>
+                    <button id="cartBtn" class="pr-6 pl-6" onclick=""> Cart </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
+          </div>
         </nav>
         <div class="modules ml-auto mr-auto pt-[5rem] px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
           {% block content %}

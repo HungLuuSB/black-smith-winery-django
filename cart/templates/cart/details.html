@@ -87,7 +87,7 @@ BlackSmith's Winery - Cart
         </div>
         <div class="pt-[1rem]">
           {% if cart.items.all|length > 0 %}
-          <button class="cursor-pointer bg-black w-full uppercase font-bold text-white border-none p-[1.2rem] font-[500] text-center" type="button" onclick="">
+          <button class="cursor-pointer bg-black w-full uppercase text-white border-none p-[1.2rem] font-[500] text-center" type="button" onclick="location.href='{% url 'order/checkout' %}'">
             <span>
               Proceed to Checkout
             </span>
