@@ -11,13 +11,16 @@ from cart.forms import UpdateCartItemForm
 
 def get_cart_details(request):
     cart = Cart.get_cart(request)
-    total_price = cart.get_total()
     total_quantity = cart.get_total_quantity()
+    sub_total = cart.get_total()
+    vat = sub_total * Decimal(0.08)
+    grand_total = vat + sub_total
     context = {
         "cart": cart,
-        "total_price": total_price,
+        "sub_total": sub_total,
         "total_quantity": total_quantity,
-        "vat": total_price * Decimal("1.8"),
+        "vat": vat,
+        "grand_total": grand_total,
     }
     return render(request, "cart/details.html", context)
 

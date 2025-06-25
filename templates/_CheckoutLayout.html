@@ -1,0 +1,78 @@
+
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}
+    BlackSmith's Winery | Checkout
+    {% endblock title %}</title>
+    {% tailwind_css %}
+  </head>
+  <body class="isloaded font-[Roboto] m-0 p-0">
+    <div class="root">
+        <nav id="nav--bar" class="group/nav--button top-0 left-0 w-full translate-y-0 bg-white text-black z-1200 transition-all transform ease-linear duration-200">
+          <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
+            <div class="m-0 flex h-20 items-center justify-between p-0 outline-0">
+              <div class="hidden max-[1400px]:block">
+                <button id="nav--button" class="flex w-[6rem] h-[6rem] outline-none flex-wrap flex-col justify-center">
+                  <span class="nav--button-bar block w-[3rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-black"></span>
+                  <span class="nav--button-bar block w-[2rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-black"></span>
+                </button>
+              </div>
+              <nav class="flex-1 flex max-[1400px]:hidden justify-center">
+                <ul class="flex list-none justify-center items-center">
+                  <li class="group text-[1.5rem]">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline {% if step != 1 %} text-[#7e7e7e] {% endif %}" href="{% url 'checkout/shipping' %}">
+                      1. Shipping
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 {% if step == 1 %} opacity-100 {% endif %}"></span>
+                    </a>
+                  </li>
+                  <li class="group text-[1.5rem]">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline {% if step != 2 %} text-[#7e7e7e] {% endif %}" href="{% url 'checkout/payment' %}">
+                      2. Payment
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 {% if step == 2 %} opacity-100 {% endif %}"></span>
+                    </a>
+                  </li>
+                  <li class="group text-[1.5rem]">
+                    <a class="relative flex items-center justify-center h-full w-full px-6 no-underline {% if step != 3 %} text-[#7e7e7e] {% endif %}" href="{% url 'checkout/confirm' %}">
+                      3. Review & Confirm
+                      <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 {% if step == 3 %} opacity-100 {% endif %}"></span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </nav>
+        <div class="modules ml-auto mr-auto pt-[5rem] px-[10rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
+          {% block content %}
+
+          {% endblock content %}
+        </div>
+        <footer class="bg-black w-full h-full mt-1">
+          <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
+            <div class="flex flex-wrap">
+              <div>
+                <address>
+                  <p class="not-italic text-white font-[400] text-[1rem]">Black Smith's Winery Headquarter</p>
+                  <p class="not-italic text-gray-400 font-[400] text-[0.8rem]">31/2D Tân Xuân 6, ấp Mỹ Hòa 3, Hốc Môn, Tp.Hồ Chí Minh</p>
+                  <p class="not-italic text-gray-400 font-[400] text-[0.8rem]">(84) 774 688 827</p>
+                </address>
+              </div>
+            </div>
+          </div>
+        </footer>
+    </div>
+
+    <script>
+      fetch("{% url 'cart/summary_partial' %}")
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('cart-summary').innerHTML = html;
+        });
+    </script>
+  </body>
+</html>

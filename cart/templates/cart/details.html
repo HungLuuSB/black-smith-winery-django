@@ -51,7 +51,7 @@ BlackSmith's Winery - Cart
             <tr class="text-left uppercase text-[1.2rem]">
               <td class="border-t-[1px] border-t-[#b2b2b2]" colspan="3"></td>
               <td class="p-[20px] text-center border-t-[1px] border-t-[#b2b2b2]">
-                <button class="cursor-pointer bg-black w-full uppercase font-bold text-white border-none p-[1.2rem] font-[500] text-center" type="submit">
+                <button class="cursor-pointer bg-black w-full uppercase text-white border-none p-[1.2rem] font-[500] text-center" type="submit">
                   <span>
                     Update Cart
                   </span>
@@ -74,12 +74,17 @@ BlackSmith's Winery - Cart
             <tbody class="pt-[1rem] leading-[2rem]">
               <tr>
                 <th class="text-[1rem] text-left">Subtotal</th>
-                <td class="text-[1rem] text-right">£{{ total_price|floatformat:2|intcomma }}</td>
+                <td class="text-[1rem] text-right">£{{ sub_total|floatformat:2|intcomma }}</td>
                 </td>
               </tr>
               <tr>
-                <th class="text-[1rem] text-left">VAT</th>
+                <th class="text-[1rem] text-left">VAT(8%)</th>
                 <td class="text-[1rem] text-right">£{{ vat|floatformat:2|intcomma }}</td>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-[1.2rem] text-left">Grand Total</th>
+                <td class="text-[1.2rem] text-right">£{{ grand_total|floatformat:2|intcomma }}</td>
                 </td>
               </tr>
             </tbody>
@@ -87,7 +92,7 @@ BlackSmith's Winery - Cart
         </div>
         <div class="pt-[1rem]">
           {% if cart.items.all|length > 0 %}
-          <button class="cursor-pointer bg-black w-full uppercase text-white border-none p-[1.2rem] font-[500] text-center" type="button" onclick="location.href='{% url 'order/checkout' %}'">
+          <button class="cursor-pointer bg-black w-full uppercase text-white border-none p-[1.2rem] font-[500] text-center" type="button" onclick="location.href='{% url 'checkout/shipping' %}'">
             <span>
               Proceed to Checkout
             </span>

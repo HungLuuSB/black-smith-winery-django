@@ -1,7 +1,7 @@
 {% load static %}
 {% load humanize %}
 <div class="flex flex-col h-full flex-none">
-  <div class="flex items-center justify-between pb-[3rem] border-b border-b-[#D7D7D7] border-b-[0.1rem]">
+  <div class="flex items-center justify-between pb-[3rem] border-b-[#D7D7D7] border-b-[0.1rem]">
     <h4 class="text-[2rem] font-[GTSuperDisplay]">Your Cart ({{ total_quantity }})</h4>
     <a class="text-[1.2rem] hidden">Account</a>
     <p class="eyebrow ">
@@ -12,7 +12,7 @@
 <div class="overflow-auto flex-1">
   <ul class="w-full">
     {% for item in cart.items.all %}
-    <li class="flex border-b border-b-[#D7D7D7] border-b-[0.1rem] py-[1.5rem] relative items-center">
+    <li class="flex border-b-[#D7D7D7] border-b-[0.1rem] py-[1.5rem] relative items-center">
       <div class="w-[115px] h-[115px] -ml-[0rem] mr-[1.5rem]">
         <img class="w-full h-full block object-contain" src="{{ item.product.image.url }}" />
       </div>
@@ -33,4 +33,7 @@
     </li>
     {% endfor %}
   </ul>
+  <button type="button" class="cursor-pointer mt-[2rem] bg-black w-full uppercase text-white border-none p-[1.2rem] font-[500] text-center" onclick="location.href='{% url 'cart/details' %}'">
+    View and Checkout
+  </button>
 </div>

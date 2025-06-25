@@ -1,0 +1,110 @@
+{% extends "_CheckoutLayout.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+BlackSmith's Winery | Checkout
+{% endblock title %}
+{% block content %}
+<div class="modules--1 bg-white relative text-black">
+  <div class="flex justify-between flex-row">
+    <div class="w-[50%] flex flex-col bg-[#EDEAE6] p-[5rem]">
+      <h1 class="font-[GTSuperDisplay] text-[3rem]">Payment</h1>
+      <form class="pt-[1.5rem]" method="post" class="w-full">
+        {% csrf_token %}
+        <div class="flex flex-wrap justify-between">
+        </div>
+        <button type="submit" class="mt-[2rem] bg-black w-full uppercase text-white border-none p-[1.2rem] font-[500] text-center">
+          Review & Confirm
+        </button>
+        <span class="text-red-500 ml-[25%]">
+          {% if form.errors %}
+          <ul>
+            {% for field in form %}
+            {% for error in field.errors %}
+            <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </span>
+      </form>
+    </div>
+    <div class="w-[50%] pt-[5rem] h-full top-0 sticky">
+      <div class="w-full px-[3rem]">
+        <h1 class="font-[GTSuperDisplay] text-[3rem]">Your Cart</h1>
+        <table class="w-full pt-[1rem]">
+          <thead class="">
+            <tr class="text-left uppercase text-[1.2rem] font-[GTSuperDisplay]">
+              <th class="eyebrow uppercase">Items</th>
+              <th class="eyebrow py-[20px] text-center uppercase">Qty</th>
+              <th class="eyebrow py-[20px] text-center uppercase">Price</th>
+            </tr>
+          </thead>
+          <tbody class="pt-[1rem]">
+            {% for item in cart.items.all  %}
+            <tr>
+              <td class="">
+                <a class="inline-block underline" href="{% url 'product/details' item.product.slug %}">{{ item.product.name }}</a>
+              </td>
+              <td class="text-center ml-auto mr-[3.5rem]">
+                <input name="quantity_{{ item.id }}" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center border border-[#b2b2b2]" value="{{ item.quantity }}"/>
+              </td>
+              <td class="text-center ml-auto mr-[3.5rem]">
+                <span>£{{ item.product.price }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            {% comment %}
+            <tr class="text-left uppercase text-[1.2rem]">
+              <td class="eyebrow p-[20px] border-t-[1px] border-t-[#b2b2b2] font-[GTSuperDisplay]" colspan="3">Total</td>
+              <td class="p-[20px] text-center border-t-[1px] border-t-[#b2b2b2]">£{{ total_price|floatformat:2|intcomma }}</td>
+            </tr>
+            {% endcomment %}
+        </table>
+        <ul class="w-full mt-[1rem] border-t-[1px] border-t-[#b2b2b2]">
+          <li class="flex justify-between items-center py-[1rem]">
+            <span class="eyebrow uppercase text-[1.5rem]">Subtotal</span>
+            <span>£{{ subtotal|floatformat:2|intcomma }}</span>
+          </li>
+          <li class="flex justify-between items-center py-[1rem]">
+            <span class="eyebrow uppercase text-[1.5rem]">VAT(8%)</span>
+            <span>£{{ vat|floatformat:2|intcomma }}</span>
+          </li>
+          <li class="flex justify-between items-center border-t-[1px] border-t-[#b2b2b2] text-[1.5rem] ">
+            <span class="font-bold">Grand Total</span>
+            <span>£{{ grand_total|floatformat:2|intcomma }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="mt-[1rem]">
+        {% comment %}
+
+        <div>
+          <p class="text-[1.2rem]">Items: {{ cart.items.count }}</p>
+          <ul class="list-none p-0">
+            {% for item in cart.items.all %}
+            <li class="flex mb-[0.5rem]">
+              <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-[100px] h-[100px] object-contain mr-[0.5rem]" />
+              <div class="pl-[1rem]">
+                <a class="" href="{% url 'product/details' item.product.slug %}">{{ item.product.name }}</a>
+                <p class="">Qty: {{ item.quantity }}</p>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div>
+          <p class="text-[1.2rem]">Total: £{{ total_price|floatformat:2|intcomma }}</p>
+        </div>
+        {% endcomment %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
