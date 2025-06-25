@@ -14,6 +14,7 @@ def shipping(request):
     initial["customer_phone"] = session_data.get("customer_phone", "")
     initial["country"] = session_data.get("country", "")
     initial["city"] = session_data.get("city", "")
+    initial["postal_code"] = session_data.get("postal_code", "")
     initial["address"] = session_data.get("address", "")
 
     if request.user.is_authenticated:
@@ -35,6 +36,7 @@ def shipping(request):
                 "customer_last_name": data.get("customer_last_name"),
                 "country": data.get("country"),
                 "city": data.get("city"),
+                "postal_code": data.get("postal_code"),
                 "address": data.get("address"),
             }
             return redirect("checkout/payment")
@@ -65,6 +67,7 @@ def payment(request):
     initial["customer_phone"] = session_data.get("customer_phone", "")
     initial["country"] = session_data.get("country", "")
     initial["city"] = session_data.get("city", "")
+    initial["postal_code"] = session_data.get("postal_code", "")
     initial["address"] = session_data.get("address", "")
     if request.user.is_authenticated:
         initial["customer_email"] = request.user.email
@@ -100,6 +103,7 @@ def confirm_review(request):
         "customer_phone": session_data.get("customer_phone"),
         "country": session_data.get("country"),
         "city": session_data.get("city"),
+        "postal_code": session_data.get("postal_code"),
         "address": session_data.get("address"),
     }
     if request.user.is_authenticated:

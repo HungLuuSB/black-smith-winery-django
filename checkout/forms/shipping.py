@@ -8,4 +8,5 @@ class ShippingForm(forms.Form):
     customer_phone = forms.CharField(max_length=11, required=True)
     country = forms.CharField()
     city = forms.CharField(max_length=100, required=True)
+    postal_code = forms.CharField(max_length=15, required=True)
     address = forms.CharField(max_length=255, required=True)
