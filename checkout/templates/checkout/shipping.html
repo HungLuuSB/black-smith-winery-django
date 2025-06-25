@@ -32,7 +32,7 @@ BlackSmith's Winery | Checkout
             <label class="font-[GTSuperDisplay] inline-block text-[1.2rem] mb-[0.5rem]">Country</label>
             <select name="country" class="w-full border border-[#b2b2b2] h-[3rem] px-[1rem] text-[1rem]" >
               {% for country in countries %}
-              <option value="{{ country.id }}" {% if country.id == form.country.value|default_if_none:'' %} selected="selected" {% endif %} >{{ country.name }}</option>
+              <option value="{{ country.id }}" {% if form.initial.country|add:""|stringformat:"s" == country.id|stringformat:"s" %} selected="selected" {% endif%} >{{ country.name }}</option>
               {% endfor %}
             </select>
           </div>
@@ -42,7 +42,7 @@ BlackSmith's Winery | Checkout
           </div>
           <div class="w-[48%] mt-[1rem]">
             <label class="font-[GTSuperDisplay] inline-block text-[1.2rem] mb-[0.5rem]">Postal Code</label>
-            <input type="text" name="postal_code" class="w-full border border-[#b2b2b2] h-[3rem] px-[1rem] text-[1rem]" required value="" />
+            <input type="text" name="postal_code" class="w-full border border-[#b2b2b2] h-[3rem] px-[1rem] text-[1rem]" required value="{{ form.postal_code.value|default_if_none:'' }}" />
           </div>
           <div class="w-[48%] mt-[1rem]">
             <label class="font-[GTSuperDisplay] inline-block text-[1.2rem] mb-[0.5rem]">Phone Number</label>

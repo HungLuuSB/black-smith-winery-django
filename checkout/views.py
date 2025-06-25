@@ -8,7 +8,7 @@ from order.models import Order, OrderDetail
 
 
 def shipping(request):
-    session_data = request.session.get("shipping")
+    session_data = request.session.get("shipping", {})
     cart = Cart.get_cart(request)
     initial = {}
     initial["customer_phone"] = session_data.get("customer_phone", "")
@@ -60,7 +60,6 @@ def shipping(request):
 
 def payment(request):
     session_data = request.session.get("shipping")
-    print(session_data)
 
     cart = Cart.get_cart(request)
     initial = {}
@@ -97,7 +96,7 @@ def payment(request):
 
 
 def confirm_review(request):
-    session_data = request.session.get("shipping")
+    session_data = request.session.get("shipping", {})
     cart = Cart.get_cart(request)
     initial = {
         "customer_phone": session_data.get("customer_phone"),
@@ -168,4 +167,6 @@ def place_order(request):
         )
 
     cart.clear()
+    if "shipping" in request.session:
+        del request.session["shipping"]
     return render(request, "checkout/success.html", {"order": order})
