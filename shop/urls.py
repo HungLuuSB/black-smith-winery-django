@@ -4,8 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('<slug:categorySlug>', views.category, name='product/categorySlug'),
-    path('details/<slug:productSlug>', views.product_details, name='product/details')
+    path("<slug:categorySlug>", views.category, name="product/categorySlug"),
+    path(
+        r"^shop/details/(?P<productSlug>[\w-]+)$",
+        views.product_details,
+        name="product/details",
+    ),
 ]
 
 if settings.DEBUG:

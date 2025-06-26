@@ -1,6 +1,4 @@
 from django import forms
-from django.forms import models, widgets
-from django.contrib.auth.forms import UserCreationForm
 from account.models import CustomUser
 
 

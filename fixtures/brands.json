@@ -6,5 +6,13 @@
       "name": "Some Brand",
       "slug": "some-brand"
     }
+  },
+  {
+    "model": "common.brand",
+    "pk": 2,
+    "fields": {
+      "name": "Château Haut-Brion",
+      "slug": "château-haut-brion"
+    }
   }
 ]
