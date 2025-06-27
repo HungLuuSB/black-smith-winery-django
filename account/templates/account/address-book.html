@@ -1,3 +1,4 @@
+
 {% extends "_DashboardLayout.html" %}
 {% load static %}
 {% block title %}
@@ -28,13 +29,13 @@ Dashboard
     <div class="flex bg-[#333333] h-[4.8vw] z-[5] relative -mt-[2.4vw] items-center justify-between px-[4rem]">
       <div class="flex items-center justify-center">
         <div class="h-full flex items-center mr-[4vw]">
-          <a class="font-bold text-[1rem]" href="{% url 'account/dashboard' %}">Dashboard</a>
+          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/dashboard' %}">Dashboard</a>
         </div>
         <div class="h-full flex items-center mr-[4vw]">
           <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/order-history' %}">Order History</a>
         </div>
         <div class="h-full flex items-center mr-[4vw]">
-          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/address-book' %}">Address Book</a>
+          <a class="font-bold text-[1rem]" href="{% url 'account/address-book' %}">Address Book</a>
         </div>
         <div class="h-full flex items-center mr-[4vw]">
           <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/payment' %}">Payment</a>

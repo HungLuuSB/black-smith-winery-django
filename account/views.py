@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from account.models import CustomUser
+from order.models import Order, OrderDetail
 from .forms import SignUpForm
 from .forms import LoginForm
 # Create your views here.
@@ -63,6 +64,47 @@ def dashboard(request):
             "address": user.address,
         }
         return render(request, "account/dashboard.html", context)
+    return redirect("account/login")
+
+
+def order_history(request):
+    user = request.user
+    if user.is_authenticated:
+        orders = Order.objects.filter(user=user)
+        context = {"orders": orders, "total_orders": len(orders)}
+        return render(request, "account/order-history.html", context)
+    return redirect("account/login")
+
+
+def address_book(request):
+    user = request.user
+    if user.is_authenticated:
+        context = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "password": user.password,
+            "phone": user.phone,
+            "city": user.city,
+            "address": user.address,
+        }
+        return render(request, "account/address-book.html", context)
+    return redirect("account/login")
+
+
+def payment(request):
+    user = request.user
+    if user.is_authenticated:
+        context = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "password": user.password,
+            "phone": user.phone,
+            "city": user.city,
+            "address": user.address,
+        }
+        return render(request, "account/payment.html", context)
     return redirect("account/login")
 
 

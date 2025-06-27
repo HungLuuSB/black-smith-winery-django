@@ -213,12 +213,6 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
-  .top-\[0\] {
-    top: 0;
-  }
-  .top-\[12rem\] {
-    top: 12rem;
-  }
   .top-\[25\%\] {
     top: 25%;
   }
@@ -444,11 +438,11 @@
   .h-\[6rem\] {
     height: 6rem;
   }
-  .h-\[45vw\] {
-    height: 45vw;
-  }
   .h-\[50px\] {
     height: 50px;
+  }
+  .h-\[60px\] {
+    height: 60px;
   }
   .h-\[100px\] {
     height: 100px;
@@ -462,17 +456,8 @@
   .h-\[219px\] {
     height: 219px;
   }
-  .h-\[1000px\] {
-    height: 1000px;
-  }
-  .h-\[1200px\] {
-    height: 1200px;
-  }
   .h-\[calc\(17vw\)\] {
     height: calc(17vw);
-  }
-  .h-\[calc\(22\.5vw\)\] {
-    height: calc(22.5vw);
   }
   .h-\[calc\(45vw\)\] {
     height: calc(45vw);
@@ -482,12 +467,6 @@
   }
   .h-\[calc\(100vh-12\.1rem\)\] {
     height: calc(100vh - 12.1rem);
-  }
-  .h-\[calc\(100vh-45vw\)\] {
-    height: calc(100vh - 45vw);
-  }
-  .h-\[calc\(100vw-45vw\)\] {
-    height: calc(100vw - 45vw);
   }
   .h-auto {
     height: auto;
@@ -503,6 +482,9 @@
   }
   .min-h-\[76px\] {
     min-height: 76px;
+  }
+  .min-h-\[100px\] {
+    min-height: 100px;
   }
   .\!w-\[45px\] {
     width: 45px !important;
@@ -551,9 +533,6 @@
   }
   .w-\[70\%\] {
     width: 70%;
-  }
-  .w-\[80\%\] {
-    width: 80%;
   }
   .w-\[100\%\] {
     width: 100%;
@@ -662,9 +641,6 @@
   }
   .justify-start {
     justify-content: flex-start;
-  }
-  .gap-\[1rem\] {
-    gap: 1rem;
   }
   .gap-\[2px\] {
     gap: 2px;
@@ -824,9 +800,6 @@
   .px-\[1rem\] {
     padding-inline: 1rem;
   }
-  .px-\[2rem\] {
-    padding-inline: 2rem;
-  }
   .px-\[3rem\] {
     padding-inline: 3rem;
   }
@@ -859,9 +832,6 @@
   }
   .py-\[1rem\] {
     padding-block: 1rem;
-  }
-  .py-\[2rem\] {
-    padding-block: 2rem;
   }
   .py-\[10\%\] {
     padding-block: 10%;
@@ -902,36 +872,6 @@
   .pt-\[12\.1rem\] {
     padding-top: 12.1rem;
   }
-  .pt-\[calc\(4\.5vw\)\] {
-    padding-top: calc(4.5vw);
-  }
-  .pt-\[calc\(10vw\)\] {
-    padding-top: calc(10vw);
-  }
-  .pt-\[calc\(12\.1rem\)\] {
-    padding-top: calc(12.1rem);
-  }
-  .pt-\[calc\(12\.1rem\+45vw\)\] {
-    padding-top: calc(12.1rem + 45vw);
-  }
-  .pt-\[calc\(17vw\)\] {
-    padding-top: calc(17vw);
-  }
-  .pt-\[calc\(19vw\)\] {
-    padding-top: calc(19vw);
-  }
-  .pt-\[calc\(20vw\)\] {
-    padding-top: calc(20vw);
-  }
-  .pt-\[calc\(25vw\)\] {
-    padding-top: calc(25vw);
-  }
-  .pt-\[calc\(32vw\)\] {
-    padding-top: calc(32vw);
-  }
-  .pt-\[calc\(45vw\)\] {
-    padding-top: calc(45vw);
-  }
   .pr-3 {
     padding-right: calc(var(--spacing) * 3);
   }
@@ -940,6 +880,9 @@
   }
   .pr-\[2\.5rem\] {
     padding-right: 2.5rem;
+  }
+  .pb-\[1rem\] {
+    padding-bottom: 1rem;
   }
   .pb-\[2\.5rem\] {
     padding-bottom: 2.5rem;
@@ -1017,9 +960,6 @@
   }
   .text-\[1rem\] {
     font-size: 1rem;
-  }
-  .text-\[2\.5rem\] {
-    font-size: 2.5rem;
   }
   .text-\[2rem\] {
     font-size: 2rem;
@@ -1203,9 +1143,6 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
-  }
-  .will-change-\[top\] {
-    will-change: top;
   }
   .outline-none {
     --tw-outline-style: none;
