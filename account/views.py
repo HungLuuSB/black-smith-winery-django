@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.hashers import check_password
 from account.models import CustomUser
 from order.models import Order, OrderDetail
 from .forms import SignUpForm
@@ -59,6 +60,7 @@ def dashboard(request):
             "last_name": user.last_name,
             "email": user.email,
             "password": user.password,
+            "hidden_password": "*" * len(user.password),
             "phone": user.phone,
             "city": user.city,
             "address": user.address,

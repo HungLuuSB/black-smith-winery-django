@@ -147,7 +147,7 @@ def place_order(request):
         customer_email=shipping_data.get("customer_email"),
         customer_phone=shipping_data.get("customer_phone"),
         country=Country.objects.get(id=shipping_data.get("country")),
-        total_amount=grand_total,
+        grand_total=grand_total,
         city=shipping_data.get("city"),
         shipping_address=shipping_data.get("address"),
         status="Pending",

@@ -114,6 +114,11 @@ _AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASERS = [
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+]
+
 AUTH_USER_MODEL = "account.CustomUser"
 
 # Internationalization

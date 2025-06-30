@@ -12,7 +12,7 @@ def get_order_details(request, order_id):
 
     context = {"order": order, "order_details": order_details}
 
-    return render(request, "order/detail.html", context)
+    return render(request, "order/details.html", context)
 
 
 def get_orders(request):

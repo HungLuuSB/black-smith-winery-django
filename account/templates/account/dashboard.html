@@ -33,12 +33,6 @@ Dashboard
         <div class="h-full flex items-center mr-[4vw]">
           <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/order-history' %}">Order History</a>
         </div>
-        <div class="h-full flex items-center mr-[4vw]">
-          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/address-book' %}">Address Book</a>
-        </div>
-        <div class="h-full flex items-center mr-[4vw]">
-          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/payment' %}">Payment</a>
-        </div>
       </div>
       <div>
         <a class="text-[1rem]" href="{% url 'account/logout' %}">Sign out</a>
@@ -54,15 +48,25 @@ Dashboard
         <h1 class="font-[GTSuperDisplay] text-[2rem]">
           Account Profile
         </h1>
-        <a href="">Edit</a>
+        <a class ="underline" href="">Edit</a>
       </div>
       <h1 class="pt-[1rem] text-[1.2rem] uppercase border-b-[1px] border-b-[#b2b2b2]">
         Account Information
       </h1>
       <div class="pt-[2rem]">
-        <div>
-          <p class="eyebrow text-[1rem] uppercase">Full Name</p>
-          <p class="text-[1rem] uppercase">{{ first_name }} {{ last_name }}</p>
+        <div class="flex flex-wrap">
+          <div class="inline-flex w-[50%] flex-col">
+            <p class="eyebrow text-[1rem] uppercase">First Name</p>
+            <p class="text-[1rem]">{{ first_name }}</p>
+          </div>
+          <div class="inline-flex w-[50%] flex-col">
+            <p class="eyebrow text-[1rem] uppercase">Last Name</p>
+            <p class="text-[1rem]">{{ last_name }}</p>
+          </div>
+          <div class="inline-flex w-[50%] flex-col pt-[1rem]">
+            <p class="eyebrow text-[1rem] uppercase">Birthday</p>
+            <p class="text-[1rem]">{{ birthday|default_if_none:'NONE' }}</p>
+          </div>
         </div>
       </div>
       <h1 class="pt-[1rem] text-[1.2rem] uppercase border-b-[1px] border-b-[#b2b2b2]">
@@ -77,10 +81,6 @@ Dashboard
           <div class="inline-flex w-[50%] flex-col">
             <p class="eyebrow text-[1rem] uppercase">Phone</p>
             <p class="text-[1rem]">{{ phone|default_if_none:'NONE' }}</p>
-          </div>
-          <div class="inline-flex w-[50%] flex-col pt-[1rem]">
-            <p class="eyebrow text-[1rem] uppercase">Birthday</p>
-            <p class="text-[1rem]">{{ birthday|default_if_none:'NONE' }}</p>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ Dashboard
   </div>
 </div>
 
-<div class="modules--2 bg-white pt-[4rem]">
+<div class="modules--2 bg-white pt-[4rem] mb-[2rem]">
   <div class="w-full bg-[#EDEAE6]">
     <div class="w-full mt-[2rem]">
       <div class="h-full w-full p-[6rem] bg-[#EDEAE6]">
@@ -111,12 +111,12 @@ Dashboard
           <h1 class="font-[GTSuperDisplay] text-[2rem]">
             Security
           </h1>
-          <a href="">Edit</a>
+          <a class="underline" href="">Change Password</a>
         </div>
         <div class="pt-[2rem]">
           <div>
             <p class="eyebrow text-[1rem] uppercase">Password</p>
-            <p class="text-[1rem] uppercase">{{ password }}</p>
+            <p class="text-[1rem] uppercase">{{ hidden_password }}</p>
           </div>
         </div>
       </div>

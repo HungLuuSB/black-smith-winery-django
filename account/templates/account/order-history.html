@@ -34,12 +34,6 @@ Dashboard
         <div class="h-full flex items-center mr-[4vw]">
           <a class="font-bold text-[1rem] text-[#FAF8F5]" href="{% url 'account/order-history' %}">Order History</a>
         </div>
-        <div class="h-full flex items-center mr-[4vw]">
-          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/address-book' %}">Address Book</a>
-        </div>
-        <div class="h-full flex items-center mr-[4vw]">
-          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/payment' %}">Payment</a>
-        </div>
       </div>
       <div>
         <a class="text-[1rem]" href="{% url 'account/logout' %}">Sign out</a>
@@ -48,7 +42,7 @@ Dashboard
   </div>
 </div>
 
-<div class="modules--2 bg-white mt-[4rem]">
+<div class="modules--2 bg-white mt-[4rem] mb-[2rem]">
   <div class="w-full bg-[#EDEAE6]">
     <div class="h-full w-full p-[6rem] ">
       <div class="flex justify-between items-center">
@@ -68,6 +62,7 @@ Dashboard
               <th class="text-left py-[20px] border-b-[1px] border-b-[#b2b2b2]">Order Date</th>
               <th class="text-left py-[20px] border-b-[1px] border-b-[#b2b2b2]">Delivery Address</th>
               <th class="text-right py-[20px] border-b-[1px] border-b-[#b2b2b2]">Total</th>
+              <th class="text-center py-[20px] border-b-[1px] border-b-[#b2b2b2]">Status</th>
               <th class="text-center py-[20px] border-b-[1px] border-b-[#b2b2b2]">Actions</th>
             </tr>
           </thead>
@@ -80,9 +75,10 @@ Dashboard
               {% endcomment %}
               <td class="text-left ml-auto">{{ order.created_at }}</td>
               <td class="text-left ml-auto">{{ order.shipping_address }}</td>
-              <td class="text-right">£{{ order.total_amount }}</td>
+              <td class="text-right">£{{ order.grand_total }}</td>
+              <td class="text-center ml-auto mr-auto">{{ order.status }}</td>
               <td class="text-center">
-                <a class="underline" href="">Details</a>
+                <a class="underline" href="{% url 'order/details' order.id %}">Details</a>
               </td>
             </tr>
             {% endfor %}

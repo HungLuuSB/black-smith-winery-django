@@ -483,9 +483,6 @@
   .min-h-\[76px\] {
     min-height: 76px;
   }
-  .min-h-\[100px\] {
-    min-height: 100px;
-  }
   .\!w-\[45px\] {
     width: 45px !important;
   }
@@ -722,9 +719,6 @@
   .bg-\[\#EFECE8\] {
     background-color: #EFECE8;
   }
-  .bg-\[\#F2F0EC\] {
-    background-color: #F2F0EC;
-  }
   .bg-\[\#FAF8F5\] {
     background-color: #FAF8F5;
   }
@@ -880,9 +874,6 @@
   }
   .pr-\[2\.5rem\] {
     padding-right: 2.5rem;
-  }
-  .pb-\[1rem\] {
-    padding-bottom: 1rem;
   }
   .pb-\[2\.5rem\] {
     padding-bottom: 2.5rem;
