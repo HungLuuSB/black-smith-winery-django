@@ -4,7 +4,33 @@ from .forms import ShippingForm
 from common.models import Country
 from cart.models import Cart
 from order.models import Order, OrderDetail
+import time
+from payos import ItemData, PaymentData, PayOS
 # Create your views here.
+
+client_id = "YOUR_CLIENT_ID"
+api_key = "YOUR_API_KEY"
+checksum_key = "YOUR_CHECKSUM_KEY"
+
+payOS = PayOS(client_id, api_key, checksum_key)
+
+
+def create_payment_link():
+    try:
+        item = ItemData(name="Mì tôm hảo hảo ly", quantity=1, price=2000)
+        payment_data = PaymentData(
+            orderCode=int(time.time()),
+            amount=2000,
+            description="Thanh toan don hang",
+            items=[item],
+            cancelUrl="",
+            returnUrl="",
+        )
+        payment_link_response = payOS.createPaymentLink(payment_data)
+    except Exception as e:
+        return str(e)
+
+    return payment_link_response.to_json()
 
 
 def shipping(request):
