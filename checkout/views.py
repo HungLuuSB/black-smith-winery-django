@@ -65,7 +65,7 @@ def shipping(request):
                 "postal_code": data.get("postal_code"),
                 "address": data.get("address"),
             }
-            return redirect("checkout/payment")
+            return redirect("checkout/confirm")
         else:
             print(form.errors)
     subtotal = cart.get_total()
@@ -94,23 +94,18 @@ def payment(request):
     initial["city"] = session_data.get("city", "")
     initial["postal_code"] = session_data.get("postal_code", "")
     initial["address"] = session_data.get("address", "")
-    if request.user.is_authenticated:
-        initial["customer_email"] = request.user.email
-        initial["customer_first_name"] = request.user.first_name
-        initial["customer_last_name"] = request.user.last_name
-    else:
-        initial["customer_email"] = session_data.get("customer_email")
-        initial["customer_first_name"] = session_data.get("customer_first_name")
-        initial["customer_last_name"] = session_data.get("customer_last_name")
+    initial["customer_email"] = session_data.get("customer_email")
+    initial["customer_first_name"] = session_data.get("customer_first_name")
+    initial["customer_last_name"] = session_data.get("customer_last_name")
 
     if request.method == "POST":
-        return redirect("checkout/confirm")
+        return redirect("checkout/place_order")
 
     subtotal = cart.get_total()
     vat = subtotal * Decimal(0.08)
     grand_total = subtotal + vat
     context = {
-        "step": 2,
+        "step": 3,
         "countries": Country.objects.all(),
         "cart": cart,
         "subtotal": subtotal,
@@ -131,24 +126,20 @@ def confirm_review(request):
         "postal_code": session_data.get("postal_code"),
         "address": session_data.get("address"),
     }
-    if request.user.is_authenticated:
-        initial["customer_email"] = request.user.email
-        initial["customer_first_name"] = request.user.first_name
-        initial["customer_last_name"] = request.user.last_name
-    else:
-        initial["customer_email"] = session_data.get("customer_email")
-        initial["customer_first_name"] = session_data.get("customer_first_name")
-        initial["customer_last_name"] = session_data.get("customer_last_name")
+
+    initial["customer_email"] = session_data.get("customer_email")
+    initial["customer_first_name"] = session_data.get("customer_first_name")
+    initial["customer_last_name"] = session_data.get("customer_last_name")
 
     if request.method == "POST":
-        return redirect("checkout/place_order")
+        return redirect("checkout/payment")
 
     subtotal = cart.get_total()
     vat = subtotal * Decimal(0.08)
     grand_total = subtotal + vat
     form = ShippingForm(initial=initial)
     context = {
-        "step": 3,
+        "step": 2,
         "form": form,
         "countries": Country.objects.all(),
         "cart": cart,

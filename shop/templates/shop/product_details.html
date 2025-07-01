@@ -5,106 +5,113 @@
   {{ product_name|title }}
 {% endblock title %}
 {% block content %}
-<div class="modules--1 bg-white relative text-black">
-    <div class="flex justify-between">
-        <div class="w-[45%]">
-            <div class="w-full h-full max-h-[700px] p-[2rem] bg-[#EDEAE6]">
-              <img class="h-full w-full object-contain" src="{{ product.image.url }}"/>
-            </div>
-        </div>
-        <div class="w-[50%]">
-            <p class="eyebrow ">
-            {{ product.brand.name|title }}
-            </p>
-            <h1 class="font-[GTSuperDisplay] text-[3rem]">
-              {{ product.name }}
-            </h1>
-            <div class="mt-[1rem]">
-                <p class="text-[0.9rem] inline-block">
-                Availability: <span class="text-[#7e7e7e]">
-                  {% if product.stock.quantity > 0 %}
-                  In stock
-                  {% else %}
-                  Out of stock
-                  {% endif %}
-                </span>
-                </p>
-                <p class="text-[0.9rem] inline-block ml-[2rem]">
-                SKU: <span class="text-[#7e7e7e]"> {{ product.sku }} </span>
-                </p>
-            </div>
-            <div class="mt-[1rem]">
-              <p class="font-bold text-[2rem]">£{{ product.price|floatformat:2|intcomma }}</p>
-            </div>
-            <div class="mt-[1rem]">
-              <p class="break text-[1rem] text-justify">{{ product.description }}</p>
-            </div>
-            <form class="mt-[1rem]" method="post" action="{% url 'cart/update' product.id %}">
-              {% csrf_token %}
-              <div class="flex justify-between">
-                <div class="flex justify-evenly items-center border-2 border-[#f2f0ec] rounded-[6px]">
-                  <button id="descQty" type="button" class="w-[40px] text-[35px] px-[10px] cursor-pointer">-</button>
-                  <input name="quantity" id="quantity" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center" value="1"/>
-                  <input name="product_id" class="hidden" value="{{ product.id }}" />
-                  <button id="incrQty" type="button" class="w-[40px] text-[35px] px-[10px] cursor-pointer">+</button>
-                </div>
-                <div class="justify-end flex-[0_1_75%]">
-                  <button class="text-white w-full h-[50px] bg-black rounded-[6px] cursor-pointer" type="submit">
-                    <span>Add to Cart</span>
-                  </button>
-                </div>
-                <script>
-                  const incBtn = document.getElementById("incrQty");
-                  const descBtn = document.getElementById("descQty");
-                  const quantityInput = document.getElementById("quantity");
-                  const maxStock = {{ product.stock.quantity }};
-
-                  incBtn.addEventListener("click", () => {
-                    let currentQty = parseInt(quantityInput.value);
-                    if (currentQty < maxStock) {
-                      quantityInput.value = currentQty + 1;
-                    }
-                  });
-
-                  descBtn.addEventListener("click", () => {
-                    let currentQty = parseInt(quantityInput.value);
-                    if (currentQty > 1) {
-                      quantityInput.value = currentQty - 1;
-                    }
-                  });
-                </script>
-              </div>
-            </form>
-        </div>
+<div class="modules--1 bg-white relative text-black h-[1000px]">
+  <div class="flex justify-between flex-row">
+    <div class="w-[45%]">
+      <div class="w-full h-full max-h-[700px] p-[2rem] bg-[#FAFAFA]">
+        <img class="h-full w-full object-contain" src="{{ product.image.url }}"/>
+      </div>
     </div>
-    <div class="w-[45%] mt-[5rem]">
-      <h4 class="mb-[1.5rem] font-[GTSuperDisplay] text-3xl">Product Specs</h4>
-      <div class="flex justify-between flex-wrap">
-        <div class="inline-block w-[50%] mb-[2rem]">
-          <p class="text-[1rem] uppercase">Vintage</p>
-          <p class="text-[#7e7e7e]">
-          {{ product.vintage }}
-          </p>
+    <div class="w-[55%] ml-[2rem]">
+      <p class="eyebrow">
+      {{ product.brand.name|title }}
+      </p>
+      <h1 class="font-[GTSuperDisplay] text-[3rem]">
+        {{ product.name }}
+      </h1>
+      <hr>
+      <div class="mt-[1rem]">
+        <p class="text-[0.9rem] inline-block">
+        Availability: <span class="text-[#7e7e7e]">
+          {% if product.stock.quantity > 0 %}
+          In stock
+          {% else %}
+          Out of stock
+          {% endif %}
+        </span>
+        </p>
+        <p class="text-[0.9rem] inline-block ml-[2rem]">
+        SKU: <span class="text-[#7e7e7e]"> {{ product.sku }} </span>
+        </p>
+      </div>
+      <div class="mt-[1rem]">
+        <p class="font-bold text-[2rem]">£{{ product.price|floatformat:2|intcomma }}</p>
+      </div>
+      <div class="mt-[1rem]">
+        <p class="break text-[1rem] text-justify">{{ product.description }}</p>
+      </div>
+      <form class="mt-[1rem]" method="post" action="{% url 'cart/update' product.id %}">
+        {% csrf_token %}
+        <div class="flex justify-between">
+          <div class="flex justify-evenly items-center border-2 border-[#f2f0ec] rounded-[6px]">
+            <button id="descQty" type="button" class="w-[40px] text-[35px] px-[10px] cursor-pointer">-</button>
+            <input name="quantity" id="quantity" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center" value="1"/>
+            <input name="product_id" class="hidden" value="{{ product.id }}" />
+            <button id="incrQty" type="button" class="w-[40px] text-[35px] px-[10px] cursor-pointer">+</button>
+          </div>
+          <div class="justify-end flex-[0_1_75%]">
+            <button class="text-white w-full h-[50px] bg-black rounded-[6px] cursor-pointer" type="submit">
+              <span>Add to Cart</span>
+            </button>
+          </div>
+          <script>
+            const incBtn = document.getElementById("incrQty");
+            const descBtn = document.getElementById("descQty");
+            const quantityInput = document.getElementById("quantity");
+            const maxStock = {{ product.stock.quantity }};
+
+            incBtn.addEventListener("click", () => {
+              let currentQty = parseInt(quantityInput.value);
+              if (currentQty < maxStock) {
+                quantityInput.value = currentQty + 1;
+              }
+            });
+
+            descBtn.addEventListener("click", () => {
+              let currentQty = parseInt(quantityInput.value);
+              if (currentQty > 1) {
+                quantityInput.value = currentQty - 1;
+              }
+            });
+          </script>
         </div>
-        <div class="inline-block w-[50%] mb-[2rem]">
-          <p class="text-[1rem] uppercase">Country of Origin</p>
-          <p class="text-[#7e7e7e]">
-          {{ product.country.name }}
-          </p>
-        </div>
-        <div class="inline-block w-[50%] mb-[2rem]">
-          <p class="text-[1rem] uppercase">Volume</p>
-          <p class="text-[#7e7e7e]">
-          {{ product.volume }}ml
-          </p>
-        </div>
-        <div class="inline-block w-[50%] mb-[2rem]">
-          <p class="text-[1rem] uppercase">ABV</p>
-          <p class="text-[#7e7e7e]">
-          {{ product.abv }}%
-          </p>
+      </form>
+      <div class="mt-[2rem]">
+        <h4 class="mb-[0.9rem] font-[GTSuperDisplay] text-3xl">Product Specs</h4>
+        <div class="flex justify-between flex-wrap">
+          <div class="inline-block w-[50%] mb-[2rem]">
+            <p class="text-[1rem] uppercase">Vintage</p>
+            <p class="text-[#7e7e7e]">
+            {{ product.vintage }}
+            </p>
+          </div>
+          <div class="inline-block w-[50%] mb-[2rem]">
+            <p class="text-[1rem] uppercase">Country of Origin</p>
+            <p class="text-[#7e7e7e]">
+            {{ product.country.name }}
+            </p>
+          </div>
+          <div class="inline-block w-[50%] mb-[2rem]">
+            <p class="text-[1rem] uppercase">Volume</p>
+            <p class="text-[#7e7e7e]">
+            {{ product.volume }}ml
+            </p>
+          </div>
+          <div class="inline-block w-[50%] mb-[2rem]">
+            <p class="text-[1rem] uppercase">ABV</p>
+            <p class="text-[#7e7e7e]">
+            {{ product.abv }}%
+            </p>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="mt-[5rem]">
+    <h4 class="mb-[0.9rem] font-[GTSuperDisplay] text-3xl">Reviews(0)</h4>
+  </div>
+  <div class="mt-[5rem] flex justify-center">
+    <h4 class="mb-[0.9rem] font-[GTSuperDisplay] text-3xl">Related Products</h4>
+  </div>
 </div>
 {% endblock content %}
