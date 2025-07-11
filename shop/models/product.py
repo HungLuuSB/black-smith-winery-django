@@ -10,7 +10,7 @@ CATEGORY_SKU_PREFIX = {1: "WHT", 2: "RED", 3: "SPK", 4: "WSK", 5: "GIN", 6: "TEQ
 class Product(models.Model):
     sku = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True, blank=True, allow_unicode=True)
-    name = models.CharField(max_length=50)
+    name = models.TextField(max_length=100)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="products"
@@ -28,8 +28,9 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.sku:
             cat_code = self.category.sku_prefix
+            country_code = self.country.code
             uid = str(uuid.uuid4().int)[:5]
-            self.sku = f"{cat_code}-{uid}"
+            self.sku = f"{cat_code}-{country_code}-{uid}"
 
         if not self.slug:
             self.slug = slugify(self.name)

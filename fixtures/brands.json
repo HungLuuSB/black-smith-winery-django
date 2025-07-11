@@ -14,5 +14,21 @@
       "name": "Château Haut-Brion",
       "slug": "château-haut-brion"
     }
+  },
+  {
+    "model": "common.brand",
+    "pk": 3,
+    "fields": {
+      "name": "Louis Jadot",
+      "slug": "louis-jadot"
+    }
+  },
+  {
+    "model": "common.brand",
+    "pk": 4,
+    "fields": {
+      "name": "Château Mouton Rothschild",
+      "slug": "château-mouton-rothschild"
+    }
   }
 ]

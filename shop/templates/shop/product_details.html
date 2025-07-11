@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
-  {{ product_name|title }}
+{{ product.name|title }}
 {% endblock title %}
 {% block content %}
 <div class="modules--1 bg-white relative text-black h-[1000px]">
@@ -17,7 +17,7 @@
       {{ product.brand.name|title }}
       </p>
       <h1 class="font-[GTSuperDisplay] text-[3rem]">
-        {{ product.name }}
+        {{ product.name|title }}
       </h1>
       <hr>
       <div class="mt-[1rem]">

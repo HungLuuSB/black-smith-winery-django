@@ -72,7 +72,7 @@ def dashboard(request):
 def order_history(request):
     user = request.user
     if user.is_authenticated:
-        orders = Order.objects.filter(user=user)
+        orders = Order.objects.filter(user=user).order_by("-created_at")
         context = {"orders": orders, "total_orders": len(orders)}
         return render(request, "account/order-history.html", context)
     return redirect("account/login")

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "tailwind",
     "django_browser_reload",
     "theme",
+    "chartjs",
     "shop",
     "home",
     "common",
@@ -64,6 +65,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "black_smith_winery_django.urls"
+
+DEFAULT_CHARSET = "utf-8"
 
 TEMPLATES = [
     {

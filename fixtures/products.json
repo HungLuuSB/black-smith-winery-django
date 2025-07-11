@@ -52,6 +52,60 @@
       "quantity": 10,
       "last_updated": "2025-06-26 00:49:01.816490"
     }
+  },
+  {
+    "model": "shop.product",
+    "pk": 3,
+    "fields": {
+      "sku": "RED-10552",
+      "slug": "louis-jadot-clos-vougeot-grand-cru-2013",
+      "name": "Louis Jadot Clos Vougeot Grand Cru 2013",
+      "category": 2,
+      "brand": 3,
+      "country": 60,
+      "description": "From the callars of leading French wine producer Louis Jadot, this Clos Vougeot Grand Cru 2013 is a superb Red Burgundy which can be enjoyed now, or cellared for another decade. Fragrant dark fruit nose of ripe berries, on the palate silky texture with great depth and complexity.",
+      "price": 141.00,
+      "volume": 750,
+      "abv": 13.5,
+      "vintage": 2013,
+      "image": "products/louis-jadot-clos-vougeot-grand-cru-2013.png"
+    }
+  },
+  {
+    "model": "shop.stock",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "quantity": 15,
+      "last_updated": "2025-07-12 00:49:01.816490"
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 4,
+    "fields": {
+      "sku": "RED-17228",
+      "slug": "château-mouton-rothschild-1996",
+      "name": "Château Mouton Rothschild 1996",
+      "category": 2,
+      "brand": 4,
+      "country": 60,
+      "description": "From a great vintage now drinking at its peak, the 1996 Bordeaux 1st Growth Pauillac Mouton Rothschild has mellowed over time, showing a complex array of blackcurrant, cedar and spice notes soaring from the glass and broad yet resolved tannins that make this great wine a pleasure to drink.",
+      "price": 734.00,
+      "volume": 750,
+      "abv": 13.5,
+      "vintage": 1996,
+      "image": "products/château-mouton-rothschild-1996.png"
+    }
+  },
+  {
+    "model": "shop.stock",
+    "pk": 4,
+    "fields": {
+      "product": 4,
+      "quantity": 17,
+      "last_updated": "2025-07-12 06:00:00"
+    }
   }
 
 ]
