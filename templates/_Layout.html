@@ -52,7 +52,7 @@
                 </li>
               </ul>
             </nav>
-            <nav class="ml-auto flex flex-1 justify-end flex max-[1400px]:hidden">
+            <nav class="ml-auto flex flex-1 justify-end max-[1400px]:hidden">
               <ul class="flex list-none items-center">
                 <li class="border-r-[rgba(255, 255, 255, 0.2)] border-r-[0.1rem]">
                   {% if user.is_authenticated %}
@@ -71,7 +71,6 @@
       </nav>
       <div class="modules ml-auto mr-auto pt-[12.1rem] px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
         {% block content %}
-
         {% endblock content %}
       </div>
       <footer class="bg-black w-full h-full mt-1">

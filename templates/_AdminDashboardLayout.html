@@ -1,0 +1,61 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}
+      Admin Dashboard
+      {% endblock title %}</title>
+    {% tailwind_css %}
+  </head>
+  <body class="isloaded font-[Roboto] m-0 p-0">
+    <div class="root">
+      <div class="flex flex-nowrap">
+        <div class="w-[20%] h-full text-white bg-[#1D1C1A] fixed">
+          <div class="h-[15vh] w-full flex items-center justify-center">
+            <h1 class="text-[1.5rem] w-full font-[GTSuperDisplay] text-center">@BlackSmithWinery</h1>
+          </div>
+          <div class="w-full h-[85vh]">
+            <div class="flex flex-nowrap">
+              <ul class="">
+                <li>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="w-[80%] h-full left-[20%] relative">
+          <div class="w-full">
+            <div class="h-[15vh] w-full">
+              <div class="px-[5rem] flex flex-nowrap flex-row items-center h-full">
+                <div class="flex justify-center items-center">
+                  <div class="flex flex-col">
+                    <h1 class="text-[1.5rem] font-[GTSuperDisplay]">
+                      {% block section_name %}
+                      Overview
+                      {% endblock section_name %}
+                    </h1>
+                    <h3 class="text-[1.2rem] eyebrow">
+                      {% block section_desc %}
+                      Here are today's stats of your store!
+                      {% endblock section_desc %}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-full h-full bg-[#F8F8FF]">
+              {% block content %}
+
+              {% endblock content %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static "/js/site.js" %}"></script>
+  </body>
+</html>
