@@ -30,6 +30,7 @@ urlpatterns = [
     path("order/", include("order.urls")),
     path("payment/", include("payment.urls")),
     path("checkout/", include("checkout.urls")),
+    path("api/", include("api.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

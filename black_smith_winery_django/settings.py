@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "order",
     "payment",
     "checkout",
+    "api"
 ]
 
 MIDDLEWARE = [
@@ -135,6 +136,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+NPM_BIN_PATH = "npm.cmd"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

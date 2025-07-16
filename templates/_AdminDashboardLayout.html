@@ -13,21 +13,23 @@
   <body class="isloaded font-[Roboto] m-0 p-0">
     <div class="root">
       <div class="flex flex-nowrap">
-        <div class="w-[20%] h-full text-white bg-[#1D1C1A] fixed">
+        <div class="w-[15%] h-full text-white bg-[#1D1C1A] fixed">
           <div class="h-[15vh] w-full flex items-center justify-center">
             <h1 class="text-[1.5rem] w-full font-[GTSuperDisplay] text-center">@BlackSmithWinery</h1>
           </div>
           <div class="w-full h-[85vh]">
             <div class="flex flex-nowrap">
-              <ul class="">
-                <li>
-
+              <ul class="w-full">
+                <li class="">
+                  <div class="{% if choice == 'overview' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[50px] flex justify-center items-center">
+                    <a class="text-[1.2rem] text-center w-full block">Overview</a>
+                  </div>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="w-[80%] h-full left-[20%] relative">
+        <div class="w-[85%] h-full left-[15%] relative">
           <div class="w-full">
             <div class="h-[15vh] w-full">
               <div class="px-[5rem] flex flex-nowrap flex-row items-center h-full">
@@ -47,9 +49,8 @@
                 </div>
               </div>
             </div>
-            <div class="w-full h-full bg-[#F8F8FF]">
+            <div class="w-full h-full bg-[#f3f3f3]">
               {% block content %}
-
               {% endblock content %}
             </div>
           </div>
@@ -57,5 +58,6 @@
       </div>
     </div>
     <script src="{% static "/js/site.js" %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>
