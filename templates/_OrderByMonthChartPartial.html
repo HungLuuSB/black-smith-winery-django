@@ -21,7 +21,7 @@ function fetchRevenueChartData() {
         data: {
           labels: labels,
           datasets: [{
-            label: metricFilter === 'orders' ? 'Order Count' : 'Revenue (vnđ)',
+            label: metricFilter === 'orders' ? 'Order Count' : 'Revenue (£)',
             data: data,
             borderColor: 'black',
             backgroundColor: 'rgba(0,0,0,0)',
@@ -35,7 +35,7 @@ function fetchRevenueChartData() {
               beginAtZero: true,
               ticks: {
                 callback: function(value) {
-                  return metricFilter === 'revenue' ? value.toLocaleString() + ' vnđ' : value;
+                  return metricFilter === 'revenue' ? value.toLocaleString() + ' £' : value;
                 }
               }
             }

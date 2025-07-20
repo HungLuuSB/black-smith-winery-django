@@ -80,3 +80,8 @@ class OrderChart(View):
             'labels': labels,
             'data': data,
         })
+    
+class TotalOrdersChart(View):
+    def get(self, request, *args, **kwargs):
+        
+        pass

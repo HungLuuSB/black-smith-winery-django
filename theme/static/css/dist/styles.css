@@ -391,9 +391,6 @@
   .ml-\[2rem\] {
     margin-left: 2rem;
   }
-  .ml-\[10\%\] {
-    margin-left: 10%;
-  }
   .ml-\[10px\] {
     margin-left: 10px;
   }
@@ -402,9 +399,6 @@
   }
   .ml-\[25\%\] {
     margin-left: 25%;
-  }
-  .ml-\[30\%\] {
-    margin-left: 30%;
   }
   .ml-auto {
     margin-left: auto;
@@ -484,11 +478,14 @@
   .h-\[219px\] {
     height: 219px;
   }
+  .h-\[350px\] {
+    height: 350px;
+  }
+  .h-\[500px\] {
+    height: 500px;
+  }
   .h-\[650px\] {
     height: 650px;
-  }
-  .h-\[700px\] {
-    height: 700px;
   }
   .h-\[1000px\] {
     height: 1000px;
@@ -541,11 +538,17 @@
   .w-\[29\%\] {
     width: 29%;
   }
+  .w-\[30\%\] {
+    width: 30%;
+  }
   .w-\[33\%\] {
     width: 33%;
   }
   .w-\[34\%\] {
     width: 34%;
+  }
+  .w-\[35\%\] {
+    width: 35%;
   }
   .w-\[40px\] {
     width: 40px;
@@ -573,9 +576,6 @@
   }
   .w-\[70\%\] {
     width: 70%;
-  }
-  .w-\[75\%\] {
-    width: 75%;
   }
   .w-\[85\%\] {
     width: 85%;
@@ -618,9 +618,6 @@
   }
   .flex-1 {
     flex: 1;
-  }
-  .flex-1\/4 {
-    flex: calc(1/4 * 100%);
   }
   .flex-\[0_1_20\%\] {
     flex: 0 1 20%;
@@ -679,9 +676,6 @@
   .items-start {
     align-items: flex-start;
   }
-  .items-stretch {
-    align-items: stretch;
-  }
   .justify-between {
     justify-content: space-between;
   }
@@ -725,10 +719,6 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .border-0 {
-    border-style: var(--tw-border-style);
-    border-width: 0px;
-  }
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
@@ -768,20 +758,11 @@
   .border-\[\#2d2d2e54\] {
     border-color: #2d2d2e54;
   }
-  .border-\[\#2d2d2e91\] {
-    border-color: #2d2d2e91;
-  }
-  .border-\[\#2d2d2e\] {
-    border-color: #2d2d2e;
-  }
   .border-\[\#b2b2b2\] {
     border-color: #b2b2b2;
   }
   .border-\[\#f2f0ec\] {
     border-color: #f2f0ec;
-  }
-  .border-black {
-    border-color: var(--color-black);
   }
   .border-gray-500 {
     border-color: var(--color-gray-500);
@@ -929,9 +910,6 @@
   }
   .py-\[1rem\] {
     padding-block: 1rem;
-  }
-  .py-\[2rem\] {
-    padding-block: 2rem;
   }
   .py-\[10\%\] {
     padding-block: 10%;
