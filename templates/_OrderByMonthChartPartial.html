@@ -1,0 +1,51 @@
+{% load static %}
+<canvas id="ordersChart"></canvas>
+<script>
+let revenueChart;
+
+function fetchRevenueChartData() {
+  const timeFilter = document.getElementById('time-filter').value;
+  let metricFilter = 'revenue';
+  if (document.getElementById('metric-filter') !== null) {
+    metricFilter = document.getElementById('metric-filter').value ;
+  }
+
+  fetch(`/api/order-chart?filter=${timeFilter}&metric=${metricFilter}`)
+    .then(res => res.json())
+    .then(({ labels, data }) => {
+      if (revenueChart) revenueChart.destroy();
+
+      const ctx = document.getElementById('ordersChart').getContext('2d');
+      revenueChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: metricFilter === 'orders' ? 'Order Count' : 'Revenue (vnđ)',
+            data: data,
+            borderColor: 'black',
+            backgroundColor: 'rgba(0,0,0,0)',
+            tension: 0.3,
+            fill: true,
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return metricFilter === 'revenue' ? value.toLocaleString() + ' vnđ' : value;
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+}
+
+document.getElementById('time-filter').addEventListener('change', fetchRevenueChartData);
+
+fetchRevenueChartData();
+</script>

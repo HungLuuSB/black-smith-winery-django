@@ -1,29 +1,36 @@
-<div>
-  <canvas id="myChart"></canvas>
-</div>
-
+{% load static %}
+<canvas id="monthlyOrdersBarChart"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const canvasElement = document.getElementById('monthlyOrdersBarChart');
+    console.log("Found element for chart:", canvasElement); 
 
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ labels|safe }},
-            datasets: [{
-                label: '# of orders',
-                data: {{ data|safe }},
-                borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-            beginAtZero: true
-            }
-        }
+    if (canvasElement) {
+        const ctx = canvasElement.getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: {{ labels|safe }}, 
+                        datasets: [{
+                            label: '# of Orders per Month',
+                            data: {{ data|safe }},
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+    } else {
+        console.error('Could not find canvas element with ID "monthlyOrdersBarChart"');
     }
-  });
+});
 </script>

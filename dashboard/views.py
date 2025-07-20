@@ -10,7 +10,10 @@ def index(request):
 
 
 def admin_index(request):
-    return render(request, "dashboard/admin.html")
+    context = {
+        'choice': 'overview'
+    }
+    return render(request, "dashboard/admin.html", context)
 
 
 def add_product(request):

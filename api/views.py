@@ -1,32 +1,82 @@
 from django.shortcuts import render
-from order.models import Order
-from django.db.models.functions import TruncMonth
-from django.db.models import Count
-from django.db.models import Sum
+from order.models import Order, OrderDetail
+from django.db.models.functions import TruncMonth, TruncDay
+from django.db.models import Count, Sum
 from django.http import JsonResponse
-from datetime import datetime
+from django.views import View
+from dateutil.relativedelta import relativedelta
+from django.utils.timezone import now, timedelta 
 import calendar
 import json
 # Create your views here.
-def sales_chart(request):
-    months = list(calendar.month_name)[1:]
-    orders_by_month = (
-        Order.objects
-        .annotate(month=TruncMonth('created_at'))
-        .values('month')
-        .annotate(total=Count('id'))
-        .order_by('month')
-    )
 
-    sales_data = {
-        order['month'].month: order['total']
-        for order in orders_by_month
-    }
+class TopSellingCategoryChart(View):
+    def get(self, request, *args, **kwargs):
+        data = (
+            OrderDetail.objects
+            .values('product__category__name')
+            .annotate(total_sold=Sum('quantity'))
+            .order_by('-total_sold')[:6]
+        )
 
-    data = [sales_data.get(month, 0) for month in range(1, 13)]
+        labels = [entry['product__category__name'] for entry in data]
+        data = [entry['total_sold'] for entry in data]
 
-    
-    return JsonResponse({
-        'labels': months,
-        'data': data,
-    })
+        return JsonResponse({
+            'labels': labels,
+            'data': data,
+        })
+
+class OrderChart(View):
+    def get(self, request, *args, **kwargs):
+        time_filter = request.GET.get('filter', '30d')
+        metric = request.GET.get('metric', 'revenue')
+
+        today = now().date()
+
+        if time_filter == '7d':
+            start_date = today - timedelta(days=6)
+            trunc_func = TruncDay
+            date_range = [start_date + timedelta(days=i) for i in range(7)]
+            labels = [d.strftime('%d %b') for d in date_range]
+
+        elif time_filter == '12m':
+            start_date = today.replace(day=1) - relativedelta(months=11)
+            trunc_func = TruncMonth
+            date_range = [today.replace(day=1) - relativedelta(months=i) for i in reversed(range(12))]
+            labels = [d.strftime('%b %Y') for d in date_range]
+
+        else:
+            start_date = today - timedelta(days=29)
+            trunc_func = TruncDay
+            date_range = [start_date + timedelta(days=i) for i in range(30)]
+            labels = [d.strftime('%d %b') for d in date_range]
+
+        orders = (
+            Order.objects
+            .filter(created_at__date__gte=start_date)
+            .annotate(period=trunc_func('created_at'))
+            .values('period')
+        )
+
+        if metric == 'revenue':
+            orders = orders.annotate(value=Sum('grand_total'))
+        else:
+            orders = orders.annotate(value=Count('id'))
+
+        orders = orders.order_by('period')
+
+        data_map = {
+            entry['period'].date().replace(day=1 if trunc_func == TruncMonth else entry['period'].date().day): entry['value']
+            for entry in orders
+        }
+
+        if trunc_func == TruncMonth:
+            data = [data_map.get(month.replace(day=1), 0) for month in date_range]
+        else:
+            data = [data_map.get(day, 0) for day in date_range]
+
+        return JsonResponse({
+            'labels': labels,
+            'data': data,
+        })

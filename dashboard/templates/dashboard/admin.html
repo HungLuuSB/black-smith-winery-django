@@ -3,45 +3,34 @@
 {% load humanize %}
 {% block content %}
 <div class="p-[2rem]">
-    <canvas id="monthlyOrdersBarChart" class="w-full">
-    </canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const canvasElement = document.getElementById('monthlyOrdersBarChart');
-    console.log("Found element for chart:", canvasElement); 
+    <div class="flex flex-nowrap justify-between items-start h-[650px]">
+        <div id="sales-chart-wrapper" class="w-[70%] bg-white p-[3rem] rounded-2xl h-full">
+            <div>
+                <div class="flex flex-nowrap justify-between">
+                    <div>
+                        <h1 class="font-[GTSuperDisplay] text-[1.5rem]">Performance</h1>
+                    </div>
+                    <div class="flex flex-nowrap text-[0.9rem]">
+                        <div class="">
+                            <select id="time-filter" class="rounded-2xl border-[#2d2d2e54] border-[1px] p-[10px]">
+                                <option value="7d">Last 7 Days</option>
+                                <option value="30d" selected>Last 30 Days</option>
+                                <option value="12m">Last 12 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {% include "_OrderByMonthChartPartial.html" %}
+            </div>
+        </div>
 
-    if (canvasElement) {
-        fetch("{% url 'api/sales_chart' %}")
-            .then(response => response.json())
-            .then(chartData => {
-                const ctx = canvasElement.getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: chartData.labels, 
-                        datasets: [{
-                            label: '# of Orders per Month',
-                            data: chartData.data,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            })
-    } else {
-        console.error('Could not find canvas element with ID "monthlyOrdersBarChart"');
-    }
-});
-</script>
+        <div class="w-[29%] bg-white p-[3rem] rounded-2xl h-full">
+            <div>
+                {% include "_TopSellingCategoryChart.html" %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

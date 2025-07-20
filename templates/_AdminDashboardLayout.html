@@ -5,6 +5,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>{% block title %}
       Admin Dashboard
       {% endblock title %}</title>
@@ -20,9 +21,22 @@
           <div class="w-full h-[85vh]">
             <div class="flex flex-nowrap">
               <ul class="w-full">
-                <li class="">
-                  <div class="{% if choice == 'overview' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[50px] flex justify-center items-center">
-                    <a class="text-[1.2rem] text-center w-full block">Overview</a>
+                <li class="font-[GTSuperDisplay]">
+                  <div class="{% if choice == 'overview' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
+                    <i class="fa fa-home ml-[20px]"></i>
+                    <a class="text-left w-full block ml-[10px]">Overview</a>
+                  </div>
+                </li>
+                <li class="font-[GTSuperDisplay]">
+                  <div class="{% if choice == 'orders' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
+                    <i class="fa fa-shopping-cart ml-[20px]"></i>
+                    <a class="text-left w-full block ml-[10px]">Orders</a>
+                  </div>
+                </li>
+                <li class="font-[GTSuperDisplay]">
+                  <div class="{% if choice == 'products' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
+                    <i class="fa fa-shopping-basket ml-[20px]"></i>
+                    <a class="text-left w-full block ml-[10px]">Products</a>
                   </div>
                 </li>
               </ul>
