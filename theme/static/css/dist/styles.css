@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.8 | MIT License | https://tailwindcss.com */
 @layer properties;
 @font-face {
   font-family: 'GTSuperDisplay';
@@ -478,11 +478,8 @@
   .h-\[219px\] {
     height: 219px;
   }
-  .h-\[350px\] {
-    height: 350px;
-  }
-  .h-\[500px\] {
-    height: 500px;
+  .h-\[250px\] {
+    height: 250px;
   }
   .h-\[650px\] {
     height: 650px;
@@ -538,17 +535,11 @@
   .w-\[29\%\] {
     width: 29%;
   }
-  .w-\[30\%\] {
-    width: 30%;
-  }
   .w-\[33\%\] {
     width: 33%;
   }
   .w-\[34\%\] {
     width: 34%;
-  }
-  .w-\[35\%\] {
-    width: 35%;
   }
   .w-\[40px\] {
     width: 40px;
@@ -564,6 +555,9 @@
   }
   .w-\[50\%\] {
     width: 50%;
+  }
+  .w-\[50px\] {
+    width: 50px;
   }
   .w-\[55\%\] {
     width: 55%;
@@ -711,6 +705,9 @@
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl);
+  }
+  .rounded-\[1rem\] {
+    border-radius: 1rem;
   }
   .rounded-\[6px\] {
     border-radius: 6px;

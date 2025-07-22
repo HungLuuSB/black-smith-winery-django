@@ -4,59 +4,63 @@
 {% block content %}
 <div class="p-[2rem]">
     <div class="flex flex-nowrap flex-row justify-between items-start">
-        <div class="w-[70%] flex flex-nowrap flex-row justify-between items-start h-[350px]">
+        <div class="w-[70%] flex flex-nowrap flex-row justify-between items-start h-[250px]">
             <div class="w-[49%] bg-[#1D1C1A] p-[3rem] rounded-2xl h-full">
                 <div class="w-full text-white font-[GTSuperDisplay] text-2xl">
                     <div>
                         <h1>Total sales</h1>
-                        <p class="eyebrow font-[Roboto] text-[2rem]">10 Orders</p>
+                        <p class="eyebrow font-[Roboto] text-[2rem]">{{ orders|length }} Orders</p>
                     </div>
                     <div class="mt-[2rem]">
-                        <h1 class="text-[2rem] font-[Roboto]">£{{ "1000"|floatformat:2|intcomma }}</h1>
+                        <h1 class="text-[2rem] font-[Roboto]">£{{ total_grand_total|floatformat:2|intcomma }}</h1>
                     </div>
-                    
+                    <div class="font-[Roboto] mb-[1rem]">
+                        <span>
+                          +/- 10%
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="w-[49%] bg-white p-[3rem] rounded-2xl h-full">
-                <div class="w-full font-[GTSuperDisplay] text-2xl">
-                    <h1>Rating</h1>
-                </div>
+              <div class="w-full font-[GTSuperDisplay] text-2xl">
+                <h1>Rating</h1>
+              </div>
             </div>
         </div>
-        <div class="w-[29%] bg-white p-[3rem] rounded-2xl h-[350px]">
-            <div class="w-full h-full font-[GTSuperDisplay] text-2xl">
-                <h1>Most purchased</h1>
-            </div>
+        <div class="w-[29%] bg-white p-[3rem] rounded-2xl h-[250px]">
+          <div class="w-full h-full font-[GTSuperDisplay] text-2xl">
+            <h1>Most purchased</h1>
+          </div>
         </div>
     </div>
     <div class="flex flex-nowrap justify-between items-start h-[650px] mt-[2rem]">
-        <div id="sales-chart-wrapper" class="w-[70%] bg-white p-[3rem] rounded-2xl h-full">
+      <div id="sales-chart-wrapper" class="w-[70%] bg-white p-[3rem] rounded-2xl h-full">
+        <div>
+          <div class="flex flex-nowrap justify-between">
             <div>
-                <div class="flex flex-nowrap justify-between">
-                    <div>
-                        <h1 class="font-[GTSuperDisplay] text-[1.5rem]">Revenue Performance</h1>
-                    </div>
-                    <div class="flex flex-nowrap text-[0.9rem]">
-                        <div class="">
-                            <select id="time-filter" class="rounded-2xl border-[#2d2d2e54] border-[1px] p-[10px]">
-                                <option value="7d">Last 7 Days</option>
-                                <option value="30d" selected>Last 30 Days</option>
-                                <option value="12m">Last 12 Months</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+              <h1 class="font-[GTSuperDisplay] text-[1.5rem]">Revenue Performance</h1>
             </div>
-            <div>
-                {% include "_OrderByMonthChartPartial.html" %}
+            <div class="flex flex-nowrap text-[0.9rem]">
+              <div class="">
+                <select id="time-filter" class="rounded-2xl border-[#2d2d2e54] border-[1px] p-[10px]">
+                  <option value="7d">Last 7 Days</option>
+                  <option value="30d" selected>Last 30 Days</option>
+                  <option value="12m">Last 12 Months</option>
+                </select>
+              </div>
             </div>
+          </div>
         </div>
+        <div>
+          {% include "_OrderByMonthChartPartial.html" %}
+        </div>
+      </div>
 
-        <div class="w-[29%] bg-white p-[3rem] rounded-2xl h-full">
-            <div>
-                {% include "_TopSellingCategoryChart.html" %}
-            </div>
+      <div class="w-[29%] bg-white p-[3rem] rounded-2xl h-full">
+        <div>
+          {% include "_TopSellingCategoryChart.html" %}
         </div>
+      </div>
     </div>
 </div>
 {% endblock content %}

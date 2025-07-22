@@ -10,3 +10,6 @@ class OrderDetail(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(decimal_places=2, max_digits=12)
+
+    def get_total_price(self):
+        return self.unit_price * self.quantity

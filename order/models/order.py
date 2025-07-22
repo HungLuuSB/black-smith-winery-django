@@ -20,3 +20,6 @@ class Order(models.Model):
     grand_total = models.DecimalField(decimal_places=2, max_digits=12)
     status = models.CharField(max_length=20, default="Pending")
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def getTotalSales(self):
+        return sum(self.order_details.get_total_price())

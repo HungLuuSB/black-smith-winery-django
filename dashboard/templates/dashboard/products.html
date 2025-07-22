@@ -1,0 +1,44 @@
+{% extends '_AdminDashboardLayout.html' %}
+{% load static %}
+{% block title %}
+Admin | Products management
+{% endblock title %}
+{% block content %}
+<table class="w-full bg-white rounded-[1rem]">
+  <thead class="">
+    <tr class="text-left uppercase text-[1.2rem] font-[GTSuperDisplay]">
+      <th class="eyebrow p-[20px] border-b-[1px] border-b-[#b2b2b2]">Id</th>
+      <th class="eyebrow p-[20px] text-center border-b-[1px] border-b-[#b2b2b2]">Name</th>
+      <th class="eyebrow p-[20px] text-center border-b-[1px] border-b-[#b2b2b2]">Category</th>
+      <th class="eyebrow p-[20px] text-center border-b-[1px] border-b-[#b2b2b2]">Price</th>
+      <th class="eyebrow p-[20px] text-center border-b-[1px] border-b-[#b2b2b2]">Stock</th>
+      <th class="eyebrow p-[20px] text-center border-b-[1px] border-b-[#b2b2b2]">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="pt-[1rem]">
+    {% for product in products %}
+    <tr>
+      <td class="text-center ml-auto mr-[3.5rem]">
+        <span>{{ product.id }}</span>
+      </td>
+      <td class="">
+        <a class="inline-block underline" href="{% url 'product/details' product.slug %}">{{ product.name }}</a>
+      </td>
+      <td class="text-center ml-auto mr-[3.5rem]">
+        <span>{{ product.category.name }}</span>
+      </td>
+      <td class="text-center ml-auto mr-[3.5rem]">
+        <span>£{{ product.price }}</span>
+      </td>
+      <td class="text-center mr-[3.5rem] mb-[0.6rem]">
+        <span>{{ product.stock.quantity }}</span>
+      </td>
+      <td class="text-center mr-[3.5rem] mb-[0.6rem]">
+        <span>Edit</span>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+</table>
+{% endblock content %}

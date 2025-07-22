@@ -1,0 +1,47 @@
+{% extends '_AdminDashboardLayout.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="p-[2rem]">
+    <canvas id="monthlyProfitBarChart" class="w-full">
+    </canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const canvasElement = document.getElementById('monthlyProfitBarChart');
+    console.log("Found element for chart:", canvasElement); 
+
+    if (canvasElement) {
+        fetch("{% url 'api/profit_chart' %}")
+            .then(response => response.json())
+            .then(chartData => {
+                const ctx = canvasElement.getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartData.labels, 
+                        datasets: [{
+                            label: '# of Profit per Month',
+                            data: chartData.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+    } else {
+        console.error('Could not find canvas element with ID "monthlyProfitBarChart"');
+    }
+});
+</script>
+{% endblock content %}

@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.db.models import Sum
 from dashboard.forms import AddNewProductForm
 from shop.models import Stock
 from common.models import Country, Brand, Category
+from order.models import Order, OrderDetail
 
 
 # Create your views here.
@@ -10,8 +12,13 @@ def index(request):
 
 
 def admin_index(request):
+    total_grand_total = Order.objects.aggregate(total_grand_total=Sum("grand_total"))[
+        "total_grand_total"
+    ]
     context = {
-        'choice': 'overview'
+        "choice": "overview",
+        "orders": Order.objects.all(),
+        "total_grand_total": total_grand_total,
     }
     return render(request, "dashboard/admin.html", context)
 
