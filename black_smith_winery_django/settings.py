@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import platform
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -136,7 +137,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-NPM_BIN_PATH = "npm.cmd"
+if platform.system() == 'Windows':
+    NPM_BIN_PATH = "npm.cmd"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -154,5 +156,6 @@ TAILWIND_APP_NAME = "theme"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # DEBUG SECTION
-print(f"DEBUG: MEDIA_URL is set to: {MEDIA_URL}")
-print(f"DEBUG: MEDIA_ROOT is set to: {MEDIA_ROOT}")
+print(f"[DEBUG] OPERATING_SYSTEM: {platform.system()}")
+print(f"[DEBUG] MEDIA_URL is set to: {MEDIA_URL}")
+print(f"[DEBUG] MEDIA_ROOT is set to: {MEDIA_ROOT}")
