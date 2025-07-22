@@ -1,0 +1,143 @@
+{% extends '_AdminDashboardLayout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block section_name %}
+Products
+{% endblock section_name %}
+{% block section_desc %}
+Edit Product
+{% endblock section_desc %}
+
+{% block content %}
+<div class="p-[2rem]">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="flex flex-nowrap flex-row justify-between items-start">
+            <div class="w-[29%] bg-white p-[3rem] rounded-2xl h-full">
+                <div class="font-[GTSuperDisplay] text-2xl">
+                    <h1 class="text-[2rem]">Product Image</h1>
+                </div>
+                <div class="w-full mt-[2rem] border-[1px] border-black">
+                    <img id="product-image-preview" class="h-full w-full object-contain p-[1rem]" src="{{ product.image.url }}"/>
+                </div>
+                <div class="flex flex-row flex-nowrap mt-[2rem] items-center justify-center">
+                    <input type="file" id="image" name="image" accept="image/*" class="hidden" />
+                    <button class="text-white h-[50px] bg-black rounded-4xl py-[0.5rem] px-[2rem] cursor-pointer" type="button" onclick="document.getElementById('image-input').click();">
+                        <span>Change</span>
+                    </button>
+                </div>
+            </div>
+            <div class="w-[70%] bg-white p-[3rem] rounded-2xl h-full">
+                <div class="font-[GTSuperDisplay] text-2xl">
+                    <h1 class="text-[2rem]">General Information</h1>
+                </div>
+                <hr class="mt-[1rem]" />
+                <div class="w-full mt-[1rem]">
+                    <div class="w-full flex flex-row">
+                        <div class="w-full">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Name</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="name" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.name }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-row justify-between mt-[1rem]">
+                        <div class="w-[49%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Category</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <select name="category" type="text" list="categories" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.category.name }}" autocomplete="off"/>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-[49%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Brand</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="brand" type="text" list="brands" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.brand.name }}" autocomplete="off"/>
+                                <datalist id="brands">
+                                    {% for brand in brands %}
+                                        <option value="{{ brand.id }}">{{ brand.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-row justify-between mt-[1rem]">
+                        <div class="w-[31%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Price</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="price" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.price }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="w-[31%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">ABV (%)</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="abv" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.abv }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="w-[31%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Stock</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="stock" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.stock.quantity }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-[2rem] mb-[2rem]"/>
+                    <div class="w-full flex flex-row mt-[1rem]">
+                        <div class="w-full">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Description</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <textarea name="description" type="text" class="text-[1.2rem] p-[1rem] w-full border-none outline-none" required>{{ product.description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-row justify-between mt-[1rem]">
+                        <div class="w-[31%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Country</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <select name="country" class="text-[1.2rem] p-[1rem] w-full" required autocomplete="off"/>
+                                    {% for country in countries %}
+                                        <option value="{{ country.id }}" {% if product.country.id == country.id %}selected{% endif %}>
+                                            {{ country.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-[31%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Vintage</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="vintage" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.vintage }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="w-[31%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Volume (ml)</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="volume" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.volume }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-auto mt-[2rem]">
+                    <button class="text-white h-[50px] bg-black rounded-4xl py-[0.5rem] px-[5rem] cursor-pointer" type="submit">
+                        <span>Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('image').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const imgPreview = document.getElementById('product-image-preview');
+            imgPreview.src = URL.createObjectURL(file);
+        }
+    });
+</script>
+{% endblock content %}

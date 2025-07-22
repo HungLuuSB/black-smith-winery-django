@@ -1,0 +1,94 @@
+{% extends '_AdminDashboardLayout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block section_name %}
+Products
+{% endblock section_name %}
+{% block section_desc %}
+Manage your store's products
+{% endblock section_desc %}
+
+{% block content %}
+<div class="p-[2rem]">
+    <div class="w-full bg-white p-[3rem] rounded-2xl h-full">
+        <div class="w-full flex flex-row items-center justify-between">
+            <div class="flex flex-nowrap gap-[1rem]">
+                <div class="h-auto">
+                    <button class="text-white w-full h-[50px] bg-black rounded-4xl py-[0.5rem] px-[1rem] cursor-pointer" type="button" onclick="window.location.href='#'">
+                        <span>+ Add Product</span>
+                    </button>
+                </div>
+                <div class="h-auto">
+                    <input id="product-name-search" class="text-black w-[500px] h-[50px] bg-[#f3f3f3] rounded-4xl py-[0.5rem] px-[1rem]" placeholder="Search product"/>
+                </div>
+            </div>
+            <div class="flex flex-nowrap gap-[1rem]">
+                <div class="h-auto rounded-4xl border-[#2d2d2e54] border-[1px] p-[10px]">
+                    <span class="eyebrow">
+                        Sort:
+                    </span>
+                    <select id="product-sort-filter" class="border-none">
+                        <option value="id" selected>ID</option>
+                        <option value="price">Price</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+                <div class="h-auto rounded-4xl border-[#2d2d2e54] border-[1px] p-[10px]">
+                    <select id="product-sort-order">
+                        <option value="asc" selected>Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex flex-nowrap flex-col justify-center mt-[2rem]">
+            <div class="w-full" id="product-table">
+
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchBox = document.getElementById('product-name-search');
+        const tableContainer = document.getElementById('product-table');
+        const sortBy = document.getElementById('product-sort-filter');
+        const sortOrder = document.getElementById('product-sort-order');
+
+        function fetchProducts(keyword = '') {
+            const sortField = sortBy.value;
+            const order = sortOrder.value;
+            const url = `{% url 'api/get-products' %}?q=${encodeURIComponent(keyword)}&sort=${sortField}&order=${order}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network error");
+                    return response.text();
+                })
+                .then(html => {
+                    tableContainer.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                });
+        }
+
+        fetchProducts();
+
+        searchBox.addEventListener('input', function () {
+            fetchProducts(searchBox.value);
+        });
+        sortBy.addEventListener('change', function () {
+            fetchProducts()
+        });
+        sortOrder.addEventListener('change', function() {
+            fetchProducts()
+        });
+    });
+</script>
+
+
+{% endblock content %}

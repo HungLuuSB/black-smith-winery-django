@@ -26,13 +26,20 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products/", blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if not self.sku:
-            cat_code = self.category.sku_prefix
+        is_new = self._state.adding
+
+        if not is_new:
+            old = Product.objects.get(pk=self.pk)
+        else:
+            old = None
+
+        if is_new or (old and self.name != old.name):
+            self.slug = slugify(self.name)
+
+        if is_new or (old and (self.category != old.category or self.country != old.country)):
+            cat_prefix = CATEGORY_SKU_PREFIX.get(self.category.id, "WHT")
             country_code = self.country.code
             uid = str(uuid.uuid4().int)[:5]
-            self.sku = f"{cat_code}-{country_code}-{uid}"
-
-        if not self.slug:
-            self.slug = slugify(self.name)
+            self.sku = f"{cat_prefix}-{country_code}-{uid}"
 
         super().save(*args, **kwargs)

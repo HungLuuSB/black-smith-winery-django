@@ -1,6 +1,14 @@
 {% extends '_AdminDashboardLayout.html' %}
 {% load static %}
 {% load humanize %}
+
+{% block section_name %}
+Overview
+{% endblock section_name %}
+{% block section_desc %}
+Here are today's stats of your store!
+{% endblock section_desc %}
+
 {% block content %}
 <div class="p-[2rem]">
     <div class="flex flex-nowrap flex-row justify-between items-start">

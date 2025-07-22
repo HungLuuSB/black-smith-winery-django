@@ -24,19 +24,19 @@
                 <li class="font-[GTSuperDisplay]">
                   <div class="{% if choice == 'overview' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
                     <i class="fa fa-home ml-[20px]"></i>
-                    <a class="text-left w-full block ml-[10px]">Overview</a>
+                    <a class="text-left w-full block ml-[10px]" href="{% url "dashboard/admin" %}">Overview</a>
                   </div>
                 </li>
                 <li class="font-[GTSuperDisplay]">
                   <div class="{% if choice == 'orders' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
                     <i class="fa fa-shopping-cart ml-[20px]"></i>
-                    <a class="text-left w-full block ml-[10px]">Orders</a>
+                    <a class="text-left w-full block ml-[10px]" href="{% url "dashboard/products" %}">Orders</a>
                   </div>
                 </li>
                 <li class="font-[GTSuperDisplay]">
                   <div class="{% if choice == 'products' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
                     <i class="fa fa-shopping-basket ml-[20px]"></i>
-                    <a class="text-left w-full block ml-[10px]">Products</a>
+                    <a class="text-left w-full block ml-[10px]" href="{% url "dashboard/products" %}">Products</a>
                   </div>
                 </li>
               </ul>
@@ -51,12 +51,10 @@
                   <div class="flex flex-col">
                     <h1 class="text-[1.5rem] font-[GTSuperDisplay]">
                       {% block section_name %}
-                      Overview
                       {% endblock section_name %}
                     </h1>
                     <h3 class="text-[1.2rem] eyebrow">
                       {% block section_desc %}
-                      Here are today's stats of your store!
                       {% endblock section_desc %}
                     </h3>
                   </div>

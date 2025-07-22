@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
+from django.template.loader import render_to_string
 from order.models import Order, OrderDetail
+from shop.models import Product, Stock
 from django.db.models.functions import TruncMonth, TruncDay
 from django.db.models import Count, Sum
 from django.http import JsonResponse
 from django.views import View
 from dateutil.relativedelta import relativedelta
-from django.utils.timezone import now, timedelta 
+from django.utils.timezone import now, timedelta
+from django.db.models import Q
 import calendar
 import json
 # Create your views here.
@@ -85,3 +88,19 @@ class TotalOrdersChart(View):
     def get(self, request, *args, **kwargs):
         
         pass
+
+def get_product_by_name(request):
+    query = request.GET.get('q', '')
+    sort = request.GET.get('sort', 'id')
+    order = request.GET.get('order', 'asc')
+
+    sort_fields = {'id', 'name', 'price'}
+    if sort not in sort_fields:
+        sort = 'id'
+
+    order_prefix = '' if order == 'asc' else '-'
+    ordering = f"{order_prefix}{sort}"
+
+    products = Product.objects.filter(Q(name__icontains=query)).order_by(ordering)
+    html = render_to_string("api/product_table.html", {'products': products})
+    return HttpResponse(html)

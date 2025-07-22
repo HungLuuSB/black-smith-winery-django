@@ -1,0 +1,32 @@
+{% load humanize %}
+<table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem] w-[400px]">Name</th>
+                            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">SKU</th>
+                            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Category</th>
+                            <th class="text-right border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Price</th>
+                            <th class="text-center border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Status</th>
+                            <th class="text-center border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Stock<th>
+                            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">ID</th>
+                            <th class="text-center border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td class="text-left border-b-[1px] border-b-[#b2b2b2] py-[1rem]">{{ product.name }}</td>
+                                <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.sku }}</td>
+                                <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.category.name }}</td>
+                                <td class="text-right border-b-[1px] border-b-[#b2b2b2]">£{{ product.price|floatformat:2|intcomma }}</td>
+                                <td class="text-center border-b-[1px] border-b-[#b2b2b2]">Available</td>
+                                <td class="text-center border-b-[1px] border-b-[#b2b2b2]">{{ product.stock.quantity }}<td>
+                                <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.id }}</td>
+                                <td class="text-center border-b-[1px] border-b-[#b2b2b2]">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i class="fa fa-trash ml-[1rem]" aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
