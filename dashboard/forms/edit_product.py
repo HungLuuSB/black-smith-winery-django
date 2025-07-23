@@ -9,4 +9,4 @@ class EditProductForm(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ['sku', 'slug']
-        fields = fields = ['name', 'description', 'category', 'volume', 'country', 'abv', 'original_price', 'vintage', 'image', 'discounted_price']
+        fields = ['name', 'description', 'category', 'volume', 'country', 'abv', 'original_price', 'vintage', 'image', 'discounted_price']
