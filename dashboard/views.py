@@ -11,7 +11,6 @@ import os
 def index(request):
     return render(request, "dashboard/index.html")
 
-
 def admin_index(request):
     total_grand_total = Order.objects.aggregate(total_grand_total=Sum("grand_total"))[
         "total_grand_total"
@@ -19,6 +18,7 @@ def admin_index(request):
     context = {
         "choice": "overview",
         "orders": Order.objects.all(),
+        "products": Product.objects.all(),
         "total_grand_total": total_grand_total,
     }
     return render(request, "dashboard/admin_index.html", context)

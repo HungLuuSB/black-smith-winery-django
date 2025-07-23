@@ -2,7 +2,7 @@
                 <table class="w-full border-collapse">
                     <thead>
                         <tr>
-                            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem] w-[400px]">Name</th>
+                            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem] w-[500px]">Name</th>
                             <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">SKU</th>
                             <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Category</th>
                             <th class="text-right border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Original Price</th>
@@ -16,7 +16,10 @@
                     <tbody>
                         {% for product in products %}
                             <tr>
-                                <td class="text-left border-b-[1px] border-b-[#b2b2b2] py-[1rem]">{{ product.name }}</td>
+                                <td class="text-left border-b-[1px] border-b-[#b2b2b2] py-[1rem]">
+                                    <img class="w-[20%] inline-block h-[125px]" src="{{ product.image.url }}"/>
+                                    <span class="inline-block">{{ product.name }}</span>
+                                </td>
                                 <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.sku }}</td>
                                 <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.category.name }}</td>
                                 <td class="text-right border-b-[1px] border-b-[#b2b2b2]">£{{ product.original_price|floatformat:2|intcomma }}</td>
