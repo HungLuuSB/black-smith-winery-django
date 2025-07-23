@@ -63,9 +63,9 @@ Edit Product
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Category</h2>
                             <div class="w-full border-[1px] border-black">
-                                <select name="category" type="text" list="categories" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.category.name }}" autocomplete="off"/>
+                                <select name="category" type="text" list="categories" class="text-[1.2rem] p-[1rem] w-full" required autocomplete="off"/>
                                     {% for category in categories %}
-                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                        <option value="{{ category.id }}" {% if product.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
