@@ -5,11 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("<slug:categorySlug>", views.category, name="product/categorySlug"),
-    re_path(
-        r"^shop/details/(?P<productSlug>[\w-]+)$",
-        views.product_details,
-        name="product/details",
-    ),
+    re_path(r"^details/(?P<productSlug>[\w-]+)$", views.product_details, name="product/details")
 ]
 
 if settings.DEBUG:

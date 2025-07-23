@@ -20,7 +20,7 @@
         <a class="inline-block max-w-[14em]">{{ item.product.name }}</a>
       </div>
       <div class="text-center ml-auto mr-[3.5rem]">
-        <span>£{{ item.product.price|floatformat:2|intcomma }}</span>
+        <span>£{{ item.product.final_price|floatformat:2|intcomma }}</span>
       </div>
       <div class="text-center mr-[3.5rem] mb-[0.6rem]">
         <span>{{ item.quantity }}</span>

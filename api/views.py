@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.template.loader import render_to_string
+from django.core.paginator import Paginator
 from order.models import Order, OrderDetail
 from shop.models import Product, Stock
 from django.db.models.functions import TruncMonth, TruncDay
@@ -93,6 +94,7 @@ def get_product_by_name(request):
     query = request.GET.get('q', '')
     sort = request.GET.get('sort', 'id')
     order = request.GET.get('order', 'asc')
+    page_number = request.GET.get('page', 1)
 
     sort_fields = {'id', 'name', 'price'}
     if sort not in sort_fields:
@@ -102,5 +104,11 @@ def get_product_by_name(request):
     ordering = f"{order_prefix}{sort}"
 
     products = Product.objects.filter(Q(name__icontains=query)).order_by(ordering)
-    html = render_to_string("api/product_table.html", {'products': products})
-    return HttpResponse(html)
+
+    paginator = Paginator(products, 10)
+    page_obj = paginator.get_page(page_number)
+
+    html = render_to_string("api/product_table.html", {'products': page_obj})
+    pagination_html = render_to_string("api/pagination_controls.html", {'page_obj': page_obj})
+
+    return JsonResponse({'table_html': html, 'pagination_html': pagination_html})

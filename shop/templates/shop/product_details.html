@@ -6,6 +6,23 @@
 {% endblock title %}
 {% block content %}
 <div class="modules--1 bg-white relative text-black h-[1000px]">
+  <div class="w-full">
+        {% if status and status == "OK" %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#b6eacd] rounded-[0.5rem]">
+                <h1 class="text-[.9rem]">Success</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% elif status and status == "FAILED"  %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#fee3e1]">
+                <h1 class="text-[.9rem]">Error</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
   <div class="flex justify-between flex-row">
     <div class="w-[45%]">
       <div class="w-full h-full max-h-[700px] p-[2rem] bg-[#FAFAFA]">
@@ -35,10 +52,19 @@
         </p>
       </div>
       <div class="mt-[1rem]">
-        <p class="font-bold text-[2rem]">£{{ product.price|floatformat:2|intcomma }}</p>
+        {% if product.is_discounted %}
+          <p class="text-[2rem] text-black">
+            <span class="line-through text-[#7e7e7e]">£{{ product.original_price|floatformat:2|intcomma }}</span>
+            <span class="ml-2 font-bold">£{{ product.final_price|floatformat:2|intcomma }}</span>
+          </p>
+        {% else %}
+          <p class="font-bold text-[2rem] text-black">
+            £{{ product.original_price|floatformat:2|intcomma }}
+          </p>
+        {% endif %}
       </div>
       <div class="mt-[1rem]">
-        <p class="break text-[1rem] text-justify">{{ product.description }}</p>
+        <p class="break text-[1rem] text-justify">{{ product.description|linebreaksbr  }}</p>
       </div>
       <form class="mt-[1rem]" method="post" action="{% url 'cart/update' product.id %}">
         {% csrf_token %}

@@ -11,11 +11,28 @@ Manage your store's products
 
 {% block content %}
 <div class="p-[2rem]">
-    <div class="w-full bg-white p-[3rem] rounded-2xl h-full">
+    <div class="w-full">
+        {% if status and status == "OK" %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#b6eacd] rounded-[0.5rem]">
+                <h1 class="text-[.9rem]">Success</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% elif status and status == "FAILED"  %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#fee3e1] rounded-[0.5rem]">
+                <h1 class="text-[.9rem]">Error</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="w-full bg-white p-[3rem] rounded-2xl h-full mt-[1rem]">
         <div class="w-full flex flex-row items-center justify-between">
             <div class="flex flex-nowrap gap-[1rem]">
                 <div class="h-auto">
-                    <button class="text-white w-full h-[50px] bg-black rounded-4xl py-[0.5rem] px-[1rem] cursor-pointer" type="button" onclick="window.location.href='#'">
+                    <button class="text-white w-full h-[50px] bg-black rounded-4xl py-[0.5rem] px-[1rem] cursor-pointer" type="button" onclick="window.location.href='{% url "dashboard/add-product" %}'">
                         <span>+ Add Product</span>
                     </button>
                 </div>
@@ -46,48 +63,55 @@ Manage your store's products
             <div class="w-full" id="product-table">
 
             </div>
-            <div>
+            
+            <div id="pagination-controls" class="mt-4 text-center">
+
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchBox = document.getElementById('product-name-search');
-        const tableContainer = document.getElementById('product-table');
-        const sortBy = document.getElementById('product-sort-filter');
-        const sortOrder = document.getElementById('product-sort-order');
+    const sortBy = document.getElementById("product-sort-filter");
+    const sortOrder = document.getElementById("product-sort-order");
+    const searchBox = document.getElementById("product-name-search");
+    const tableContainer = document.getElementById("product-table");
 
-        function fetchProducts(keyword = '') {
-            const sortField = sortBy.value;
-            const order = sortOrder.value;
-            const url = `{% url 'api/get-products' %}?q=${encodeURIComponent(keyword)}&sort=${sortField}&order=${order}`;
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error("Network error");
-                    return response.text();
-                })
-                .then(html => {
-                    tableContainer.innerHTML = html;
-                })
-                .catch(error => {
-                    console.error("Fetch error:", error);
-                });
-        }
+    function fetchProducts(keyword = '', page = 1) {
+        const sortField = sortBy.value;
+        const order = sortOrder.value;
+        const url = `{% url 'api/get-products' %}?q=${encodeURIComponent(keyword)}&sort=${sortField}&order=${order}&page=${page}`;
 
-        fetchProducts();
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Network error");
+                return response.json();
+            })
+            .then(data => {
+                tableContainer.innerHTML = data.table_html;
+                document.getElementById('pagination-controls').innerHTML = data.pagination_html;
+                attachPaginationEvents();
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
+    }
 
-        searchBox.addEventListener('input', function () {
-            fetchProducts(searchBox.value);
+    function attachPaginationEvents() {
+        document.querySelectorAll('#pagination-controls a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                fetchProducts(searchBox.value, page);
+            });
         });
-        sortBy.addEventListener('change', function () {
-            fetchProducts()
-        });
-        sortOrder.addEventListener('change', function() {
-            fetchProducts()
-        });
-    });
+    }
+
+    fetchProducts();
+
+    searchBox.addEventListener('input', () => fetchProducts(searchBox.value));
+    sortBy.addEventListener('change', () => fetchProducts(searchBox.value));
+    sortOrder.addEventListener('change', () => fetchProducts(searchBox.value));
 </script>
 
 

@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 from django.db.models import Sum
-from dashboard.forms import AddNewProductForm, EditProductForm
+from dashboard.forms import AddProductForm, EditProductForm
 from shop.models import Stock, Product
 from common.models import Country, Brand, Category
 from order.models import Order, OrderDetail
-
+import os
 
 # Create your views here.
 def index(request):
@@ -47,6 +48,10 @@ def admin_edit_product(request, product_id: int):
                 brand, _ = Brand.objects.get_or_create(name=brand_name)
                 product.brand = brand
 
+            if 'image' in request.FILES:
+                if product.image and os.path.isfile(product.image.path):
+                    os.remove(product.image.path)
+
             product.save()
 
             stock_quantity = request.POST.get("stock")
@@ -57,6 +62,7 @@ def admin_edit_product(request, product_id: int):
             context = {
                 'form': EditProductForm(instance=product),
                 'message': 'Product updated successfully.',
+                'status': 'OK',
                 'product': product,
                 'categories': Category.objects.all(),
                 'brands': Brand.objects.all(),
@@ -68,6 +74,7 @@ def admin_edit_product(request, product_id: int):
             context = {
                 'form': form,
                 'message': 'Failed to update product.',
+                'status': "FAILED",
                 'product': product,
                 'categories': Category.objects.all(),
                 'brands': Brand.objects.all(),
@@ -84,31 +91,64 @@ def admin_edit_product(request, product_id: int):
     }
     return render(request, "dashboard/admin_edit_product.html", context)
 
-def add_product(request):
+def admin_add_product(request):
     if request.method == "POST":
-        form = AddNewProductForm(request.POST, request.FILES)
+        form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
-            country_name = request.POST.get("country")
-            country, created = Country.objects.get_or_create(name=country_name)
+            country = form.cleaned_data['country']
             product.country = country
 
-            brand_name = request.POST.get("brand")
-            brand, created = Brand.objects.get_or_create(name=brand_name)
-
+            brand_name = form.cleaned_data['brand']
+            brand, _ = Brand.objects.get_or_create(name=brand_name)
             product.brand = brand
+
             product.save()
-            quantity = form.cleaned_data["stock_quantity"]
-            Stock.objects.create(product=product, quantity=quantity)
-            return render(request, "dashboard/index.html")
+            stock_quantity = request.POST.get("stock")
+            Stock.objects.create(product=product, quantity=stock_quantity)
+            context = {
+                'form': AddProductForm(),
+                'message': 'Product added successfully.',
+                'status': 'OK',
+                'categories': Category.objects.all(),
+                'brands': Brand.objects.all(),
+                'countries': Country.objects.all()
+            }
+            return render(request, "dashboard/admin_add_product.html", context)
         else:
             print("Form errors:", form.errors)
             print("Non-field errors:", form.non_field_errors())
+            context = {
+                'form': AddProductForm(),
+                'message': 'Failed to add product.',
+                'status': 'FAILED',
+                'categories': Category.objects.all(),
+                'brands': Brand.objects.all(),
+                'countries': Country.objects.all()
+            }
+            return render(request, "dashboard/admin_add_product.html", context)
 
     context = {
-        "form": AddNewProductForm,
+        "form": AddProductForm,
         "countries": Country.objects.all(),
         "brands": Brand.objects.all(),
         "categories": Category.objects.all(),
     }
-    return render(request, "dashboard/add_new_product.html", context)
+    return render(request, "dashboard/admin_add_product.html", context)
+
+def admin_delete_product(request, product_id: int):
+    product = get_object_or_404(Product, id=product_id)
+
+    if OrderDetail.objects.filter(product=product).exists():
+        context = {
+            "status": "FAILED",
+            "message": "This product has been purchased."
+        }
+        return render(request, "dashboard/admin_products.html", context)
+    
+    product.delete()
+    context = {
+        "status": "OK",
+        "message": "Product deleted successfully."
+    }
+    return render(request, "dashboard/admin_products.html", context)

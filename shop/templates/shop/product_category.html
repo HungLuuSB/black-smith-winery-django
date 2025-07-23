@@ -57,8 +57,16 @@
                           </a>
                           </p>
                           <p id="product--abv" class="text-[.9rem] text-[#7e7e7e]">{{ product.volume }}ml / {{ product.abv }}%</p>
-                          <p id="product--price" class="font-bold text-[2rem] text-black">£{{ product.price }}</p>
-                        <p id="product--sale-price" class="text-[.9rem] text-[#7e7e7e]">As low as <span class="font-bold text-black">£11.50</span></p>
+                          {% if product.is_discounted %}
+                            <p class="text-[2rem] text-black">
+                              <span class="line-through text-[#7e7e7e]">£{{ product.original_price }}</span>
+                              <span class="ml-2 font-bold">£{{ product.final_price }}</span>
+                            </p>
+                          {% else %}
+                            <p class="font-bold text-[2rem] text-black">
+                              £{{ product.original_price }}
+                            </p>
+                          {% endif %}
                         <div class="w-full h-auto mt-[1rem]">
                           <button class="text-white w-full h-[50px] bg-black rounded-[6px]" type="button">
                             <span>Add to Cart</span>

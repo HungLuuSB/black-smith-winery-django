@@ -30,13 +30,15 @@ BlackSmith's Winery - Cart
                 <a class="inline-block underline" href="{% url 'product/details' item.product.slug %}">{{ item.product.name }}</a>
               </td>
               <td class="text-center ml-auto mr-[3.5rem]">
-                <span>£{{ item.product.price }}</span>
+                <span>£{{ item.product.final_price|floatformat:2|intcomma }}</span>
               </td>
               <td class="text-center ml-auto mr-[3.5rem]">
                 <input name="quantity_{{ item.id }}" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center border border-[#b2b2b2]" value="{{ item.quantity }}"/>
               </td>
               <td class="text-center mr-[3.5rem] mb-[0.6rem]">
-                <span>£{{ item.quantity|multiply:item.product.price|floatformat:2|intcomma }}</span>
+                <p class=" text-black">
+                  £{{ item.quantity|multiply:item.product.final_price|floatformat:2|intcomma }}
+                </p>
               </td>
             </tr>
             {% endfor %}
@@ -78,7 +80,7 @@ BlackSmith's Winery - Cart
                 </td>
               </tr>
               <tr>
-                <th class="text-[1rem] text-left">VAT(8%)</th>
+                <th class="text-[1rem] text-left">VAT({{ vat_rate|multiply:100|floatformat:0 }}%)</th>
                 <td class="text-[1rem] text-right">£{{ vat|floatformat:2|intcomma }}</td>
                 </td>
               </tr>

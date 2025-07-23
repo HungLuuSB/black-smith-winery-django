@@ -55,8 +55,9 @@ Dashboard
         <table class="w-full">
           <thead>
             <tr class="text-[1.2rem] font-[GTSuperDisplay]">
-              <th class="text-center py-[20px] border-b-[1px] border-b-[#b2b2b2]">Id</th>
+
               {% comment %}
+              <th class="text-center py-[20px] border-b-[1px] border-b-[#b2b2b2]">Id</th>
               <th class="text-left p-[20px] border-b-[1px] border-b-[#b2b2b2]">Email</th>
               {% endcomment %}
               <th class="text-left py-[20px] border-b-[1px] border-b-[#b2b2b2]">Order Date</th>
@@ -69,8 +70,9 @@ Dashboard
           <tbody class="pt-[1rem]">
             {% for order in orders  %}
             <tr class="text-[1.2rem] h-[60px]">
-              <td class="text-center">{{ order.id }}</td>
+              
               {% comment %}
+              <td class="text-center">{{ order.id }}</td>
               <td class="">{{ order.customer_email }}</td>
               {% endcomment %}
               <td class="text-left ml-auto">{{ order.created_at }}</td>

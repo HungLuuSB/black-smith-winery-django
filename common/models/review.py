@@ -6,5 +6,6 @@ class Review(models.Model):
     user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name="reviews"
     )
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    rating = models.IntegerField()
     comment = models.TextField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)

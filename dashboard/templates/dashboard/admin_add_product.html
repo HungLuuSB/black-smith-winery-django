@@ -6,7 +6,7 @@
 Products
 {% endblock section_name %}
 {% block section_desc %}
-Edit Product
+Add New Product
 {% endblock section_desc %}
 
 {% block content %}
@@ -36,11 +36,11 @@ Edit Product
                     <h1 class="text-[2rem]">Product Image</h1>
                 </div>
                 <div class="w-full mt-[2rem] border-[1px] border-black">
-                    <img id="product-image-preview" class="h-full w-full object-contain p-[1rem]" src="{{ product.image.url }}"/>
+                    <img id="product-image-preview" class="h-full w-full object-contain p-[1rem]" alt="No image uploaded."/>
                 </div>
                 <div class="flex flex-row flex-nowrap mt-[2rem] items-center justify-center">
                     <input type="file" id="image" name="image" accept="image/*" class="hidden" />
-                    <button class="text-white h-[50px] bg-black rounded-4xl py-[0.5rem] px-[2rem] cursor-pointer" type="button" onclick="document.getElementById('image-input').click();">
+                    <button class="text-white h-[50px] bg-black rounded-4xl py-[0.5rem] px-[2rem] cursor-pointer" type="button" onclick="document.getElementById('image').click();">
                         <span>Change</span>
                     </button>
                 </div>
@@ -55,7 +55,7 @@ Edit Product
                         <div class="w-full">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Name</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="name" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.name }}" autocomplete="off"/>
+                                <input name="name" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.name.value }}" autocomplete="off"/>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ Edit Product
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Category</h2>
                             <div class="w-full border-[1px] border-black">
-                                <select name="category" type="text" list="categories" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.category.name }}" autocomplete="off"/>
+                                <select name="category" type="text" list="categories" class="text-[1.2rem] p-[1rem] w-full" required value autocomplete="off">
                                     {% for category in categories %}
                                         <option value="{{ category.id }}">{{ category.name }}</option>
                                     {% endfor %}
@@ -73,7 +73,7 @@ Edit Product
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Brand</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="brand" type="text" list="brands" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.brand.name }}" autocomplete="off"/>
+                                <input name="brand" type="text" list="brands" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.brand.value }}" autocomplete="off"/>
                                 <datalist id="brands">
                                     {% for brand in brands %}
                                         <option value="{{ brand.name }}">{{ brand.name }}</option>
@@ -84,9 +84,9 @@ Edit Product
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Country</h2>
                             <div class="w-full border-[1px] border-black">
-                                <select name="country" class="text-[1.2rem] p-[1rem] w-full" required autocomplete="off"/>
+                                <select name="country" class="text-[1.2rem] p-[1rem] w-full" required autocomplete="off">
                                     {% for country in countries %}
-                                        <option value="{{ country.id }}" {% if product.country.id == country.id %}selected{% endif %}>
+                                        <option value="{{ country.id }}">
                                             {{ country.name }}
                                         </option>
                                     {% endfor %}
@@ -98,20 +98,19 @@ Edit Product
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Original Price</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="original_price" type="number" class="text-[1.2rem] p-[1rem] w-full" min="0" required value="{{ product.original_price }}" step=".01" autocomplete="off"/>
+                                <input name="original_price" type="number" class="text-[1.2rem] p-[1rem] w-full" min="0" required value="{{ form.original_price.value }}" step=".01" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Discounted Price</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="discounted_price" type="number" class="text-[1.2rem] p-[1rem] w-full" min="0" max="{{ product.original_price }}" value="{{ product.discounted_price }}" step=".01" autocomplete="off"/>
+                                <input name="discounted_price" type="number" class="text-[1.2rem] p-[1rem] w-full" min="0" value="{{ form.discounted_price.value }}" step=".01" autocomplete="off"/>
                             </div>
                         </div>
-                        
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Stock</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="stock" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.stock.quantity }}" autocomplete="off"/>
+                                <input name="stock" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.stock.value }}" autocomplete="off"/>
                             </div>
                         </div>
                     </div>
@@ -120,34 +119,34 @@ Edit Product
                         <div class="w-full">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Description</h2>
                             <div class="w-full border-[1px] border-black">
-                                <textarea name="description" type="text" class="text-[1.2rem] p-[1rem] w-full border-none outline-none" required>{{ product.description }}</textarea>
+                                <textarea name="description" type="text" class="text-[1.2rem] p-[1rem] w-full border-none outline-none" required>{{ form.description.value }}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="w-full flex flex-row justify-between mt-[1rem]">
                         <div class="w-[31%]">
-                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">ABV (%)</h2>
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Vintage</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="abv" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.abv }}" autocomplete="off"/>
+                                <input name="vintage" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.vintage.value }}" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="w-[31%]">
-                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Vintage</h2>
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">ABV (%)</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="vintage" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.vintage }}" autocomplete="off"/>
+                                <input name="abv" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.abv.value }}" step=".01" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="w-[31%]">
                             <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Volume (ml)</h2>
                             <div class="w-full border-[1px] border-black">
-                                <input name="volume" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ product.volume }}" autocomplete="off"/>
+                                <input name="volume" type="number" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.volume.value }}" autocomplete="off"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="h-auto mt-[2rem]">
                     <button class="text-white h-[50px] bg-black rounded-4xl py-[0.5rem] px-[5rem] cursor-pointer" type="submit">
-                        <span>Save</span>
+                        <span>Add Product</span>
                     </button>
                 </div>
             </div>

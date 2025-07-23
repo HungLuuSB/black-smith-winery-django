@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from decimal import Decimal
 from .forms import ShippingForm
-from common.models import Country
+from common.models import Country, StoreSettings
 from cart.models import Cart
 from order.models import Order, OrderDetail
 import time
@@ -13,7 +13,6 @@ api_key = "YOUR_API_KEY"
 checksum_key = "YOUR_CHECKSUM_KEY"
 
 payOS = PayOS(client_id, api_key, checksum_key)
-
 
 def create_payment_link():
     try:
@@ -34,6 +33,7 @@ def create_payment_link():
 
 
 def shipping(request):
+    vat_rate = StoreSettings.get_solo().vat_rate / 100
     session_data = request.session.get("shipping", {})
     cart = Cart.get_cart(request)
     initial = {}
@@ -69,7 +69,7 @@ def shipping(request):
         else:
             print(form.errors)
     subtotal = cart.get_total()
-    vat = subtotal * Decimal(0.08)
+    vat = subtotal * vat_rate
     grand_total = subtotal + vat
     form = ShippingForm(initial=initial)
     context = {
@@ -79,6 +79,7 @@ def shipping(request):
         "cart": cart,
         "subtotal": subtotal,
         "vat": vat,
+        "vat_rate": vat_rate,
         "grand_total": grand_total,
     }
     return render(request, "checkout/shipping.html", context)
@@ -86,7 +87,7 @@ def shipping(request):
 
 def payment(request):
     session_data = request.session.get("shipping")
-
+    vat_rate = StoreSettings.get_solo().vat_rate / 100
     cart = Cart.get_cart(request)
     initial = {}
     initial["customer_phone"] = session_data.get("customer_phone", "")
@@ -102,7 +103,7 @@ def payment(request):
         return redirect("checkout/place_order")
 
     subtotal = cart.get_total()
-    vat = subtotal * Decimal(0.08)
+    vat = subtotal * vat_rate
     grand_total = subtotal + vat
     context = {
         "step": 3,
@@ -110,6 +111,7 @@ def payment(request):
         "cart": cart,
         "subtotal": subtotal,
         "vat": vat,
+        "vat_rate": vat_rate,
         "grand_total": grand_total,
     }
 
@@ -117,6 +119,7 @@ def payment(request):
 
 
 def confirm_review(request):
+    vat_rate = StoreSettings.get_solo().vat_rate / 100
     session_data = request.session.get("shipping", {})
     cart = Cart.get_cart(request)
     initial = {
@@ -135,7 +138,7 @@ def confirm_review(request):
         return redirect("checkout/payment")
 
     subtotal = cart.get_total()
-    vat = subtotal * Decimal(0.08)
+    vat = subtotal * vat_rate
     grand_total = subtotal + vat
     form = ShippingForm(initial=initial)
     context = {
@@ -145,6 +148,7 @@ def confirm_review(request):
         "cart": cart,
         "subtotal": subtotal,
         "vat": vat,
+        "vat_rate": vat_rate,
         "grand_total": grand_total,
     }
 
@@ -152,11 +156,12 @@ def confirm_review(request):
 
 
 def place_order(request):
+    vat_rate = StoreSettings.get_solo().vat_rate / 100
     shipping_data = request.session.get("shipping")
 
     cart = Cart.get_cart(request)
     subtotal = cart.get_total()
-    vat = subtotal * Decimal(0.08)
+    vat = subtotal * vat_rate
     grand_total = subtotal + vat
     order = Order(
         customer_first_name=shipping_data.get("customer_first_name"),
@@ -176,12 +181,17 @@ def place_order(request):
     order.save()
 
     for item in cart.get_items():
-        OrderDetail.objects.create(
-            order=order,
-            product=item.product,
-            quantity=item.quantity,
-            unit_price=item.product.price,
-        )
+        stock = item.product.stock
+        if stock.quantity >= item.quantity:
+            OrderDetail.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                unit_price=item.product.final_price,
+            )
+            stock.quantity -= item.quantity
+            stock.save()
+
 
     cart.clear()
     if "shipping" in request.session:

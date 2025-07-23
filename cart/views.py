@@ -2,6 +2,7 @@ from django.db import transaction
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from django.shortcuts import redirect, render, get_object_or_404
+from common.models import StoreSettings
 from cart.models import Cart, CartItem
 from shop.models import Product
 from decimal import Decimal
@@ -9,17 +10,21 @@ from cart.forms import UpdateCartItemForm
 # Create your views here.
 
 
+
+
 def get_cart_details(request):
+    vat_rate = StoreSettings.get_solo().vat_rate / 100
     cart = Cart.get_cart(request)
     total_quantity = cart.get_total_quantity()
     sub_total = cart.get_total()
-    vat = sub_total * Decimal(0.08)
+    vat = sub_total * vat_rate
     grand_total = vat + sub_total
     context = {
         "cart": cart,
         "sub_total": sub_total,
         "total_quantity": total_quantity,
         "vat": vat,
+        "vat_rate": vat_rate,
         "grand_total": grand_total,
     }
     return render(request, "cart/details.html", context)

@@ -1,6 +1,7 @@
 {% extends "_CheckoutLayout.html" %}
 {% load static %}
 {% load humanize %}
+{% load math_filters %}
 {% block title %}
 BlackSmith's Winery | Checkout
 {% endblock title %}
@@ -40,7 +41,7 @@ BlackSmith's Winery | Checkout
             <tr class="text-left uppercase text-[1.2rem] font-[GTSuperDisplay]">
               <th class="eyebrow uppercase">Items</th>
               <th class="eyebrow py-[20px] text-center uppercase">Qty</th>
-              <th class="eyebrow py-[20px] text-center uppercase">Price</th>
+              <th class="eyebrow py-[20px] text-right uppercase">Price</th>
             </tr>
           </thead>
           <tbody class="pt-[1rem]">
@@ -52,8 +53,8 @@ BlackSmith's Winery | Checkout
               <td class="text-center ml-auto mr-[3.5rem]">
                 <input name="quantity_{{ item.id }}" class="text-[20px] p-[5px] !w-[45px] font-[700] text-center border border-[#b2b2b2]" value="{{ item.quantity }}"/>
               </td>
-              <td class="text-center ml-auto mr-[3.5rem]">
-                <span>£{{ item.product.price }}</span>
+              <td class="text-right ml-auto mr-[3.5rem]">
+                <span>£{{ item.product.final_price }}</span>
               </td>
             </tr>
             {% endfor %}
@@ -72,7 +73,7 @@ BlackSmith's Winery | Checkout
             <span>£{{ subtotal|floatformat:2|intcomma }}</span>
           </li>
           <li class="flex justify-between items-center py-[1rem]">
-            <span class="eyebrow uppercase text-[1.5rem]">VAT(8%)</span>
+            <span class="eyebrow uppercase text-[1.5rem]">VAT({{ vat_rate|multiply:100|floatformat:0 }}%)</span>
             <span>£{{ vat|floatformat:2|intcomma }}</span>
           </li>
           <li class="flex justify-between items-center border-t-[1px] border-t-[#b2b2b2] text-[1.5rem] ">
