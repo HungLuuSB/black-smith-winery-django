@@ -9,9 +9,9 @@ BlackSmith's Winery - Cart
 <div class="modules--1 bg-white relative text-black">
   <h3 class="font-[GTSuperDisplay] text-[2rem]">Your shopping cart</h3>
   <div class="flex justify-between flex-row">
-    <div class="w-[70%] flex justify-center">
+    <div class="w-[70%] flex justify-center flex-col">
       {% if cart.items.all|length %}
-            <form method="post" action="{% url 'cart/update_all' %}" class="w-full">
+        <form method="post" action="{% url 'cart/update_all' %}" class="w-full">
         {% csrf_token %}
         <table class="w-full">
           <thead class="">
@@ -62,6 +62,21 @@ BlackSmith's Winery - Cart
             </tr>
         </table>
       </form>
+      <form method="get" action="{% url 'cart/details' %}" class="w-full mt-[2rem] flex flex-row justify-between items-center">
+        <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Voucher</h2>
+        <div class="w-[80%]">
+          <div class="w-full border-[1px] border-black">
+            <input name="voucher" type="text" class="text-[1.2rem] p-[1rem] w-full" value="{{ voucher_code }}" autocomplete="off"/>
+          </div>
+        </div>
+        <div class="">
+          <button class="cursor-pointer bg-black uppercase text-white border-none p-[1.2rem] font-[500] text-center float-right" type="submit">
+          <span>
+          Apply
+          </span>
+        </button>
+        </div>
+      </form>
       {% else %}
       <h1 class="eyebrow text-[1.5rem] font-[GTSuperDisplay] text-center content-center">Your cart is empty</h1>
       {% endif %}
@@ -79,6 +94,13 @@ BlackSmith's Winery - Cart
                 <td class="text-[1rem] text-right">£{{ sub_total|floatformat:2|intcomma }}</td>
                 </td>
               </tr>
+              {% if voucher %}
+              <tr>
+                <th class="text-[1rem] text-left">Discount({{ discount }}%)</th>
+                <td class="text-[1rem] text-right">- £{{ discount_amount|floatformat:2|intcomma }}</td>
+                </td>
+              </tr>
+              {% endif %}
               <tr>
                 <th class="text-[1rem] text-left">VAT({{ vat_rate|multiply:100|floatformat:0 }}%)</th>
                 <td class="text-[1rem] text-right">£{{ vat|floatformat:2|intcomma }}</td>

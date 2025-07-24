@@ -1,6 +1,7 @@
 from django.db import models
 from common.models import Country
 from account.models import CustomUser
+from .voucher import Voucher
 import uuid
 
 
@@ -19,6 +20,7 @@ class Order(models.Model):
     shipping_address = models.CharField(max_length=255)
     grand_total = models.DecimalField(decimal_places=2, max_digits=12)
     status = models.CharField(max_length=20, default="Pending")
+    voucher = models.ForeignKey(Voucher, null=True, blank=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def getTotalSales(self):

@@ -5,22 +5,46 @@ from django.shortcuts import redirect, render, get_object_or_404
 from common.models import StoreSettings
 from cart.models import Cart, CartItem
 from shop.models import Product
+from order.models import Voucher
 from decimal import Decimal
 from cart.forms import UpdateCartItemForm
+from django.contrib import messages
 # Create your views here.
 
 
 def get_cart_details(request):
-    vat_rate = StoreSettings.get_solo().vat_rate / 100
     cart = Cart.get_cart(request)
-    total_quantity = cart.get_total_quantity()
+    vat_rate = StoreSettings.get_solo().vat_rate / 100
     sub_total = Decimal(cart.get_total())
-    vat = sub_total * vat_rate
-    grand_total = vat + sub_total
+    total_quantity = cart.get_total_quantity()
+
+    voucher_code = request.GET.get("voucher") or request.session.get("voucher")
+    discount = Decimal(0)
+    voucher = None
+
+    if voucher_code:
+        try:
+            voucher = Voucher.objects.get(code__iexact=voucher_code, active=True)
+            discount = voucher.apply_discount(sub_total)
+            request.session["voucher"] = voucher.code
+        except Voucher.DoesNotExist:
+            messages.warning(request, "Invalid or inactive voucher code.")
+            request.session.pop("voucher", None)
+
+    discount_amount = (sub_total * discount / 100)
+    sub_total_after_discount = sub_total - discount_amount
+    vat = sub_total_after_discount * Decimal(vat_rate)
+    grand_total = sub_total_after_discount + vat
+    print(discount)
     context = {
         "cart": cart,
-        "sub_total": sub_total,
         "total_quantity": total_quantity,
+        "sub_total": sub_total,
+        "discount_amount": discount_amount,
+        "discount": discount,
+        "voucher": voucher,
+        "voucher_code": voucher_code,
+        "sub_total_after_discount": sub_total_after_discount,
         "vat": vat,
         "vat_rate": vat_rate,
         "grand_total": grand_total,

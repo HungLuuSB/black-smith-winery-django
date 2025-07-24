@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from dashboard.forms import AddProductForm, EditProductForm, AddVoucherForm
@@ -11,7 +12,6 @@ import os
 # Create your views here.
 def index(request):
     return render(request, "dashboard/index.html")
-
 
 def admin_index(request):
     total_grand_total = Order.objects.aggregate(total_grand_total=Sum("grand_total"))[
@@ -33,11 +33,9 @@ def admin_products(request):
     context = {"products": Product.objects.all()}
     return render(request, "dashboard/admin_products.html", context)
 
-
 def admin_orders(request):
     context = {"orders": Order.objects.all()}
     return render(request, "dashboard/admin_orders.html", context)
-
 
 def admin_edit_product(request, product_id: int):
     product = get_object_or_404(Product, id=product_id)
@@ -101,7 +99,6 @@ def admin_edit_product(request, product_id: int):
     }
     return render(request, "dashboard/admin_edit_product.html", context)
 
-
 def admin_add_product(request):
     if request.method == "POST":
         form = AddProductForm(request.POST, request.FILES)
@@ -147,7 +144,6 @@ def admin_add_product(request):
     }
     return render(request, "dashboard/admin_add_product.html", context)
 
-
 def admin_delete_product(request, product_id: int):
     product = get_object_or_404(Product, id=product_id)
 
@@ -184,3 +180,30 @@ def admin_add_voucher(request):
     }
     return render(request, "dashboard/admin_add_voucher.html", context)
 
+def admin_confirm_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if order.status != "Pending":
+        context = {
+            "orders": Order.objects.all(),
+            "status": "FAILED",
+            "message": "Can not confirm order that had already been confirmed!"
+        }
+        return render(request, "dashboard/admin_orders.html", context)
+
+    order.status = "Confirmed"
+    order.save()
+
+    send_mail(
+        subject="BlackSmith's Winery | Order confirmed!",
+        message=f'Your order {order.id} has been confirmed!',
+        from_email='noreply@yourdomain.com',
+        recipient_list=[order.customer_email],
+    )
+
+    context = {
+        "orders": Order.objects.all(),
+        "status": "OK",
+        "message": "Order confirmed!"
+    }
+    return render(request, "dashboard/admin_orders.html", context)
+    

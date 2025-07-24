@@ -30,7 +30,13 @@
       <td class="text-right border-b-[1px] border-b-[#b2b2b2]">
         £{{ order.grand_total|floatformat:2|intcomma }}
       </td>
-      <td class="text-center border-b-[1px] border-b-[#b2b2b2]">...<td>
+      <td class="text-center border-b-[1px] border-b-[#b2b2b2] p-[1rem]">
+        {% if order.status == 'Pending' %}
+          <button class="text-white h-[50px] bg-black rounded-2xl py-[0.5rem] px-[1rem] cursor-pointer" type="button" onclick="window.location.href='{% url "dashboard/confirm-order" order.id %}'">
+            <span>Confirm</span>
+          </button>
+        {% endif %}
+      <td>
     </tr>
     {% endfor %}
   </tbody>

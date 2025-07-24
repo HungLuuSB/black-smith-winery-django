@@ -72,6 +72,12 @@ BlackSmith's Winery | Checkout
             <span class="eyebrow uppercase text-[1.5rem]">Subtotal</span>
             <span>£{{ subtotal|floatformat:2|intcomma }}</span>
           </li>
+          {% if voucher %}
+          <li class="flex justify-between items-center py-[1rem]">
+            <span class="eyebrow uppercase text-[1.5rem]">Discount({{ discount }}%)</span>
+            <span>- £{{ discount_amount|floatformat:2|intcomma }}</span>
+          </li>
+          {% endif %}
           <li class="flex justify-between items-center py-[1rem]">
             <span class="eyebrow uppercase text-[1.5rem]">VAT({{ vat_rate|multiply:100|floatformat:0 }}%)</span>
             <span>£{{ vat|floatformat:2|intcomma }}</span>

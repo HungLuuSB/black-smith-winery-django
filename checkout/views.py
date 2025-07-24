@@ -3,7 +3,7 @@ from decimal import Decimal
 from .forms import ShippingForm
 from common.models import Country, StoreSettings
 from cart.models import Cart
-from order.models import Order, OrderDetail
+from order.models import Order, OrderDetail, Voucher
 import time
 from payos import ItemData, PaymentData, PayOS
 # Create your views here.
@@ -35,6 +35,10 @@ def create_payment_link():
 def shipping(request):
     vat_rate = StoreSettings.get_solo().vat_rate / 100
     session_data = request.session.get("shipping", {})
+    voucher_code = request.GET.get("voucher") or request.session.get("voucher")
+    discount = Decimal(0)
+    voucher = None
+
     cart = Cart.get_cart(request)
     initial = {}
     initial["customer_phone"] = session_data.get("customer_phone", "")
@@ -71,6 +75,18 @@ def shipping(request):
     subtotal = cart.get_total()
     vat = subtotal * vat_rate
     grand_total = subtotal + vat
+    if voucher_code:
+        try:
+            voucher = Voucher.objects.get(code__iexact=voucher_code, active=True)
+            discount = voucher.apply_discount(subtotal)
+            request.session["voucher"] = voucher.code
+        except Voucher.DoesNotExist:
+            request.session.pop("voucher", None)
+    discount_amount = (subtotal * discount / 100)
+    sub_total_after_discount = subtotal - discount_amount
+    vat = sub_total_after_discount * Decimal(vat_rate)
+    grand_total = sub_total_after_discount + vat
+
     form = ShippingForm(initial=initial)
     context = {
         "step": 1,
@@ -79,6 +95,11 @@ def shipping(request):
         "cart": cart,
         "subtotal": subtotal,
         "vat": vat,
+        "discount_amount": discount_amount,
+        "discount": discount,
+        "voucher": voucher,
+        "voucher_code": voucher_code,
+        "sub_total_after_discount": sub_total_after_discount,
         "vat_rate": vat_rate,
         "grand_total": grand_total,
     }
@@ -88,6 +109,10 @@ def shipping(request):
 def payment(request):
     session_data = request.session.get("shipping")
     vat_rate = StoreSettings.get_solo().vat_rate / 100
+    voucher_code = request.GET.get("voucher") or request.session.get("voucher")
+    discount = Decimal(0)
+    voucher = None
+
     cart = Cart.get_cart(request)
     initial = {}
     initial["customer_phone"] = session_data.get("customer_phone", "")
@@ -105,11 +130,28 @@ def payment(request):
     subtotal = cart.get_total()
     vat = subtotal * vat_rate
     grand_total = subtotal + vat
+    if voucher_code:
+        try:
+            voucher = Voucher.objects.get(code__iexact=voucher_code, active=True)
+            discount = voucher.apply_discount(subtotal)
+            request.session["voucher"] = voucher.code
+        except Voucher.DoesNotExist:
+            request.session.pop("voucher", None)
+    discount_amount = (subtotal * discount / 100)
+    sub_total_after_discount = subtotal - discount_amount
+    vat = sub_total_after_discount * Decimal(vat_rate)
+    grand_total = sub_total_after_discount + vat
+
     context = {
         "step": 3,
         "countries": Country.objects.all(),
         "cart": cart,
         "subtotal": subtotal,
+        "discount_amount": discount_amount,
+        "discount": discount,
+        "voucher": voucher,
+        "voucher_code": voucher_code,
+        "sub_total_after_discount": sub_total_after_discount,
         "vat": vat,
         "vat_rate": vat_rate,
         "grand_total": grand_total,
@@ -120,6 +162,10 @@ def payment(request):
 
 def confirm_review(request):
     vat_rate = StoreSettings.get_solo().vat_rate / 100
+    voucher_code = request.GET.get("voucher") or request.session.get("voucher")
+    discount = Decimal(0)
+    voucher = None
+
     session_data = request.session.get("shipping", {})
     cart = Cart.get_cart(request)
     initial = {
@@ -140,6 +186,18 @@ def confirm_review(request):
     subtotal = cart.get_total()
     vat = subtotal * vat_rate
     grand_total = subtotal + vat
+    if voucher_code:
+        try:
+            voucher = Voucher.objects.get(code__iexact=voucher_code, active=True)
+            discount = voucher.apply_discount(subtotal)
+            request.session["voucher"] = voucher.code
+        except Voucher.DoesNotExist:
+            request.session.pop("voucher", None)
+    discount_amount = (subtotal * discount / 100)
+    sub_total_after_discount = subtotal - discount_amount
+    vat = sub_total_after_discount * Decimal(vat_rate)
+    grand_total = sub_total_after_discount + vat
+
     form = ShippingForm(initial=initial)
     context = {
         "step": 2,
@@ -147,6 +205,11 @@ def confirm_review(request):
         "countries": Country.objects.all(),
         "cart": cart,
         "subtotal": subtotal,
+        "discount_amount": discount_amount,
+        "discount": discount,
+        "voucher": voucher,
+        "voucher_code": voucher_code,
+        "sub_total_after_discount": sub_total_after_discount,
         "vat": vat,
         "vat_rate": vat_rate,
         "grand_total": grand_total,
@@ -157,12 +220,28 @@ def confirm_review(request):
 
 def place_order(request):
     vat_rate = StoreSettings.get_solo().vat_rate / 100
+    voucher_code = request.GET.get("voucher") or request.session.get("voucher")
+    discount = Decimal(0)
+    voucher = None
+
     shipping_data = request.session.get("shipping")
 
     cart = Cart.get_cart(request)
     subtotal = cart.get_total()
     vat = subtotal * vat_rate
     grand_total = subtotal + vat
+    if voucher_code:
+        try:
+            voucher = Voucher.objects.get(code__iexact=voucher_code, active=True)
+            discount = voucher.apply_discount(subtotal)
+            request.session["voucher"] = voucher.code
+        except Voucher.DoesNotExist:
+            request.session.pop("voucher", None)
+    discount_amount = (subtotal * discount / 100)
+    sub_total_after_discount = subtotal - discount_amount
+    vat = sub_total_after_discount * Decimal(vat_rate)
+    grand_total = sub_total_after_discount + vat
+
     order = Order(
         customer_first_name=shipping_data.get("customer_first_name"),
         customer_last_name=shipping_data.get("customer_last_name"),
@@ -178,7 +257,14 @@ def place_order(request):
     if request.user.is_authenticated:
         order.user = request.user
 
+    if voucher != None:
+        order.voucher = voucher
+        request.session.pop("voucher", None)
+
     order.save()
+
+    voucher.active = False
+    voucher.save()
 
     for item in cart.get_items():
         stock = item.product.stock

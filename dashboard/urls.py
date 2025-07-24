@@ -18,6 +18,7 @@ urlpatterns = [
     ),
     path("products/add-product", views.admin_add_product, name="dashboard/add-product"),
     path("orders", views.admin_orders, name="dashboard/orders"),
+    path("orders/confirm/<uuid:order_id>", views.admin_confirm_order, name="dashboard/confirm-order"),
     path("vouchers", views.admin_vouchers, name="dashboard/vouchers"),
     path("vouchers/add-voucher", views.admin_add_voucher, name="dashboard/add-voucher")
 ]
