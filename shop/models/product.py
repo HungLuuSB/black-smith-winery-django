@@ -26,6 +26,7 @@ class Product(models.Model):
     abv = models.DecimalField(decimal_places=2, max_digits=10)
     vintage = models.PositiveSmallIntegerField()
     image = models.ImageField(upload_to="products/", blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     @property
     def is_discounted(self):
