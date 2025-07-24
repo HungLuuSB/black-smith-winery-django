@@ -50,6 +50,17 @@
         <p class="text-[0.9rem] inline-block ml-[2rem]">
         SKU: <span class="text-[#7e7e7e]"> {{ product.sku }} </span>
         </p>
+        <div class="float-right">
+          {% if user.is_authenticated %}
+            {% if in_wishlist %}
+              <a href="{% url "toggle_wishlist" product.id %}">- Remove from wishlist</a>
+            {% else %}
+              <a href="{% url "toggle_wishlist" product.id %}">+ Add to wishlist</a>
+            {% endif %}
+          {% endif %}
+        </div>
+        
+       
       </div>
       <div class="mt-[1rem]">
         {% if product.is_discounted %}

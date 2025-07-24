@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator
-from order.models import Order, OrderDetail
+from order.models import Order, OrderDetail, Voucher
 from shop.models import Product, Stock
 from django.db.models.functions import TruncMonth, TruncDay
 from django.db.models import Count, Sum
@@ -127,6 +127,33 @@ def get_product_by_name(request):
 
     return JsonResponse({"table_html": html, "pagination_html": pagination_html})
 
+
+def get_voucher_by_code(request):
+    query = request.GET.get("q", "")
+    sort = request.GET.get("sort", "id")
+    order = request.GET.get("order", "asc")
+    page_number = request.GET.get("page", 1)
+
+    sort_fields = {"id", "code", "discount_percent", "active"}
+    if sort not in sort_fields:
+        sort = "id"
+
+    order_prefix = "" if order == "asc" else "-"
+    ordering = f"{order_prefix}{sort}"
+
+    vouchers = Voucher.objects.filter(Q(code__icontains=query)).order_by(
+        ordering
+    )
+
+    paginator = Paginator(vouchers, 10)
+    page_obj = paginator.get_page(page_number)
+
+    html = render_to_string("api/voucher_table.html", {"vouchers": page_obj})
+    pagination_html = render_to_string(
+        "api/pagination_controls.html", {"page_obj": page_obj}
+    )
+
+    return JsonResponse({"table_html": html, "pagination_html": pagination_html})
 
 def get_order_by_customer_name(request):
     query = request.GET.get("q", "")

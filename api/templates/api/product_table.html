@@ -17,8 +17,10 @@
     {% for product in products %}
     <tr>
       <td class="text-left border-b-[1px] border-b-[#b2b2b2] py-[1rem]">
-        <img class="w-[20%] inline-block h-[125px]" src="{{ product.image.url }}"/>
-        <span class="inline-block">{{ product.name }}</span>
+        <div class="flex flex-row">
+          <img class="w-[20%] inline-block h-[125px]" src="{{ product.image.url }}"/>
+          <span class="inline-block">{{ product.name }}</span>
+        </div>
       </td>
       <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.sku }}</td>
       <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.category.name }}</td>
@@ -26,18 +28,18 @@
       <td class="text-right border-b-[1px] border-b-[#b2b2b2]">£{{ product.discounted_price|floatformat:2|intcomma }}</td>
       <td class="text-center border-b-[1px] border-b-[#b2b2b2]">Available</td>
       <td class="text-center border-b-[1px] border-b-[#b2b2b2]">{{ product.stock.quantity }}<td>
-          <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.id }}</td>
-          <td class="text-center border-b-[1px] border-b-[#b2b2b2]">
-            <a href="{% url 'product/details' product.slug %}" target="_blank">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
-            </a>
-            <a href="{% url "dashboard/edit-product" product.id %}">
-              <i class="fa fa-pencil ml-[1rem]" aria-hidden="true"></i>
-            </a>
-            <a href="{% url "dashboard/delete-product" product.id %}">
-              <i class="fa fa-trash ml-[1rem]" aria-hidden="true"></i>
-            </a>
-          </td>
+      <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ product.id }}</td>
+      <td class="text-center border-b-[1px] border-b-[#b2b2b2]">
+        <a href="{% url 'product/details' product.slug %}" target="_blank">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </a>
+        <a href="{% url "dashboard/edit-product" product.id %}">
+          <i class="fa fa-pencil ml-[1rem]" aria-hidden="true"></i>
+        </a>
+        <a href="{% url "dashboard/delete-product" product.id %}">
+          <i class="fa fa-trash ml-[1rem]" aria-hidden="true"></i>
+        </a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

@@ -18,4 +18,6 @@ urlpatterns = [
     ),
     path("products/add-product", views.admin_add_product, name="dashboard/add-product"),
     path("orders", views.admin_orders, name="dashboard/orders"),
+    path("vouchers", views.admin_vouchers, name="dashboard/vouchers"),
+    path("vouchers/add-voucher", views.admin_add_voucher, name="dashboard/add-voucher")
 ]

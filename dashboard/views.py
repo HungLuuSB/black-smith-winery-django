@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Sum
-from dashboard.forms import AddProductForm, EditProductForm
+from dashboard.forms import AddProductForm, EditProductForm, AddVoucherForm
 from shop.models import Stock, Product
 from common.models import Country, Brand, Category
-from order.models import Order, OrderDetail
+from order.models import Order, OrderDetail, Voucher
 import os
 
 
@@ -25,6 +25,9 @@ def admin_index(request):
     }
     return render(request, "dashboard/admin_index.html", context)
 
+def admin_vouchers(request):
+    context = {"vouchers": Voucher.objects.all()}
+    return render(request, "dashboard/admin_vouchers.html", context)
 
 def admin_products(request):
     context = {"products": Product.objects.all()}
@@ -155,4 +158,29 @@ def admin_delete_product(request, product_id: int):
     product.delete()
     context = {"status": "OK", "message": "Product deleted successfully."}
     return render(request, "dashboard/admin_products.html", context)
+
+def admin_add_voucher(request):
+    if request.method == "POST":
+        form = AddVoucherForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context = {
+                "form": AddVoucherForm,
+                "message": "Voucher added successfully.",
+                "status": "OK",
+            }
+            return render(request, "dashboard/admin_add_voucher.html", context)
+        else:
+            print("Form errors:", form.errors)
+            print("Non-field errors:", form.non_field_errors())
+            context = {
+                "form": AddVoucherForm,
+                "message": "Failed to add voucher.",
+                "status": "FAILED",
+            }
+            return render(request, "dashboard/admin_add_voucher.html", context)
+    context = {
+        "form": AddVoucherForm
+    }
+    return render(request, "dashboard/admin_add_voucher.html", context)
 

@@ -1,4 +1,3 @@
-
 {% extends "_DashboardLayout.html" %}
 {% load static %}
 {% block title %}
@@ -33,6 +32,9 @@ Dashboard
         </div>
         <div class="h-full flex items-center mr-[4vw]">
           <a class="font-bold text-[1rem] text-[#FAF8F5]" href="{% url 'account/order-history' %}">Order History</a>
+        </div>
+        <div class="h-full flex items-center mr-[4vw]">
+          <a class="font-bold text-[1rem] text-[#FAF8F5] opacity-50" href="{% url 'account/wishlist' %}">Wishlist</a>
         </div>
       </div>
       <div>

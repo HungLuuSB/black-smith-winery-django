@@ -31,57 +31,73 @@
 <div class="modules--1 bg-white">
     <div class="flex flex-nowrap">
         <div id="product-list" class="flex-[0_1_83.5%] order-2 pl-[30px] float-right max-w-full">
-            <div id="toolbar" class="max-w-full mb-[1rem]">
-                <div class="relative border border-[#b2b2b2] py-[10px] px-[20px] rounded-[6px]">
-                    <div class="flex text-center text-[#7e7e7e]">
-                      <p>Total products: {{ products|length }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="relative">
-              <ul class="grid grid-cols-3 gap-[15px]">
-                  {% for product in products %}
-                  <li class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
-                    <div class="w-full max-w-full">
-                      <a class="cursor-pointer text-decoration-none" href="{% url 'product/details' product.slug %}">
-                        <span class="w-auto h-[219px] max-w-full p-[10px] aspect-167/200 mb-[10px]">
-                          <span class="h-full w-full overflow-hidden block relative z-1 text-center">
-                            <img class="max-w-full inline-block !w-[167px] !h-[200px] object-contain" src="{{ product.image.url }}" alt="{{ product.name }}" />
-                          </span>
-                        </span>
-                      </a>
-                      <div>
-                        <p id="product--name" class="min-h-[76px] my-[5px]">
-                          <a class="text-[1.4rem] text-black leading-[25px] tracking-[1px]">
-                            {{ product.name |title }}
-                          </a>
-                          </p>
-                          <p id="product--abv" class="text-[.9rem] text-[#7e7e7e]">{{ product.volume }}ml / {{ product.abv }}%</p>
-                          {% if product.is_discounted %}
-                            <p class="text-[2rem] text-black">
-                              <span class="line-through text-[#7e7e7e]">£{{ product.original_price }}</span>
-                              <span class="ml-2 font-bold">£{{ product.final_price }}</span>
-                            </p>
-                          {% else %}
-                            <p class="font-bold text-[2rem] text-black">
-                              £{{ product.original_price }}
-                            </p>
-                          {% endif %}
-                        <div class="w-full h-auto mt-[1rem]">
-                          <button class="text-white w-full h-[50px] bg-black rounded-[6px]" type="button">
-                            <span>Add to Cart</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  {% endfor %}
-                </ul>
-            </div>
+            
         </div>
         <div class="flex-[0_1_20%] order-1 float-left max-w-[256px]">
-
+            <div class="w-full h-full">
+              <div class="w-full">
+                <div class="py-[0.5rem] border-b-black border-b-[2px] text-[1.2rem]">
+                  <h1>Brands</h1>
+                </div>
+                <div id="brand-filter">
+                  {% for brand in brands %}
+                    <div class="flex flex-row items-center">
+                      <input type="checkbox" class="brand-checkbox" name="brands" value="{{ brand.id }}"  {% if brand.id in selected_brands %}checked{% endif %}>
+                      <p class="ml-[10px]">{{ brand.name }}</p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="w-full">
+                <div class="py-[0.5rem] border-b-black border-b-[2px] text-[1.2rem]">
+                  <h1>Countries</h1>
+                </div>
+                <div id="country-filter">
+                  {% for country in countries %}
+                    <div class="flex flex-row items-center">
+                      <input type="checkbox" class="country-checkbox" name="countries" value="{{ country.id }}"  {% if country.id in selected_countries %}checked{% endif %}>
+                      <p class="ml-[10px]">{{ country.name }}</p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const brandCheckboxes = document.querySelectorAll(".brand-checkbox");
+  const countryCheckboxes = document.querySelectorAll(".country-checkbox");
+  const productList = document.getElementById("product-list");
+
+  function applyFilter() {
+    const brandSelected = Array.from(brandCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => 'brands=' + cb.value);
+
+    const countrySelected = Array.from(countryCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => 'countries=' + cb.value);
+
+    const allParams = [...brandSelected, ...countrySelected].join('&');
+    const baseUrl = window.location.pathname;
+
+    fetch(`${baseUrl}?${allParams}`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(res => res.text())
+    .then(html => {
+      productList.innerHTML = html;
+    });
+  }
+
+  applyFilter();
+
+  [...brandCheckboxes, ...countryCheckboxes].forEach(cb =>
+    cb.addEventListener("change", applyFilter)
+  );
+});
+</script>
 {% endblock content %}

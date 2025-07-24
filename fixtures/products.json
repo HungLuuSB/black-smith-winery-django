@@ -107,6 +107,59 @@
       "quantity": 17,
       "last_updated": "2025-07-12 06:00:00"
     }
+  },
+  {
+    "model": "shop.product",
+    "pk": 5,
+    "fields": {
+      "sku": "SPK-FR-17228",
+      "slug": "dom-pérignon-rosé-2008",
+      "name": "Dom Pérignon Rosé 2008",
+      "category": 3,
+      "brand": 5,
+      "country": 60,
+      "description": "The nose incites a burst of richness and complexity. Ripe fruit at first, then fig and strawberry as the wine breathes and grows, revealing guava, violet and vanilla. The palate is concentrated and remarkably well-defined. The fullness is structured, rich. The silky, spicy material very gradually disappears into a mineral, iodine, salty finish.",
+      "original_price": 345.00,
+      "volume": 750,
+      "abv": 12,
+      "vintage": 2008,
+      "image": "products/dom-pérignon-rosé-2008.png"
+    }
+  },
+  {
+    "model": "shop.stock",
+    "pk": 5,
+    "fields": {
+      "product": 5,
+      "quantity": 20,
+      "last_updated": "2025-07-12 06:00:00"
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 6,
+    "fields": {
+      "sku": "SPK-FR-10921",
+      "slug": "dom-pérignon-luminous-rosé-magnum-2006",
+      "name": "Dom Pérignon Luminous Rosé Magnum 2006",
+      "category": 3,
+      "brand": 5,
+      "country": 60,
+      "description": "The special luminous label edition of Dom Perignon's 2000 vintage Rose Champagne, perfect for lighting up your back bar with a pink glow.",
+      "original_price": 1225.00,
+      "volume": 750,
+      "abv": 12.5,
+      "vintage": 2009,
+      "image": "products/dom-pérignon-luminous-rosé-magnum-2006.png"
+    }
+  },
+  {
+    "model": "shop.stock",
+    "pk": 6,
+    "fields": {
+      "product": 6,
+      "quantity": 11,
+      "last_updated": "2025-07-12 06:00:00"
+    }
   }
-
 ]

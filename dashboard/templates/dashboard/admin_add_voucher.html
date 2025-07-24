@@ -1,0 +1,88 @@
+{% extends '_AdminDashboardLayout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block section_name %}
+Vouchers
+{% endblock section_name %}
+{% block section_desc %}
+Add New Voucher
+{% endblock section_desc %}
+
+{% block content %}
+<div class="p-[2rem]">
+    <div class="w-full">
+        {% if status and status == "OK" %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#b6eacd] rounded-[0.5rem]">
+                <h1 class="text-[.9rem]">Success</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% elif status and status == "FAILED"  %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#fee3e1]">
+                <h1 class="text-[.9rem]">Error</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <form method="post" class="mt-[1rem]">
+        {% csrf_token %}
+        <div class="flex flex-nowrap flex-row justify-between items-start">
+            <div class="w-[100%] bg-white p-[3rem] rounded-2xl h-full">
+                <div class="font-[GTSuperDisplay] text-2xl">
+                    <h1 class="text-[2rem]">Voucher Information</h1>
+                </div>
+                <hr class="mt-[1rem]" />
+                <div class="w-full mt-[1rem]">
+                    {% comment "code input" %}
+                    <div class="w-full flex flex-row">
+                        <div class="w-full">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Code</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="code" type="text" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.code.value|default_if_none:"" }}" maxlength="10" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    {% endcomment %}
+                    
+                    <div class="w-full flex flex-row justify-between mt-[1rem]">
+                        <div class="w-[49%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Valid From</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="valid_from" type="datetime-local" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.valid_from.value }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="w-[49%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Valid To</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="valid_to" type="datetime-local" class="text-[1.2rem] p-[1rem] w-full" required value="{{ form.valid_to.value }}" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-row justify-between mt-[1rem]">
+                        <div class="w-[49%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Discount Percent</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="discount_percent" type="number" class="text-[1.2rem] p-[1rem] w-full" min="0" max="100" required value="{{ form.discount_percent.value }}" step=".01" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="w-[49%]">
+                            <h2 class="text-[1.5rem] font-[GTSuperDisplay]">Min Order Total</h2>
+                            <div class="w-full border-[1px] border-black">
+                                <input name="min_order_total" type="number" class="text-[1.2rem] p-[1rem] w-full" min="0" value="{{ form.min_order_total.value }}" step=".01" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                <div class="h-auto mt-[2rem]">
+                    <button class="text-white h-[50px] bg-black rounded-4xl py-[0.5rem] px-[5rem] cursor-pointer" type="submit">
+                        <span>Add Voucher</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

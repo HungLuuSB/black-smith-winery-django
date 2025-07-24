@@ -1,0 +1,119 @@
+{% extends '_AdminDashboardLayout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block section_name %}
+Vouchers
+{% endblock section_name %}
+{% block section_desc %}
+Manage your store's vouchers
+{% endblock section_desc %}
+
+{% block content %}
+<div class="p-[2rem]">
+    <div class="w-full">
+        {% if status and status == "OK" %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#b6eacd] rounded-[0.5rem]">
+                <h1 class="text-[.9rem]">Success</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% elif status and status == "FAILED"  %}
+        <div class="w-full">
+            <div class="p-[2rem] bg-[#fee3e1] rounded-[0.5rem]">
+                <h1 class="text-[.9rem]">Error</h1>
+                <h1 class="text-[.8rem]">{{ message }}</h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="w-full bg-white p-[3rem] rounded-2xl h-full mt-[1rem]">
+        <div class="w-full flex flex-row items-center justify-between">
+            <div class="flex flex-nowrap gap-[1rem]">
+                <div class="h-auto">
+                    <button class="text-white w-full h-[50px] bg-black rounded-4xl py-[0.5rem] px-[1rem] cursor-pointer" type="button" onclick="window.location.href='{% url "dashboard/add-voucher" %}'">
+                        <span>+ Add Voucher</span>
+                    </button>
+                </div>
+                <div class="h-auto">
+                    <input id="voucher-name-search" class="text-black w-[500px] h-[50px] bg-[#f3f3f3] rounded-4xl py-[0.5rem] px-[1rem]" placeholder="Search voucher"/>
+                </div>
+            </div>
+            <div class="flex flex-nowrap gap-[1rem]">
+                <div class="h-auto rounded-4xl border-[#2d2d2e54] border-[1px] p-[10px]">
+                    <span class="eyebrow">
+                        Sort:
+                    </span>
+                    <select id="voucher-sort-filter" class="border-none">
+                        <option value="id" selected>ID</option>
+                        <option value="discount_percent">Percent</option>
+                        <option value="code">Code</option>
+                        <option value="active">Status</option>
+                    </select>
+                </div>
+                <div class="h-auto rounded-4xl border-[#2d2d2e54] border-[1px] p-[10px]">
+                    <select id="voucher-sort-order">
+                        <option value="asc" selected>Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex flex-nowrap flex-col justify-center mt-[2rem]">
+            <div class="w-full" id="voucher-table">
+
+            </div>
+            
+            <div id="pagination-controls" class="mt-4 text-center">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sortBy = document.getElementById("voucher-sort-filter");
+    const sortOrder = document.getElementById("voucher-sort-order");
+    const searchBox = document.getElementById("voucher-name-search");
+    const tableContainer = document.getElementById("voucher-table");
+
+    function fetchVouchers(keyword = '', page = 1) {
+        const sortField = sortBy.value;
+        const order = sortOrder.value;
+        const url = `{% url 'api/get-vouchers' %}?q=${encodeURIComponent(keyword)}&sort=${sortField}&order=${order}&page=${page}`;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Network error");
+                return response.json();
+            })
+            .then(data => {
+                tableContainer.innerHTML = data.table_html;
+                document.getElementById('pagination-controls').innerHTML = data.pagination_html;
+                attachPaginationEvents();
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
+    }
+
+    function attachPaginationEvents() {
+        document.querySelectorAll('#pagination-controls a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                fetchVouchers(searchBox.value, page);
+            });
+        });
+    }
+
+    fetchVouchers();
+
+    searchBox.addEventListener('input', () => fetchVouchers(searchBox.value));
+    sortBy.addEventListener('change', () => fetchVouchers(searchBox.value));
+    sortOrder.addEventListener('change', () => fetchVouchers(searchBox.value));
+</script>
+
+
+{% endblock content %}

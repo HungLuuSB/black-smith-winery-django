@@ -23,7 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-rhht*=kfdpp5hm_wyd45(+=1pkylykffu18ecodq*44$1or5f6"
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hungluu344@gmail.com'
+EMAIL_HOST_PASSWORD = 'gfga hvvf qjfi grda'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -52,7 +57,8 @@ INSTALLED_APPS = [
     "order",
     "payment",
     "checkout",
-    "api"
+    "api",
+    "wishlist"
 ]
 
 MIDDLEWARE = [
@@ -122,6 +128,10 @@ _AUTH_PASSWORD_VALIDATORS = [
 PASSWORD_HASERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+]
+
+AUTHENTICATION_BACKENDS = [
+    'account.backend.EmailBackend',
 ]
 
 AUTH_USER_MODEL = "account.CustomUser"

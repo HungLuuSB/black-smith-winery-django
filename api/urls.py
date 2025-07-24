@@ -10,4 +10,5 @@ urlpatterns = [
     ),
     path("get-products", views.get_product_by_name, name="api/get-products"),
     path("get-orders", views.get_order_by_customer_name, name="api/get-orders"),
+    path("get-vouchers", views.get_voucher_by_code, name="api/get-vouchers")
 ]

@@ -40,6 +40,12 @@
                   </div>
                 </li>
                 <li class="font-[GTSuperDisplay]">
+                  <div class="{% if choice == 'products' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
+                    <i class="fa fa-shopping-basket ml-[20px]"></i>
+                    <a class="text-left w-full block ml-[10px]" href="{% url "dashboard/vouchers" %}">Vouchers</a>
+                  </div>
+                </li>
+                <li class="font-[GTSuperDisplay]">
                   <div class="{% if choice == 'configs' %}border-l-[3px] bg-[#2d2d2e]{% endif %} h-[70px] flex items-center text-[1.2rem]">
                     <i class="fa fa-cog ml-[20px]"></i>
                     <a class="text-left w-full block ml-[10px]" href="{% url "dashboard/products" %}">Configurations</a>

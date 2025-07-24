@@ -1,0 +1,41 @@
+{% load humanize %}
+<table class="w-full border-collapse">
+    <thead>
+        <tr>
+            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem] w-[500px]">Code</th>
+            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Valid From</th>
+            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Valid To</th>
+            <th class="text-right border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Discount Percent</th>
+            <th class="text-right border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Min Total</th>
+            <th class="text-center border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Status</th>
+            <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">ID</th>
+            <th class="text-center border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for voucher in vouchers %}
+        <tr>
+            <td class="text-left border-b-[1px] border-b-[#b2b2b2] py-[1rem]">
+                {{ voucher.code }}
+            </td>
+            <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ voucher.valid_from }}</td>
+            <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ voucher.valid_to }}</td>
+            <td class="text-right border-b-[1px] border-b-[#b2b2b2]">{{ voucher.discount_percent|floatformat:2|intcomma }}%</td>
+            <td class="text-right border-b-[1px] border-b-[#b2b2b2]">£{{ voucher.min_order_total|floatformat:2|intcomma }}</td>
+            <td class="text-center border-b-[1px] border-b-[#b2b2b2]">
+                {% if voucher.active == True %}
+                    Available
+                {% else %}
+                    Unavailable
+                {% endif %}
+            </td>
+            <td class="text-left border-b-[1px] border-b-[#b2b2b2]">{{ voucher.id }}</td>
+            <td class="text-center border-b-[1px] border-b-[#b2b2b2]">
+                <a href="">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
