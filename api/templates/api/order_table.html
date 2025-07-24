@@ -1,0 +1,37 @@
+{% load humanize %}
+<table class="w-full border-collapse">
+  <thead>
+    <tr>
+      <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem] w-[400px]">ID</th>
+      <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem] w-[200px]">Date</th>
+      <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Customer</th>
+      <th class="text-left border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Status</th>
+      <th class="text-right border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Amount</th>
+      <th class="text-center border-b-[1px] border-b-[#b2b2b2] py-[0.5rem]">Actions<th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td class="text-left border-b-[1px] border-b-[#b2b2b2] py-[1rem]">
+        {{ order.id }}
+      </td>
+      <td class="text-left border-b-[1px] border-b-[#b2b2b2]">
+        <span>Date: {{ order.created_at|date:"Y-m-d" }}</span>
+        <br>
+        <span>Time: {{ order.created_at|date:"H:i:s" }}</span>
+      </td>
+      <td class="text-left border-b-[1px] border-b-[#b2b2b2]">
+        {{ order.customer_last_name }}
+      </td>
+      <td class="text-left border-b-[1px] border-b-[#b2b2b2]">
+        {{ order.status }}
+      </td>
+      <td class="text-right border-b-[1px] border-b-[#b2b2b2]">
+        £{{ order.grand_total|floatformat:2|intcomma }}
+      </td>
+      <td class="text-center border-b-[1px] border-b-[#b2b2b2]">...<td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

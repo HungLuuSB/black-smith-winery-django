@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.8 | MIT License | https://tailwindcss.com */
 @layer properties;
 @font-face {
   font-family: 'GTSuperDisplay';
@@ -542,9 +542,6 @@
   .w-\[6rem\] {
     width: 6rem;
   }
-  .w-\[10\%\] {
-    width: 10%;
-  }
   .w-\[15\%\] {
     width: 15%;
   }
@@ -604,6 +601,12 @@
   }
   .w-\[150px\] {
     width: 150px;
+  }
+  .w-\[200px\] {
+    width: 200px;
+  }
+  .w-\[300px\] {
+    width: 300px;
   }
   .w-\[400px\] {
     width: 400px;

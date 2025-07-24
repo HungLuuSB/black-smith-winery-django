@@ -10,13 +10,11 @@ from cart.forms import UpdateCartItemForm
 # Create your views here.
 
 
-
-
 def get_cart_details(request):
     vat_rate = StoreSettings.get_solo().vat_rate / 100
     cart = Cart.get_cart(request)
     total_quantity = cart.get_total_quantity()
-    sub_total = cart.get_total()
+    sub_total = Decimal(cart.get_total())
     vat = sub_total * vat_rate
     grand_total = vat + sub_total
     context = {
