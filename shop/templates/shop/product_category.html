@@ -30,8 +30,36 @@
 </div>
 <div class="modules--1 bg-white">
     <div class="flex flex-nowrap">
-        <div id="product-list" class="flex-[0_1_83.5%] order-2 pl-[30px] float-right max-w-full">
-            
+        <div id="product-list-wrapper" class="flex-[0_1_83.5%] order-2 pl-[30px] float-right max-w-full">
+            <div id="toolbar" class="max-w-full mb-[1rem]">
+              <div class="relative border border-[#b2b2b2] py-[10px] px-[20px] rounded-[6px]">
+                <div class="flex text-center justify-between text-[#7e7e7e]">
+                  <div>
+                    <p>Total products: {{ products|length }}</p>
+                  </div>
+                  <div class="flex flex-row gap-[15px]">
+                    <div>
+                      <span class="eyebrow"> Sort: </span>
+                      <select id="product-sort-filter" class="border-none">
+                        <option value="id" selected>ID</option>
+                        <option value="original_price">Price</option>
+                        <option value="name">Name</option>
+                      </select>
+                    </div>
+                    <div>
+                      <span class="eyebrow"> Order: </span>
+                      <select id="product-sort-order">
+                        <option value="asc" selected>Ascending</option>
+                        <option value="desc">Descending</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="product-list">
+            </div>
         </div>
         <div class="flex-[0_1_20%] order-1 float-left max-w-[256px]">
             <div class="w-full h-full">
@@ -71,8 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const brandCheckboxes = document.querySelectorAll(".brand-checkbox");
   const countryCheckboxes = document.querySelectorAll(".country-checkbox");
   const productList = document.getElementById("product-list");
+  const sortBy = document.getElementById("product-sort-filter");
+  const sortOrder = document.getElementById("product-sort-order");
 
   function applyFilter() {
+    const sortField = sortBy.value;
+    const order = sortOrder.value;
     const brandSelected = Array.from(brandCheckboxes)
       .filter(cb => cb.checked)
       .map(cb => 'brands=' + cb.value);
@@ -84,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const allParams = [...brandSelected, ...countrySelected].join('&');
     const baseUrl = window.location.pathname;
 
-    fetch(`${baseUrl}?${allParams}`, {
+    fetch(`${baseUrl}?${allParams}&sort=${sortField}&order=${order}`, {
       headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
     .then(res => res.text())
@@ -95,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   applyFilter();
 
-  [...brandCheckboxes, ...countryCheckboxes].forEach(cb =>
+  [...brandCheckboxes, ...countryCheckboxes, sortBy, sortOrder].forEach(cb =>
     cb.addEventListener("change", applyFilter)
   );
 });

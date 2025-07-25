@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from .models import Order, OrderDetail
 from .forms.checkout import CheckoutForm
 from common.models import Country
@@ -33,7 +34,14 @@ def your_orders(request):
     }
     return render(request, "order/your_orders.html", context)
 
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if order.status == "Pending":
+        order.status = "Cancelled"
+        order.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
+    
 def checkout(request):
     cart = Cart.get_cart(request)
     inital_data = {}

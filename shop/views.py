@@ -39,6 +39,9 @@ def filter_products(request, categorySlug: str):
     category = get_object_or_404(Category, slug=categorySlug)
     brand_ids = request.GET.getlist('brands')
     country_ids = request.GET.getlist('countries')
+    sort = request.GET.get("sort", "id")
+    order = request.GET.get("order", "asc")
+
     products = Product.objects.filter(category=category)
 
     if brand_ids:
@@ -49,6 +52,14 @@ def filter_products(request, categorySlug: str):
 
     brands = Brand.objects.filter(products__category=category).distinct()
     countries = Country.objects.filter(products__category=category).distinct()
+    sort_fields = {"id", "name", "original_price"}
+    if sort not in sort_fields:
+        sort = "id"
+
+    order_prefix = "" if order == "asc" else "-"
+    ordering = f"{order_prefix}{sort}"
+
+    products = products.order_by(ordering)
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'shop/product_list.html', {

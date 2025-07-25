@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.core.mail import send_mail
 from decimal import Decimal
 from .forms import ShippingForm
 from common.models import Country, StoreSettings
@@ -260,11 +261,12 @@ def place_order(request):
     if voucher != None:
         order.voucher = voucher
         request.session.pop("voucher", None)
+        voucher.active = False
+        voucher.save()
 
     order.save()
 
-    voucher.active = False
-    voucher.save()
+    
 
     for item in cart.get_items():
         stock = item.product.stock
@@ -282,4 +284,10 @@ def place_order(request):
     cart.clear()
     if "shipping" in request.session:
         del request.session["shipping"]
+    send_mail(
+        subject="BlackSmith's Winery | Order placed!",
+        message=f'Your order {order.id} has been created! Wait for confirmation and it will be on your way.\nTotal: £{order.grand_total}\nTime: {order.created_at}',
+        from_email='noreply@yourdomain.com',
+        recipient_list=[order.customer_email],
+    )
     return render(request, "checkout/success.html", {"order": order})

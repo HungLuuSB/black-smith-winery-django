@@ -82,14 +82,19 @@ BlackSmith's Winery | Order Details
             <span>£{{ order.grand_total|floatformat:2|intcomma  }}</span>
           </li>
         </ul>
-        <h1 class="font-[GTSuperDisplay] text-[3rem] mt-[2rem]">Order Status</h1>
+        <h1 class="font-[GTSuperDisplay] text-[3rem] mt-[2rem]">Status</h1>
         <hr>
         <div>
           <table class="w-full">
             <tbody class="pt-[1rem] leading-[2rem]">
               <tr>
-                <th class="text-[1rem] text-left">Shipping Status</th>
+                <th class="text-[1rem] text-left">Order Status</th>
                 <td class="text-[1rem] text-right">{{ order.status }}</td>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-[1rem] text-left">Shipping Status</th>
+                <td class="text-[1rem] text-right"></td>
                 </td>
               </tr>
               <tr>

@@ -83,6 +83,9 @@ Dashboard
               <td class="text-center ml-auto mr-auto">{{ order.status }}</td>
               <td class="text-center">
                 <a class="underline" href="{% url 'order/details' order.id %}">Details</a>
+                {% if order.status == "Pending" %}
+                <a class="underline" href="{% url 'order/cancel' order.id %}">Cancel</a>
+                {% endif %}
               </td>
             </tr>
             {% endfor %}
