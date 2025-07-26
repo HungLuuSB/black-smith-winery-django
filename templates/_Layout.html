@@ -13,63 +13,58 @@
   </head>
   <body class="isloaded font-[Roboto] m-0 p-0">
     <div class="root">
-      <nav id="nav--bar" class="group/nav--button sticky top-0 left-0 w-full translate-y-0 bg-transparent text-white z-1200 transition-all transform ease-linear duration-200 hover:bg-white hover/nav--button:bg-black hover:text-black">
+      <nav id="nav--bar" class="group sticky top-0 left-0 w-full translate-y-0 bg-transparent text-white z-1200 transition-all transform ease-linear duration-200 hover:bg-white hover:text-black">
         <div class="mr-auto ml-auto w-full px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem] border-b-[rgba(255, 255, 255, 0.2)] border-b-[0.1rem]">
           <div class="m-0 flex h-20 items-center justify-between p-0 outline-0">
             <div class="hidden max-[1400px]:block">
               <button id="nav--button" class="flex w-[6rem] h-[6rem] outline-none flex-wrap flex-col justify-center">
-                <span class="nav--button-bar block w-[3rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-white group-hover/nav--button:bg-black transition-all transform ease-linear duration-200"></span>
-                <span class="nav--button-bar block w-[2rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-white group-hover/nav--button:bg-black transition-all transform ease-linear duration-200"></span>
+                <span class="nav--button-bar block w-[3rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-white group-hover:bg-black transition-all transform ease-linear duration-200"></span>
+                <span class="nav--button-bar block w-[2rem] h-[0.2rem] mt-[0.4rem] mb-[0.4rem] bg-white group-hover:bg-black transition-all transform ease-linear duration-200"></span>
               </button>
             </div>
             <div class="flex-1 text-2xl items-center font-[GTSuperDisplay] max-[1400px]:text-center">
-              <a class="" href="{% url 'home/index' %}">BLACK SMITH WINERY</a>
+              <a href="{% url 'home/index' %}">BLACK SMITH WINERY</a>
             </div>
-            <nav class="flex-1 flex max-[1400px]:hidden justify-center">
-              <ul class="flex list-none justify-center items-center">
-                <li class="group">
-                  <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline" href="{% url 'home/index' %}">
-                    Shop
-                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                  </a>
-                </li>
-                <li class="group">
-                  <a class="relative flex items-center justify-center h-full w-full px-6 group no-underline">
-                    Visit
-                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                  </a>
-                </li>
-                <li class="group">
-                  <a class="relative flex items-center justify-center h-full w-full px-6 no-underline">
-                    Blog
-                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                  </a>
-                </li>
-                <li class="group">
-                  <a class="relative flex items-center justify-center h-full w-full px-6 no-underline">
-                    About Us
-                    <span class="absolute left-0 -bottom-[14px] h-[2px] w-full bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                  </a>
-                </li>
-              </ul>
+            <nav class="flex-1 flex max-[1400px]:hidden justify-center relative">
+              <input
+                id="product-search-box"
+                class="w-full h-[45px] border-[2px] border-white px-[10px] py-[10px] rounded-[5px] focus:outline-none transition-all duration-200 group-hover:border-black"
+                placeholder="What are you looking for?"
+              />
+              <div id="search-result" class="w-[800px] bg-white absolute top-0 mt-[63px] rounded-[5px] text-black hidden">
+                <div class="w-full h-full p-[2rem] flex flex-row flex-none justify-between">
+                  <div class="w-[100%] p-[20px]">
+                    <div class="w-full">
+                      <p class="text-[1.5rem] font-[GTSuperDisplay] float-left">Product (0)</p>
+                      <a href="">
+                        <span class="text-[.9rem] font-[GTSuperDisplay] float-right">View all</span>
+                      </a>
+                    </div>
+                    <div id="search-product-list" class="w-full mt-[3rem]">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
             </nav>
             <nav class="ml-auto flex flex-1 justify-end max-[1400px]:hidden">
               <ul class="flex list-none items-center">
                 <li class="border-r-[rgba(255, 255, 255, 0.2)] border-r-[0.1rem]">
                   {% if user.is_authenticated %}
-                  <a href="{% url 'account/dashboard' %}" class="pr-3 pl-3"> Your Account </a>
+                  <a href="{% url 'account/dashboard' %}" class="pr-3 pl-3">Your Account</a>
                   {% else %}
-                  <a href="{% url 'account/login' %}" class="pr-3 pl-3"> Account </a>
+                  <a href="{% url 'account/login' %}" class="pr-3 pl-3">Account</a>
                   {% endif %}
                 </li>
                 <li>
-                  <button id="cartBtn" class="pr-6 pl-6" onclick=""> Cart </button>
+                  <button id="cartBtn" class="pr-6 pl-6">Cart</button>
                 </li>
               </ul>
             </nav>
           </div>
         </div>
       </nav>
+
       <div class="modules ml-auto mr-auto pt-[12.1rem] px-[14rem] max-[1200px]:px-[10rem] max-[1000px]:px-[4rem]">
         {% block content %}
         {% endblock content %}
@@ -92,7 +87,7 @@
       <div class="fixed z-1600 inset-0 bg-[rgba(0,0,0,0.8)]">
 
       </div>
-      <div class="fixed z-1700 top-0 right-0 absolute w-[56%] h-screen bg-[#FAF8F5]">
+      <div class="fixed z-1700 top-0 right-0 w-[56%] h-screen bg-[#FAF8F5]">
         <div id="cart-summary" class="px-[20%] py-[10%]">
           {% comment %}
           InvokeCartAsync()
@@ -116,5 +111,72 @@
         });
     </script>
     <script src="{% static "/js/site.js" %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("product-search-box");
+      const resultPanel = document.getElementById("search-result");
+      const resultList = document.getElementById("search-product-list");
+      const productCountLabel = document.querySelector("#search-result p");
+
+      let timeout = null;
+
+      input.addEventListener("input", function () {
+        const query = input.value.trim();
+        clearTimeout(timeout);
+
+        if (query.length >= 3) {
+          timeout = setTimeout(() => {
+            const url = `{% url "product/search" %}?q=${encodeURIComponent(query)}`;
+            fetch(url)
+              .then(res => res.json())
+              .then(data => {
+                renderProducts(data.products);
+                resultPanel.classList.remove("hidden");
+              });
+          }, 300);
+        } else {
+          resultPanel.classList.add("hidden");
+          resultList.innerHTML = "";
+        }
+      });
+
+      function renderProducts(products) {
+        if (products.length === 0) {
+          resultList.innerHTML = "<p class='text-center text-[14px]'>No products found.</p>";
+          productCountLabel.innerHTML = `Product (0)`;
+          return;
+        }
+
+        productCountLabel.innerHTML = `Product (${products.length})`;
+
+        const html = `
+          <ul class="grid grid-cols-3 gap-[15px] w-full">
+            ${products.map(p => `
+              <li class="max-w-full border-[1px] rounded-[5px] border-[#dcdcdc] flex flex-nowrap justify-between p-[10px]">
+                <div class="w-[36%]">
+                  <a href="/shop/details/${p.slug}">
+                    <img class="h-[120px] object-cover" src="${p.image}" alt="Image" />
+                  </a>
+                </div>
+                <div class="w-[61%] flex flex-col min-h-[100px] max-w-full justify-between bg-[#f7f7f7] p-[10px] rounded-[5px]">
+                  <a class="text-[13px] font-[GTSuperDisplay]" href="/shop/details/${p.slug}">
+                    ${p.name}
+                  </a>
+                  <p class="text-[13px] font-[Roboto]">£${p.final_price}</p>
+                </div>
+              </li>
+            `).join('')}
+          </ul>
+        `;
+        resultList.innerHTML = html;
+      }
+
+      document.addEventListener("click", function (e) {
+        if (!input.contains(e.target) && !resultPanel.contains(e.target)) {
+          resultPanel.classList.add("hidden");
+        }
+      });
+    });
+    </script>
   </body>
 </html>

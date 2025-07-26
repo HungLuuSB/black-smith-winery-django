@@ -31,6 +31,8 @@
     --text-2xl--line-height: calc(2 / 1.5);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
     --font-weight-thin: 100;
     --font-weight-bold: 700;
     --radius-2xl: 1rem;
@@ -335,6 +337,9 @@
   .mt-\[7rem\] {
     margin-top: 7rem;
   }
+  .mt-\[63px\] {
+    margin-top: 63px;
+  }
   .mr-\[0\.5rem\] {
     margin-right: 0.5rem;
   }
@@ -464,6 +469,9 @@
   .h-\[15vh\] {
     height: 15vh;
   }
+  .h-\[45px\] {
+    height: 45px;
+  }
   .h-\[50px\] {
     height: 50px;
   }
@@ -481,6 +489,9 @@
   }
   .h-\[115px\] {
     height: 115px;
+  }
+  .h-\[120px\] {
+    height: 120px;
   }
   .h-\[125px\] {
     height: 125px;
@@ -527,6 +538,9 @@
   .min-h-\[76px\] {
     min-height: 76px;
   }
+  .min-h-\[100px\] {
+    min-height: 100px;
+  }
   .\!w-\[45px\] {
     width: 45px !important;
   }
@@ -551,6 +565,9 @@
   .w-\[29\%\] {
     width: 29%;
   }
+  .w-\[30\%\] {
+    width: 30%;
+  }
   .w-\[31\%\] {
     width: 31%;
   }
@@ -559,6 +576,9 @@
   }
   .w-\[34\%\] {
     width: 34%;
+  }
+  .w-\[36\%\] {
+    width: 36%;
   }
   .w-\[40px\] {
     width: 40px;
@@ -580,6 +600,9 @@
   }
   .w-\[56\%\] {
     width: 56%;
+  }
+  .w-\[61\%\] {
+    width: 61%;
   }
   .w-\[65\%\] {
     width: 65%;
@@ -613,6 +636,15 @@
   }
   .w-\[500px\] {
     width: 500px;
+  }
+  .w-\[800\] {
+    width: 800;
+  }
+  .w-\[800px\] {
+    width: 800px;
+  }
+  .w-\[1220px\] {
+    width: 1220px;
   }
   .w-auto {
     width: auto;
@@ -752,6 +784,9 @@
   .rounded-\[1rem\] {
     border-radius: 1rem;
   }
+  .rounded-\[5px\] {
+    border-radius: 5px;
+  }
   .rounded-\[6px\] {
     border-radius: 6px;
   }
@@ -766,6 +801,10 @@
   .border-\[1px\] {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .border-\[2px\] {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
   }
   .border-t-\[1px\] {
     border-top-style: var(--tw-border-style);
@@ -805,6 +844,9 @@
   .border-\[\#b2b2b2\] {
     border-color: #b2b2b2;
   }
+  .border-\[\#dcdcdc\] {
+    border-color: #dcdcdc;
+  }
   .border-\[\#f2f0ec\] {
     border-color: #f2f0ec;
   }
@@ -813,6 +855,9 @@
   }
   .border-gray-500 {
     border-color: var(--color-gray-500);
+  }
+  .border-white {
+    border-color: var(--color-white);
   }
   .border-t-\[\#b2b2b2\] {
     border-top-color: #b2b2b2;
@@ -1080,6 +1125,10 @@
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
   }
+  .text-4xl {
+    font-size: var(--text-4xl);
+    line-height: var(--tw-leading, var(--text-4xl--line-height));
+  }
   .text-\[\.8rem\] {
     font-size: .8rem;
   }
@@ -1115,6 +1164,12 @@
   }
   .text-\[5vw\] {
     font-size: 5vw;
+  }
+  .text-\[13px\] {
+    font-size: 13px;
+  }
+  .text-\[14px\] {
+    font-size: 14px;
   }
   .text-\[20px\] {
     font-size: 20px;
@@ -1165,6 +1220,12 @@
   .tracking-\[1px\] {
     --tw-tracking: 1px;
     letter-spacing: 1px;
+  }
+  .whitespace-normal {
+    white-space: normal;
+  }
+  .whitespace-nowrap {
+    white-space: nowrap;
   }
   .\!text-red-500 {
     color: var(--color-red-500) !important;
@@ -1306,6 +1367,16 @@
     }
   }
   @media (hover: hover) {
+    .group-hover\:border-black:is(:where(.group):hover *) {
+      border-color: var(--color-black);
+    }
+  }
+  @media (hover: hover) {
+    .group-hover\:bg-black:is(:where(.group):hover *) {
+      background-color: var(--color-black);
+    }
+  }
+  @media (hover: hover) {
     .group-hover\:opacity-100:is(:where(.group):hover *) {
       opacity: 100%;
     }
@@ -1336,6 +1407,10 @@
     .hover\:text-black:hover {
       color: var(--color-black);
     }
+  }
+  .focus\:outline-none:focus {
+    --tw-outline-style: none;
+    outline-style: none;
   }
   @media (width < 1400px) {
     .max-\[1400px\]\:block {
@@ -1394,6 +1469,9 @@ body.is-scrolling-up #nav--bar {
 }
 body.is-scrolling-up #nav--button .nav--button-bar {
   background-color: var(--color-black);
+}
+body.is-scrolling-up #product-search-box {
+  border-color: var(--color-black);
 }
 .eyebrow {
   --tw-font-weight: 800;

@@ -32,6 +32,7 @@ urlpatterns = [
     path("checkout/", include("checkout.urls")),
     path("api/", include("api.urls")),
     path("wishlist/", include("wishlist.urls")),
+    path("user_behavior/", include("user_behavior.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

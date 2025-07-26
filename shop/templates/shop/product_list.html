@@ -1,5 +1,7 @@
 <div class="relative">
-  <ul class="grid grid-cols-3 gap-[15px]"> {% for product in products %} <li class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
+  <ul class="grid grid-cols-3 gap-[15px]"> 
+    {% for product in products %} 
+    <li class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
       <div class="w-full max-w-full">
         <a class="cursor-pointer text-decoration-none" href="{% url 'product/details' product.slug %}">
           <span class="w-auto h-[219px] max-w-full p-[10px] aspect-167/200 mb-[10px]">
@@ -25,5 +27,7 @@
           </div>
         </div>
       </div>
-    </li> {% endfor %} </ul>
+    </li> 
+    {% endfor %} 
+  </ul>
 </div>

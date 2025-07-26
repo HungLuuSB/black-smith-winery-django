@@ -102,6 +102,75 @@ BlackSmith's Winery
 </div>
 
 <div class="modules--2 bg-white pb-[10rem]">
+    <h4 class="mb-[0.9rem] font-[GTSuperDisplay] text-4xl w-full text-center">Our Recommendations</h4>
+    <div class="">
+        <div class="w-full overflow-auto whitespace-nowrap p-[10px]">
+            {% if personalized_products %}
+                {% for product in personalized_products %}
+                <div class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
+                    <div class="w-full max-w-full">
+                        <a class="cursor-pointer text-decoration-none" href="{% url 'product/details' product.slug %}">
+                        <span class="w-full h-[219px] max-w-full p-[10px] aspect-167/200 mb-[10px]">
+                            <span class="h-full w-full overflow-hidden block z-1 text-center">
+                            <img class="max-w-full inline-block !w-[167px] !h-[200px] object-contain" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                            </span>
+                        </span>
+                        </a>
+                        <div>
+                        <p id="product--name" class="min-h-[76px] my-[5px]">
+                            <a class="text-[1.4rem] text-black leading-[25px] tracking-[1px] whitespace-normal" href="{% url 'product/details' product.slug %}">
+                            {{ product.name |title }}
+                            </a>
+                        </p>
+                        <p id="product--abv" class="text-[.9rem] text-[#7e7e7e]">{{ product.volume }}ml / {{ product.abv }}%</p> {% if product.is_discounted %} <p class="text-[2rem] text-black">
+                            <span class="line-through text-[#7e7e7e]">£{{ product.original_price }}</span>
+                            <span class="ml-2 font-bold">£{{ product.final_price }}</span>
+                        </p> {% else %} <p class="font-bold text-[2rem] text-black"> £{{ product.original_price }}
+                        </p> {% endif %} <div class="w-full h-auto mt-[1rem]">
+                            <button class="text-white w-full h-[50px] bg-black rounded-[6px]" type="button">
+                            <span>Add to Cart</span>
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                {% for product in products %}
+                <div class="w-full min-w-[300px] max-w-[380px] inline-block border border-[#b2b2b2] rounded-[6px] py-[11px] px-[23px]">
+                    <div class="w-full max-w-full">
+                        <a class="cursor-pointer text-decoration-none" href="{% url 'product/details' product.slug %}">
+                        <span class="w-full h-[219px] max-w-full p-[10px] aspect-167/200 mb-[10px]">
+                            <span class="h-full w-full overflow-hidden block z-1 text-center">
+                            <img class="max-w-full inline-block !w-[167px] !h-[200px] object-contain" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                            </span>
+                        </span>
+                        </a>
+                        <div>
+                        <p id="product--name" class="min-h-[76px] my-[5px]">
+                            <a class="text-[1.4rem] text-black leading-[25px] tracking-[1px] whitespace-normal" href="{% url 'product/details' product.slug %}">
+                            {{ product.name |title }}
+                            </a>
+                        </p>
+                        <p id="product--abv" class="text-[.9rem] text-[#7e7e7e]">{{ product.volume }}ml / {{ product.abv }}%</p> {% if product.is_discounted %} <p class="text-[2rem] text-black">
+                            <span class="line-through text-[#7e7e7e]">£{{ product.original_price }}</span>
+                            <span class="ml-2 font-bold">£{{ product.final_price }}</span>
+                        </p> {% else %} <p class="font-bold text-[2rem] text-black"> £{{ product.original_price }}
+                        </p> {% endif %} <div class="w-full h-auto mt-[1rem]">
+                            <button class="text-white w-full h-[50px] bg-black rounded-[6px]" type="button">
+                            <span>Add to Cart</span>
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="modules--3 bg-white pb-[10rem]">
     <div class="eyebrow">
         Plan your visit
     </div>

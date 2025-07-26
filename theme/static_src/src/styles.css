@@ -46,6 +46,10 @@ body.is-scrolling-up #nav--button .nav--button-bar {
   @apply bg-black;
 }
 
+body.is-scrolling-up #product-search-box {
+  @apply border-black;
+}
+
 .eyebrow {
   @apply font-[800];
   @apply text-[0.9rem];

@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from common.models import Category, Brand, Country
 from shop.models import Product
 from wishlist.models import Wishlist
+from user_behavior.models import ProductView
 # Create your views here.
 
 def category(request, categorySlug: str):
@@ -28,6 +29,14 @@ def product_details(request, productSlug: str):
     in_wishlist = False
     if request.user.is_authenticated:
         in_wishlist = Wishlist.objects.filter(user=request.user, product=product).exists()
+
+    user = request.user
+    
+    if user.is_authenticated:
+        ProductView.objects.create(user=request.user, product=product)
+    else:
+        session_key = request.session.session_key or request.session.save()
+        ProductView.objects.create(session_key=session_key, product=product)
 
     context = {
         'product': product,
@@ -74,3 +83,19 @@ def filter_products(request, categorySlug: str):
         'selected_brands': list(map(int, brand_ids)),
         'selected_countries': list(map(int, country_ids)),
     })
+
+def search_products(request):
+    query = request.GET.get("q", "")
+    if len(query) >= 3:
+        products = Product.objects.filter(name__icontains=query)[:15]
+        data = [
+            {
+                "name": p.name,
+                "slug": p.slug,
+                "image": p.image.url if p.image else "",
+                "final_price": p.final_price,
+            }
+            for p in products
+        ]
+        return JsonResponse({"products": data})
+    return JsonResponse({"products": []})

@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('<slug:categorySlug>/', views.filter_products, name='product/categorySlug'),
+    path('search-products', views.search_products, name='product/search'),
     re_path(r"^details/(?P<productSlug>[\w-]+)$", views.product_details, name="product/details")
 ]
 
