@@ -11,11 +11,18 @@ class Cart(models.Model):
 
     @staticmethod
     def get_cart(request):
-        if request.user.is_authenticated:
-            cart, _ = Cart.objects.get_or_create(user=request.user)
-        else:
-            session_key = request.session.session_key or request.session.create()
-            cart, _ = Cart.objects.get_or_create(session_key=session_key)
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.save()
+            session_key = request.session.session_key
+        try:
+            cart = Cart.objects.get(session_key=session_key)
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(session_key=session_key)
+        except Cart.MultipleObjectsReturned:
+            carts = Cart.objects.filter(session_key=session_key).order_by("created_at")
+            cart = carts.first()
+            carts.exclude(id=cart.id).delete()
         return cart
 
     def add_item(self, product, quantity=1):

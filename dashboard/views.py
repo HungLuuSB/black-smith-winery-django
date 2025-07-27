@@ -206,4 +206,3 @@ def admin_confirm_order(request, order_id):
         "message": "Order confirmed!"
     }
     return render(request, "dashboard/admin_orders.html", context)
-    

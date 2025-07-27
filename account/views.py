@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import check_password
 from account.models import CustomUser
 from order.models import Order, OrderDetail
 from wishlist.models import Wishlist
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, ForgotPasswordForm, ResetPasswordForm
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
@@ -14,6 +14,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -66,6 +68,55 @@ def register(request):
     context = {"form": SignUpForm}
     return render(request, "account/signup.html", context)
         
+    
+def forget_password_view(request):
+    if request.method == "POST":
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            user = CustomUser.objects.get(email=email)
+            if user and user.is_active:
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                token = default_token_generator.make_token(user)
+                reset_url = request.build_absolute_uri(
+                    reverse("renew_password", kwargs={"uidb64": uid, "token": token})
+                )
+                print(reset_url)
+                send_mail(
+                    subject='Renew your password',
+                    message=f'Click the link to renew your password: {reset_url}',
+                    from_email='noreply@yourdomain.com',
+                    recipient_list=[user.email],
+                )
+    context = {
+        "form": ForgotPasswordForm()
+    }
+    return render(request, "account/forgot_password.html", context)
+
+
+def renew_password(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = CustomUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == "POST":
+            form = ResetPasswordForm(request.POST)
+            if form.is_valid():
+                new_password = form.cleaned_data["new_password"]
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "Password has been reset. You can now log in.")
+                return redirect("account/login")
+        else:
+            form = ResetPasswordForm()
+        return render(request, "account/renew_password.html", {"form": form})
+    else:
+        messages.error(request, "The reset link is invalid or has expired.")
+        return redirect("account/forgot_password")
+
 def activate_account(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))

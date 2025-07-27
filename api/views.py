@@ -14,7 +14,6 @@ import calendar
 import json
 # Create your views here.
 
-
 class TopSellingCategoryChart(View):
     def get(self, request, *args, **kwargs):
         data = (
@@ -32,7 +31,6 @@ class TopSellingCategoryChart(View):
                 "data": data,
             }
         )
-
 
 class OrderChart(View):
     def get(self, request, *args, **kwargs):
@@ -96,11 +94,9 @@ class OrderChart(View):
             }
         )
 
-
 class TotalOrdersChart(View):
     def get(self, request, *args, **kwargs):
         pass
-
 
 def get_product_by_name(request):
     query = request.GET.get("q", "")
@@ -126,7 +122,6 @@ def get_product_by_name(request):
     )
 
     return JsonResponse({"table_html": html, "pagination_html": pagination_html})
-
 
 def get_voucher_by_code(request):
     query = request.GET.get("q", "")

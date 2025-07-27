@@ -7,6 +7,7 @@ from wishlist.models import Wishlist
 # Create your views here.
 
 def index(request):
+    wishlist = []
     if request.user.is_authenticated:
         views = ProductView.objects.filter(user=request.user).order_by('-timestamp')[:10]
         wishlist = Wishlist.objects.filter(user=request.user)[:10]
