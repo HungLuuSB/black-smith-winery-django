@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 UserModel = get_user_model()
 
+
 class EmailBackend(ModelBackend):
     def authenticate(self, request, email=None, password=None, **kwargs):
         print("AUTH backend called with:", email, password)
@@ -15,8 +16,10 @@ class EmailBackend(ModelBackend):
 
         if user.check_password(password):
             print("Password match")
+            return user
         else:
             print("Password mismatch")
+            return None
 
         if self.user_can_authenticate(user):
             print("User can authenticate")
@@ -24,3 +27,4 @@ class EmailBackend(ModelBackend):
         else:
             print("User cannot authenticate (inactive?)")
             return None
+

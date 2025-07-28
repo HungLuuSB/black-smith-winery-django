@@ -37,7 +37,7 @@ def login(request):
     context = {"form": LoginForm}
     return render(request, "account/login.html", context)
 
-    
+
 def register(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -45,6 +45,7 @@ def register(request):
             user = form.save(commit=False)
             password = form.cleaned_data["password"]
             print(password)
+            user.set_password(password)
             user.is_active = False
             user.save()
 
@@ -52,23 +53,25 @@ def register(request):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = account_activation_token.make_token(user)
 
-            activation_link = reverse('activate', kwargs={'uidb64': uid, 'token': token})
+            activation_link = reverse(
+                "activate", kwargs={"uidb64": uid, "token": token}
+            )
             activation_url = f"http://{current_site.domain}{activation_link}"
             print(activation_url)
             send_mail(
-                subject='Activate your account',
-                message=f'Click the link to activate your account: {activation_url}',
-                from_email='noreply@yourdomain.com',
+                subject="Activate your account",
+                message=f"Click the link to activate your account: {activation_url}",
+                from_email="noreply@yourdomain.com",
                 recipient_list=[user.email],
             )
-            return redirect('account/login')
+            return redirect("account/login")
         else:
             print(form.errors)
-            
+
     context = {"form": SignUpForm}
     return render(request, "account/signup.html", context)
-        
-    
+
+
 def forget_password_view(request):
     if request.method == "POST":
         form = ForgotPasswordForm(request.POST)
@@ -83,14 +86,12 @@ def forget_password_view(request):
                 )
                 print(reset_url)
                 send_mail(
-                    subject='Renew your password',
-                    message=f'Click the link to renew your password: {reset_url}',
-                    from_email='noreply@yourdomain.com',
+                    subject="Renew your password",
+                    message=f"Click the link to renew your password: {reset_url}",
+                    from_email="noreply@yourdomain.com",
                     recipient_list=[user.email],
                 )
-    context = {
-        "form": ForgotPasswordForm()
-    }
+    context = {"form": ForgotPasswordForm()}
     return render(request, "account/forgot_password.html", context)
 
 
@@ -108,7 +109,9 @@ def renew_password(request, uidb64, token):
                 new_password = form.cleaned_data["new_password"]
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, "Password has been reset. You can now log in.")
+                messages.success(
+                    request, "Password has been reset. You can now log in."
+                )
                 return redirect("account/login")
         else:
             form = ResetPasswordForm()
@@ -116,6 +119,7 @@ def renew_password(request, uidb64, token):
     else:
         messages.error(request, "The reset link is invalid or has expired.")
         return redirect("account/forgot_password")
+
 
 def activate_account(request, uidb64, token):
     try:
@@ -127,9 +131,10 @@ def activate_account(request, uidb64, token):
     if user and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'account/activation_success.html')
+        return render(request, "account/activation_success.html")
     else:
-        return render(request, 'account/activation_invalid.html')
+        return render(request, "account/activation_invalid.html")
+
 
 def signup(request):
     if request.method == "POST":
@@ -145,6 +150,7 @@ def signup(request):
     context = {"form": SignUpForm}
     return render(request, "account/signup.html", context)
 
+
 @login_required
 def edit(request):
     if not request.user.is_authenticated:
@@ -155,6 +161,7 @@ def edit(request):
     print(custom_user)
     context = {"user": custom_user}
     return render(request, "account/edit.html", context)
+
 
 @login_required
 def dashboard(request):
@@ -173,6 +180,7 @@ def dashboard(request):
         return render(request, "account/dashboard.html", context)
     return redirect("account/login")
 
+
 @login_required
 def order_history(request):
     user = request.user
@@ -181,6 +189,7 @@ def order_history(request):
         context = {"orders": orders, "total_orders": len(orders)}
         return render(request, "account/order-history.html", context)
     return redirect("account/login")
+
 
 @login_required
 def address_book(request):
@@ -198,13 +207,12 @@ def address_book(request):
         return render(request, "account/address-book.html", context)
     return redirect("account/login")
 
+
 @login_required
 def wishlist(request):
     user = request.user
     if user.is_authenticated:
-        context = {
-            "wishlist": Wishlist.objects.filter(user=user)
-        }
+        context = {"wishlist": Wishlist.objects.filter(user=user)}
         return render(request, "account/wishlist.html", context)
     return redirect("account/login")
 
